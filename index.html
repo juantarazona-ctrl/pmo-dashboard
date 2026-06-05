@@ -6,41 +6,12 @@
 <title>Portfolio de Proyectos — PMO Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #0f1117;
-  --bg2: #161922;
-  --bg3: #1e2230;
-  --bg4: #252a3a;
-  --border: rgba(255,255,255,0.07);
-  --border2: rgba(255,255,255,0.12);
-  --text: #e8eaf0;
-  --text2: #9095a8;
-  --text3: #5a5f72;
-  --green: #22c55e;
-  --green-bg: rgba(34,197,94,0.1);
-  --amber: #f59e0b;
-  --amber-bg: rgba(245,158,11,0.1);
-  --red: #ef4444;
-  --red-bg: rgba(239,68,68,0.1);
-  --blue: #3b82f6;
-  --blue-bg: rgba(59,130,246,0.1);
-  --gray: #6b7280;
-  --gray-bg: rgba(107,114,128,0.1);
-  --accent: #6366f1;
-  --accent-bg: rgba(99,102,241,0.12);
-  --radius: 10px;
-  --radius-sm: 6px;
-}
+:root{--bg:#0f1117;--bg2:#161922;--bg3:#1e2230;--bg4:#252a3a;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);--text:#e8eaf0;--text2:#9095a8;--text3:#5a5f72;--green:#22c55e;--green-bg:rgba(34,197,94,0.1);--amber:#f59e0b;--amber-bg:rgba(245,158,11,0.1);--red:#ef4444;--red-bg:rgba(239,68,68,0.1);--blue:#3b82f6;--blue-bg:rgba(59,130,246,0.1);--gray:#6b7280;--gray-bg:rgba(107,114,128,0.1);--accent:#6366f1;--accent-bg:rgba(99,102,241,0.12);--radius:10px;--radius-sm:6px}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.5;min-height:100vh}
-a{color:inherit;text-decoration:none}
-
-/* LAYOUT */
 .shell{display:grid;grid-template-columns:260px 1fr;min-height:100vh}
 .sidebar{background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
 .main{overflow-y:auto;padding:28px 32px}
-
-/* SIDEBAR */
 .sb-logo{padding:24px 20px 16px;border-bottom:1px solid var(--border)}
 .sb-logo-mark{font-size:11px;font-weight:600;letter-spacing:0.12em;color:var(--text3);text-transform:uppercase;margin-bottom:4px}
 .sb-logo-title{font-size:16px;font-weight:600;color:var(--text)}
@@ -51,22 +22,20 @@ a{color:inherit;text-decoration:none}
 .sb-item-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .sb-item-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sb-item-badge{font-size:10px;font-family:'DM Mono',monospace;padding:2px 6px;border-radius:20px;flex-shrink:0}
+.sb-gestor-hdr{display:flex;align-items:center;gap:8px;padding:8px 12px 4px 12px;cursor:pointer;color:var(--text3);font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;transition:color 0.15s;margin:0 8px;border-radius:var(--radius-sm)}
+.sb-gestor-hdr:hover{color:var(--text2);background:var(--bg3)}
+.sb-gestor-chev{transition:transform 0.2s;font-size:10px}
+.sb-gestor-chev.open{transform:rotate(90deg)}
 .sb-divider{height:1px;background:var(--border);margin:8px 16px}
 .sb-footer{margin-top:auto;padding:16px;border-top:1px solid var(--border)}
 .sb-footer-text{font-size:11px;color:var(--text3)}
-
-/* TOP BAR */
 .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
 .topbar-left h2{font-size:22px;font-weight:600;color:var(--text)}
 .topbar-left p{font-size:13px;color:var(--text2);margin-top:2px}
 .topbar-right{display:flex;align-items:center;gap:10px}
 .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:var(--radius-sm);border:1px solid var(--border2);background:var(--bg3);color:var(--text2);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.15s}
-.btn:hover{background:var(--bg4);color:var(--text);border-color:var(--border2)}
-.btn-accent{background:var(--accent);border-color:var(--accent);color:#fff}
-.btn-accent:hover{background:#4f52d9;border-color:#4f52d9;color:#fff}
-
-/* METRICS */
-.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.btn:hover{background:var(--bg4);color:var(--text)}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
 .metric{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
 .metric-label{font-size:11px;color:var(--text3);font-weight:500;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px}
 .metric-value{font-size:28px;font-weight:600;font-family:'DM Mono',monospace;line-height:1}
@@ -75,25 +44,18 @@ a{color:inherit;text-decoration:none}
 .metric.success .metric-value{color:var(--green)}
 .metric.warn .metric-value{color:var(--amber)}
 .metric.info .metric-value{color:var(--blue)}
-
-/* ALERTS */
 .alert-banner{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:var(--radius);padding:14px 18px;margin-bottom:20px}
 .alert-banner-title{font-size:12px;font-weight:600;color:var(--red);margin-bottom:8px;display:flex;align-items:center;gap:6px}
 .alert-list{display:flex;flex-direction:column;gap:4px}
 .alert-list-item{font-size:12px;color:#fca5a5;padding-left:12px;position:relative}
 .alert-list-item::before{content:'·';position:absolute;left:0;color:var(--red)}
-
-/* GANTT TABLE */
 .section-title{font-size:12px;font-weight:600;letter-spacing:0.08em;color:var(--text3);text-transform:uppercase;margin-bottom:10px}
 .gantt-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:20px}
-.gantt-header{display:grid;grid-template-columns:260px 80px 80px 80px 1fr 80px;gap:0;border-bottom:1px solid var(--border);padding:9px 16px;background:var(--bg3)}
+.gantt-header{display:grid;grid-template-columns:260px 80px 80px 100px 1fr 90px;gap:0;border-bottom:1px solid var(--border);padding:9px 16px;background:var(--bg3)}
 .gantt-header span{font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em}
-.gantt-header .gh-timeline{display:flex;justify-content:space-between;padding:0 4px}
-.gantt-header .gh-timeline span{font-size:9px;color:var(--text3)}
-
 .phase-row{border-bottom:1px solid var(--border)}
 .phase-row:last-child{border-bottom:none}
-.phase-hdr{display:grid;grid-template-columns:260px 80px 80px 80px 1fr 80px;gap:0;padding:10px 16px;cursor:pointer;transition:background 0.15s;align-items:center}
+.phase-hdr{display:grid;grid-template-columns:260px 80px 80px 100px 1fr 90px;gap:0;padding:10px 16px;cursor:pointer;transition:background 0.15s;align-items:center}
 .phase-hdr:hover{background:var(--bg3)}
 .ph-name-cell{display:flex;align-items:center;gap:8px}
 .ph-chevron{width:16px;height:16px;border-radius:3px;background:var(--bg4);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:9px;color:var(--text3);transition:transform 0.2s}
@@ -106,7 +68,6 @@ a{color:inherit;text-decoration:none}
 .pct-real-red{color:var(--red)}
 .pct-real-gray{color:var(--text3)}
 .status-cell{display:flex;justify-content:flex-end;padding-right:8px}
-
 .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:20px;font-size:10px;font-weight:500}
 .badge-green{background:var(--green-bg);color:var(--green)}
 .badge-red{background:var(--red-bg);color:var(--red)}
@@ -118,8 +79,6 @@ a{color:inherit;text-decoration:none}
 .badge-dot-red{background:var(--red)}
 .badge-dot-amber{background:var(--amber)}
 .badge-dot-gray{background:var(--gray)}
-
-/* MINI GANTT */
 .gantt-cell{padding:0 4px}
 .gantt-track{height:20px;background:var(--bg4);border-radius:3px;position:relative;overflow:hidden}
 .g-bar-plan{position:absolute;height:9px;top:1px;border-radius:2px;background:rgba(99,102,241,0.4)}
@@ -128,718 +87,470 @@ a{color:inherit;text-decoration:none}
 .g-bar-amber{background:rgba(245,158,11,0.7)}
 .g-bar-red{background:rgba(239,68,68,0.7)}
 .g-bar-gray{background:rgba(107,114,128,0.4)}
-.g-today{position:absolute;width:1px;top:0;bottom:0;background:rgba(99,102,241,0.6)}
-
-/* TASK ROWS */
+.g-today{position:absolute;width:1px;top:0;bottom:0;background:rgba(99,102,241,0.8)}
 .task-rows{border-top:1px solid var(--border)}
-.task-row{display:grid;grid-template-columns:260px 80px 80px 80px 1fr 80px;gap:0;padding:7px 16px 7px 40px;border-bottom:1px solid rgba(255,255,255,0.03);align-items:center;transition:background 0.1s}
+.task-row{display:grid;grid-template-columns:260px 80px 80px 100px 1fr 90px;gap:0;padding:7px 16px 7px 40px;border-bottom:1px solid rgba(255,255,255,0.03);align-items:center;transition:background 0.1s}
 .task-row:last-child{border-bottom:none}
 .task-row:hover{background:rgba(255,255,255,0.02)}
 .task-name-cell{display:flex;align-items:center;gap:8px;overflow:hidden}
-.task-edt{font-size:10px;font-family:'DM Mono',monospace;color:var(--text3);flex-shrink:0;min-width:60px}
+.task-edt{font-size:10px;font-family:'DM Mono',monospace;color:var(--text3);flex-shrink:0;min-width:55px}
 .task-name{font-size:12px;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .task-name.retrasada{color:#fca5a5}
 .task-atraso{font-size:10px;padding:1px 5px;border-radius:10px;background:var(--red-bg);color:var(--red);flex-shrink:0;margin-left:4px;white-space:nowrap}
-
-/* PORTFOLIO VIEW */
-.portfolio-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:24px}
+.task-riesgo{font-size:10px;padding:1px 5px;border-radius:10px;background:var(--amber-bg);color:var(--amber);flex-shrink:0;margin-left:4px;white-space:nowrap;max-width:120px;overflow:hidden;text-overflow:ellipsis}
+.portfolio-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px;margin-bottom:24px}
 .proj-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px;cursor:pointer;transition:all 0.15s}
 .proj-card:hover{border-color:var(--border2);background:var(--bg3);transform:translateY(-1px)}
-.proj-card.active{border-color:var(--accent);background:var(--bg3)}
 .pc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
 .pc-name{font-size:14px;font-weight:500;color:var(--text);margin-bottom:2px}
 .pc-pm{font-size:11px;color:var(--text3)}
+.pc-gestor{font-size:11px;color:var(--text3);margin-top:1px}
 .pc-pct-wrap{text-align:right}
 .pc-pct-plan{font-size:10px;color:var(--text3)}
 .pc-pct-real{font-size:18px;font-weight:600;font-family:'DM Mono',monospace}
-.pc-bar-bg{height:4px;background:var(--bg4);border-radius:2px;margin:10px 0 12px}
-.pc-bar-plan{position:relative;height:4px;border-radius:2px;background:rgba(99,102,241,0.3)}
+.pc-bar-bg{height:4px;background:var(--bg4);border-radius:2px;margin:10px 0 12px;position:relative}
+.pc-bar-plan{position:absolute;top:0;left:0;height:4px;border-radius:2px;background:rgba(99,102,241,0.3)}
 .pc-bar-real{position:absolute;top:0;left:0;height:4px;border-radius:2px}
 .pc-footer{display:flex;justify-content:space-between;align-items:center}
 .pc-dates{font-size:10px;color:var(--text3);font-family:'DM Mono',monospace}
-
-/* TABS */
-.tabs{display:flex;gap:2px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:3px;margin-bottom:20px;width:fit-content}
-.tab{padding:6px 14px;border-radius:4px;font-size:12px;font-weight:500;color:var(--text3);cursor:pointer;transition:all 0.15s}
-.tab.active{background:var(--bg2);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,0.3)}
-.tab:hover:not(.active){color:var(--text2)}
-
-/* DETAIL HEADER */
+.gestor-section{margin-bottom:28px}
+.gestor-title{font-size:13px;font-weight:600;color:var(--text2);margin-bottom:12px;display:flex;align-items:center;gap:8px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.gestor-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0}
 .detail-header{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:20px}
 .dh-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
 .dh-name{font-size:20px;font-weight:600;color:var(--text)}
 .dh-pm{font-size:13px;color:var(--text2);margin-top:3px}
-.dh-right{display:flex;align-items:center;gap:12px}
-.dh-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.dh-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .dh-stat{background:var(--bg3);border-radius:var(--radius-sm);padding:10px 14px}
 .dh-stat-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px}
 .dh-stat-value{font-size:16px;font-weight:600;font-family:'DM Mono',monospace}
-
-/* BACK BTN */
 .back-btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);cursor:pointer;margin-bottom:16px;padding:6px 0;transition:color 0.15s}
 .back-btn:hover{color:var(--text)}
-
-/* MONTH LABELS */
 .month-labels{display:flex;justify-content:space-between;padding:4px 20px 0;margin-bottom:4px}
 .month-label{font-size:9px;color:var(--text3)}
-
-/* SCROLLBAR */
+.sync-banner{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between}
+.sync-info{font-size:12px;color:var(--text2)}
+.sync-info strong{color:var(--text);font-weight:500}
+.sync-btn{font-size:12px;padding:6px 12px;background:var(--accent-bg);color:var(--accent);border:1px solid rgba(99,102,241,0.3);border-radius:var(--radius-sm);cursor:pointer;transition:all 0.15s}
+.sync-btn:hover{background:rgba(99,102,241,0.2)}
+.loading{display:flex;align-items:center;justify-content:center;padding:48px;color:var(--text3);font-size:13px;gap:8px}
+.spinner{width:16px;height:16px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.config-box{background:var(--bg2);border:1px solid rgba(99,102,241,0.3);border-radius:var(--radius);padding:20px 24px;margin-bottom:20px}
+.config-box-title{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.config-row{display:grid;grid-template-columns:160px 1fr 80px;gap:8px;align-items:center;margin-bottom:8px}
+.config-label{font-size:12px;color:var(--text2)}
+.config-input{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:6px 10px;color:var(--text);font-size:12px;font-family:'DM Mono',monospace;width:100%}
+.config-input:focus{outline:none;border-color:var(--accent)}
+.config-note{font-size:11px;color:var(--text3);margin-top:8px;line-height:1.6}
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
-
-/* EMPTY STATE */
-.empty{padding:48px;text-align:center;color:var(--text3)}
-.empty-icon{font-size:32px;margin-bottom:8px}
-.empty-text{font-size:13px}
-
-/* RESPONSIVE */
-@media(max-width:900px){
-  .shell{grid-template-columns:1fr}
-  .sidebar{position:relative;height:auto}
-  .metrics{grid-template-columns:repeat(2,1fr)}
-}
 </style>
 </head>
 <body>
 <div class="shell">
-
-<!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar">
   <div class="sb-logo">
     <div class="sb-logo-mark">PMO Dashboard</div>
     <div class="sb-logo-title">Portfolio de Proyectos</div>
   </div>
   <div class="sb-section">Vista general</div>
-  <div class="sb-item" onclick="showPortfolio()" id="nav-portfolio">
+  <div class="sb-item active" onclick="showPortfolio()" id="nav-portfolio">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
     <span class="sb-item-name">Todos los proyectos</span>
-    <span class="sb-item-badge" id="badge-total" style="background:var(--bg4);color:var(--text2)">0</span>
+    <span class="sb-item-badge" id="badge-total" style="background:var(--bg4);color:var(--text2)">—</span>
+  </div>
+  <div class="sb-item" onclick="showConfig()" id="nav-config">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+    <span class="sb-item-name">Conectar Google Sheets</span>
   </div>
   <div class="sb-section">Proyectos activos</div>
-  <div id="sb-projects"></div>
+  <div id="sb-projects"><div style="padding:12px 20px;font-size:12px;color:var(--text3)">Cargando...</div></div>
   <div class="sb-divider"></div>
   <div class="sb-footer">
     <div class="sb-footer-text">Actualizado desde Google Sheets</div>
-    <div class="sb-footer-text" style="margin-top:2px;font-family:'DM Mono',monospace" id="last-update"></div>
+    <div class="sb-footer-text" style="margin-top:2px;font-family:'DM Mono',monospace" id="last-update">—</div>
   </div>
 </aside>
-
-<!-- MAIN -->
 <main class="main" id="main-content">
   <div id="view-portfolio"></div>
   <div id="view-detail" style="display:none"></div>
+  <div id="view-config" style="display:none"></div>
 </main>
-
 </div>
 
 <script>
-// ─── CONFIG ──────────────────────────────────────────────────────────────────
-// Para conectar Google Sheets:
-// 1. Abre tu Google Sheet
-// 2. Archivo → Compartir → Publicar en la web → Hoja1 → CSV → Publicar
-// 3. Copia la URL y reemplaza SHEET_CSV_URL abajo
-// 4. Cada proyecto es una pestaña, con el mismo formato de columnas
-const SHEET_CSV_URLS = {
-  // 'Escalera de Descuento': 'https://docs.google.com/spreadsheets/d/TU_ID/export?format=csv&gid=0',
-  // 'Migradown':             'https://docs.google.com/spreadsheets/d/TU_ID/export?format=csv&gid=12345',
+// ════════════════════════════════════════════════════════════════
+// CONFIGURACIÓN — Pega aquí las URLs de tus Google Sheets
+// Instrucciones: ver sección "Conectar Google Sheets" en el dashboard
+// ════════════════════════════════════════════════════════════════
+const SHEET_CONFIG = {
+  // Formato: 'Nombre Gestor': 'URL_CSV_de_su_pestaña'
+  // Ejemplo:
+  // 'Ana Torres':   'https://docs.google.com/spreadsheets/d/ID/export?format=csv&gid=0',
+  // 'Carlos Vega':  'https://docs.google.com/spreadsheets/d/ID/export?format=csv&gid=111111',
+  // 'María Quispe': 'https://docs.google.com/spreadsheets/d/ID/export?format=csv&gid=222222',
 };
 
-// ─── DATA DE EJEMPLO (reemplaza con datos reales desde Sheets) ────────────────
-const DEMO_PROJECTS = [
-  {
-    id: 'p1',
-    name: 'Escalera de Descuento',
-    pm: 'Ana Lucía Grimaldi',
-    gestor: 'Ana Torres',
-    estado: 'Retrasada',
-    pct_plan: 66,
-    pct_real: 54,
-    fecha_inicio: '10/02/2026',
-    fecha_fin: '06/07/2026',
-    monto: 'S/ 850,000',
-    fases: [
-      {
-        id:'1.1', name:'Definición', estado:'Completada', pct_plan:100, pct_real:100,
-        start_offset:0, dur_pct:22,
-        tasks:[
-          {edt:'1.1.2001', name:'Identificación de stakeholders', estado:'Completada', pct_plan:100, pct_real:100, start:'10/02', end:'11/02'},
-          {edt:'1.1.2002', name:'Objetivo y alcance del proyecto', estado:'Completada', pct_plan:100, pct_real:100, start:'12/02', end:'13/02'},
-          {edt:'1.1.2003', name:'Diagnóstico de situación actual', estado:'Completada', pct_plan:100, pct_real:100, start:'16/02', end:'16/02'},
-          {edt:'1.1.2005', name:'Requerimiento funcional', estado:'Completada', pct_plan:100, pct_real:100, start:'17/02', end:'17/02'},
-          {edt:'1.1.2006', name:'Definición y aprobación de escenarios', estado:'Completada', pct_plan:100, pct_real:100, start:'18/02', end:'25/02'},
-        ]
-      },
-      {
-        id:'1.2', name:'Planificación', estado:'Completada', pct_plan:100, pct_real:100,
-        start_offset:18, dur_pct:20,
-        tasks:[
-          {edt:'1.2.2001', name:'Entendimiento funcional', estado:'Completada', pct_plan:100, pct_real:100, start:'18/03', end:'26/03'},
-          {edt:'1.2.2002', name:'Cotización del desarrollo', estado:'Completada', pct_plan:100, pct_real:100, start:'27/03', end:'02/04'},
-          {edt:'1.2.2003', name:'Especificaciones técnicas y aprobación', estado:'Completada', pct_plan:100, pct_real:100, start:'05/03', end:'06/03'},
-          {edt:'1.2.2006', name:'EDT', estado:'Completada', pct_plan:100, pct_real:100, start:'09/03', end:'10/03'},
-          {edt:'1.2.2008', name:'Cronograma', estado:'Completada', pct_plan:100, pct_real:100, start:'31/03', end:'06/04'},
-        ]
-      },
-      {
-        id:'1.3.1', name:'Ejecución — Desarrollo BI', estado:'Retrasada', pct_plan:100, pct_real:77,
-        start_offset:27, dur_pct:38,
-        tasks:[
-          {edt:'1.3.1.1', name:'Definición BI', estado:'Completada', pct_plan:100, pct_real:100, start:'23/03', end:'14/04'},
-          {edt:'1.3.1.2', name:'Desarrollo de la Solución', estado:'Completada', pct_plan:100, pct_real:100, start:'17/04', end:'07/05'},
-          {edt:'1.3.1.3.1', name:'Certificación y validación', estado:'Retrasada', pct_plan:100, pct_real:15, start:'08/05', end:'21/05', atraso:'7 días'},
-          {edt:'1.3.1.3.2', name:'Compartir accesos SFTP a SAP', estado:'Retrasada', pct_plan:100, pct_real:0, start:'13/05', end:'13/05', atraso:'Bloqueada'},
-          {edt:'1.3.2004', name:'Gestión PAP BI — Documentación', estado:'Retrasada', pct_plan:100, pct_real:0, start:'22/05', end:'22/05', atraso:'+9 días'},
-        ]
-      },
-      {
-        id:'1.3.2', name:'Ejecución — Desarrollo SAP', estado:'Retrasada', pct_plan:72, pct_real:47,
-        start_offset:27, dur_pct:50,
-        tasks:[
-          {edt:'1.3.2.1', name:'Análisis SAP', estado:'Completada', pct_plan:100, pct_real:100, start:'23/03', end:'30/03'},
-          {edt:'1.3.2.2.1', name:'Diseño funcionalidad', estado:'Completada', pct_plan:100, pct_real:100, start:'30/03', end:'31/03'},
-          {edt:'1.3.2.2.3.2', name:'Especificación técnica configuraciones', estado:'Retrasada', pct_plan:100, pct_real:75, start:'08/04', end:'09/04', atraso:'25% pendiente'},
-          {edt:'1.3.2.2.3.3', name:'Arquitectura de Solución', estado:'Retrasada', pct_plan:100, pct_real:0, start:'09/04', end:'10/04', atraso:'Sin iniciar'},
-          {edt:'1.3.2.3.2.1', name:'Interfaz Carga Batch', estado:'Retrasada', pct_plan:100, pct_real:50, start:'21/04', end:'23/04', atraso:'50% pendiente'},
-          {edt:'1.3.2.3.2.2', name:'Interfaz usuario VISOR SAC', estado:'Retrasada', pct_plan:100, pct_real:50, start:'30/04', end:'13/05', atraso:'50% pendiente'},
-          {edt:'1.3.2.3.2.3', name:'Visibilidad de Datos Maestros', estado:'Retrasada', pct_plan:70, pct_real:25, start:'07/05', end:'20/05', atraso:'⚠ brecha 45%'},
-          {edt:'1.3.2.3.2.5', name:'Actualización PPI nueva contabilización', estado:'Retrasada', pct_plan:70, pct_real:5, start:'07/05', end:'20/05', atraso:'⚠ brecha 65%'},
-          {edt:'1.3.2.3.2.6', name:'Pruebas técnicas', estado:'Retrasada', pct_plan:0, pct_real:0, start:'21/05', end:'25/05', atraso:'Bloqueada'},
-          {edt:'1.3.2.3.3', name:'Pruebas de Consultoría', estado:'Retrasada', pct_plan:0, pct_real:0, start:'25/05', end:'29/05', atraso:'Bloqueada'},
-        ]
-      },
-      {
-        id:'1.3.3', name:'Pruebas UAT', estado:'Tarea futura', pct_plan:0, pct_real:0,
-        start_offset:75, dur_pct:15,
-        tasks:[
-          {edt:'1.3.3.1.1', name:'Creación escenarios pruebas QAS', estado:'Tarea futura', pct_plan:0, pct_real:0, start:'05/06', end:'08/06'},
-          {edt:'1.3.3.2.1', name:'Capacitación funcionalidad', estado:'Tarea futura', pct_plan:0, pct_real:0, start:'09/06', end:'10/06'},
-          {edt:'1.3.3.2.2', name:'Ejecución pruebas usuario', estado:'Tarea futura', pct_plan:0, pct_real:0, start:'10/06', end:'17/06'},
-        ]
-      },
-      {
-        id:'1.4', name:'Despliegue', estado:'Tarea futura', pct_plan:0, pct_real:0,
-        start_offset:83, dur_pct:12,
-        tasks:[
-          {edt:'1.4.1.1', name:'Capacitación final a usuarios', estado:'Tarea futura', pct_plan:0, pct_real:0, start:'18/06', end:'19/06'},
-          {edt:'1.3.5.4', name:'Paso a Producción', estado:'Tarea futura', pct_plan:0, pct_real:0, start:'18/06', end:'18/06'},
-          {edt:'1.4.2.1', name:'Entendimiento ROCN al equipo', estado:'Tarea futura', pct_plan:0, pct_real:0, start:'05/06', end:'08/06'},
-        ]
-      },
-      {
-        id:'1.5', name:'Go Live', estado:'Tarea futura', pct_plan:0, pct_real:0,
-        start_offset:90, dur_pct:10,
-        tasks:[
-          {edt:'1.5.2001', name:'Monitoreo post producción', estado:'Tarea futura', pct_plan:0, pct_real:0, start:'18/06', end:'02/07'},
-          {edt:'1.5.2.1', name:'Manual transferencia de conocimiento', estado:'Tarea futura', pct_plan:0, pct_real:0, start:'02/07', end:'06/07'},
-          {edt:'1.5.2.2', name:'Acta de cierre y aceptación final', estado:'Tarea futura', pct_plan:0, pct_real:0, start:'02/07', end:'03/07'},
-        ]
-      },
-    ]
-  },
-  {
-    id: 'p2',
-    name: 'Migradown',
-    pm: 'Carlos Vega',
-    gestor: 'Carlos Vega',
-    estado: 'Amarillo',
-    pct_plan: 40,
-    pct_real: 38,
-    fecha_inicio: '01/01/2026',
-    fecha_fin: '15/10/2026',
-    monto: 'S/ 420,000',
-    fases: [
-      { id:'2.1', name:'Definición', estado:'Completada', pct_plan:100, pct_real:100, start_offset:0, dur_pct:20, tasks:[
-        {edt:'2.1.1', name:'Levantamiento de requisitos', estado:'Completada', pct_plan:100, pct_real:100, start:'01/01', end:'15/01'},
-        {edt:'2.1.2', name:'Aprobación de alcance', estado:'Completada', pct_plan:100, pct_real:100, start:'16/01', end:'25/01'},
-      ]},
-      { id:'2.2', name:'Diseño', estado:'Completada', pct_plan:100, pct_real:100, start_offset:20, dur_pct:20, tasks:[
-        {edt:'2.2.1', name:'Arquitectura técnica', estado:'Completada', pct_plan:100, pct_real:100, start:'01/02', end:'20/02'},
-        {edt:'2.2.2', name:'Diseño de base de datos', estado:'Completada', pct_plan:100, pct_real:100, start:'21/02', end:'10/03'},
-      ]},
-      { id:'2.3', name:'Desarrollo', estado:'Amarillo', pct_plan:65, pct_real:60, start_offset:40, dur_pct:35, tasks:[
-        {edt:'2.3.1', name:'Módulo de migración core', estado:'Completada', pct_plan:100, pct_real:100, start:'15/03', end:'10/04'},
-        {edt:'2.3.2', name:'Interfaz de usuario', estado:'Amarillo', pct_plan:80, pct_real:65, start:'11/04', end:'05/05', atraso:'Riesgo 15%'},
-        {edt:'2.3.3', name:'API de integración', estado:'Tarea futura', pct_plan:0, pct_real:0, start:'06/05', end:'30/05'},
-      ]},
-      { id:'2.4', name:'Pruebas', estado:'Tarea futura', pct_plan:0, pct_real:0, start_offset:75, dur_pct:15, tasks:[
-        {edt:'2.4.1', name:'Pruebas unitarias', estado:'Tarea futura', pct_plan:0, pct_real:0, start:'01/06', end:'20/06'},
-        {edt:'2.4.2', name:'UAT con usuarios finales', estado:'Tarea futura', pct_plan:0, pct_real:0, start:'21/06', end:'15/07'},
-      ]},
-      { id:'2.5', name:'Despliegue', estado:'Tarea futura', pct_plan:0, pct_real:0, start_offset:90, dur_pct:10, tasks:[
-        {edt:'2.5.1', name:'Migración a producción', estado:'Tarea futura', pct_plan:0, pct_real:0, start:'16/07', end:'31/07'},
-        {edt:'2.5.2', name:'Capacitación usuarios', estado:'Tarea futura', pct_plan:0, pct_real:0, start:'01/08', end:'15/08'},
-      ]},
-    ]
-  },
-  {
-    id: 'p3',
-    name: 'Nexus Core',
-    pm: 'María Quispe',
-    gestor: 'María Quispe',
-    estado: 'Retrasada',
-    pct_plan: 90,
-    pct_real: 65,
-    fecha_inicio: '15/01/2026',
-    fecha_fin: '30/06/2026',
-    monto: 'S/ 1,200,000',
-    fases: [
-      { id:'3.1', name:'Definición', estado:'Completada', pct_plan:100, pct_real:100, start_offset:0, dur_pct:15, tasks:[
-        {edt:'3.1.1', name:'Kickoff y alineación', estado:'Completada', pct_plan:100, pct_real:100, start:'15/01', end:'25/01'},
-      ]},
-      { id:'3.2', name:'Desarrollo', estado:'Retrasada', pct_plan:100, pct_real:70, start_offset:15, dur_pct:55, tasks:[
-        {edt:'3.2.1', name:'Backend API', estado:'Completada', pct_plan:100, pct_real:100, start:'01/02', end:'15/03'},
-        {edt:'3.2.2', name:'Frontend módulo A', estado:'Retrasada', pct_plan:100, pct_real:60, start:'16/03', end:'15/04', atraso:'40% pendiente'},
-        {edt:'3.2.3', name:'Frontend módulo B', estado:'Retrasada', pct_plan:100, pct_real:30, start:'16/04', end:'15/05', atraso:'⚠ crítico'},
-      ]},
-      { id:'3.3', name:'Integración', estado:'Retrasada', pct_plan:80, pct_real:40, start_offset:70, dur_pct:20, tasks:[
-        {edt:'3.3.1', name:'Integración con ERP', estado:'Retrasada', pct_plan:80, pct_real:40, start:'16/05', end:'10/06', atraso:'Brecha 40%'},
-        {edt:'3.3.2', name:'Pruebas integración', estado:'Tarea futura', pct_plan:0, pct_real:0, start:'11/06', end:'25/06'},
-      ]},
-      { id:'3.4', name:'Go Live', estado:'Tarea futura', pct_plan:0, pct_real:0, start_offset:90, dur_pct:10, tasks:[
-        {edt:'3.4.1', name:'Paso a producción', estado:'Tarea futura', pct_plan:0, pct_real:0, start:'26/06', end:'30/06'},
-      ]},
-    ]
-  },
-  {
-    id: 'p4',
-    name: 'DataSync Pro',
-    pm: 'Ana Torres',
-    gestor: 'Ana Torres',
-    estado: 'Verde',
-    pct_plan: 45,
-    pct_real: 50,
-    fecha_inicio: '01/03/2026',
-    fecha_fin: '20/11/2026',
-    monto: 'S/ 310,000',
-    fases: [
-      { id:'4.1', name:'Análisis', estado:'Completada', pct_plan:100, pct_real:100, start_offset:0, dur_pct:25, tasks:[
-        {edt:'4.1.1', name:'Levantamiento de fuentes de datos', estado:'Completada', pct_plan:100, pct_real:100, start:'01/03', end:'20/03'},
-        {edt:'4.1.2', name:'Mapeo de integraciones', estado:'Completada', pct_plan:100, pct_real:100, start:'21/03', end:'10/04'},
-      ]},
-      { id:'4.2', name:'Desarrollo', estado:'Verde', pct_plan:50, pct_real:55, start_offset:25, dur_pct:45, tasks:[
-        {edt:'4.2.1', name:'Conectores de datos', estado:'Completada', pct_plan:100, pct_real:100, start:'11/04', end:'30/04'},
-        {edt:'4.2.2', name:'Pipeline ETL', estado:'Verde', pct_plan:50, pct_real:60, start:'01/05', end:'15/06'},
-        {edt:'4.2.3', name:'Dashboard analítico', estado:'Tarea futura', pct_plan:0, pct_real:0, start:'16/06', end:'31/07'},
-      ]},
-      { id:'4.3', name:'Pruebas', estado:'Tarea futura', pct_plan:0, pct_real:0, start_offset:70, dur_pct:20, tasks:[
-        {edt:'4.3.1', name:'QA de datos', estado:'Tarea futura', pct_plan:0, pct_real:0, start:'01/08', end:'30/09'},
-      ]},
-      { id:'4.4', name:'Despliegue', estado:'Tarea futura', pct_plan:0, pct_real:0, start_offset:90, dur_pct:10, tasks:[
-        {edt:'4.4.1', name:'Pase a producción', estado:'Tarea futura', pct_plan:0, pct_real:0, start:'01/10', end:'20/10'},
-      ]},
-    ]
-  },
-  {
-    id: 'p5',
-    name: 'Portal Cliente v3',
-    pm: 'Carlos Vega',
-    gestor: 'Carlos Vega',
-    estado: 'Retrasada',
-    pct_plan: 60,
-    pct_real: 40,
-    fecha_inicio: '01/01/2026',
-    fecha_fin: '28/02/2027',
-    monto: 'S/ 675,000',
-    fases: [
-      { id:'5.1', name:'Diseño UX', estado:'Completada', pct_plan:100, pct_real:100, start_offset:0, dur_pct:20, tasks:[
-        {edt:'5.1.1', name:'Research de usuarios', estado:'Completada', pct_plan:100, pct_real:100, start:'01/01', end:'20/01'},
-        {edt:'5.1.2', name:'Prototipo y aprobación', estado:'Completada', pct_plan:100, pct_real:100, start:'21/01', end:'10/02'},
-      ]},
-      { id:'5.2', name:'Desarrollo frontend', estado:'Retrasada', pct_plan:80, pct_real:45, start_offset:20, dur_pct:40, tasks:[
-        {edt:'5.2.1', name:'Componentes base', estado:'Completada', pct_plan:100, pct_real:100, start:'11/02', end:'05/03'},
-        {edt:'5.2.2', name:'Módulo autenticación', estado:'Retrasada', pct_plan:100, pct_real:50, start:'06/03', end:'30/03', atraso:'50% pendiente'},
-        {edt:'5.2.3', name:'Módulo de pedidos', estado:'Retrasada', pct_plan:80, pct_real:20, start:'01/04', end:'30/04', atraso:'⚠ brecha 60%'},
-        {edt:'5.2.4', name:'Módulo de reportes', estado:'Tarea futura', pct_plan:0, pct_real:0, start:'01/05', end:'31/05'},
-      ]},
-      { id:'5.3', name:'Backend', estado:'Tarea futura', pct_plan:0, pct_real:0, start_offset:60, dur_pct:25, tasks:[
-        {edt:'5.3.1', name:'APIs REST', estado:'Tarea futura', pct_plan:0, pct_real:0, start:'01/06', end:'31/07'},
-        {edt:'5.3.2', name:'Seguridad y autenticación', estado:'Tarea futura', pct_plan:0, pct_real:0, start:'01/08', end:'31/08'},
-      ]},
-      { id:'5.4', name:'Go Live', estado:'Tarea futura', pct_plan:0, pct_real:0, start_offset:85, dur_pct:15, tasks:[
-        {edt:'5.4.1', name:'Migración de datos', estado:'Tarea futura', pct_plan:0, pct_real:0, start:'01/09', end:'30/09'},
-        {edt:'5.4.2', name:'Despliegue producción', estado:'Tarea futura', pct_plan:0, pct_real:0, start:'01/10', end:'31/10'},
-      ]},
-    ]
-  },
+// ════════════════════════════════════════════════════════════════
+// DATOS DE EJEMPLO — Se reemplazan automáticamente al conectar Sheets
+// ════════════════════════════════════════════════════════════════
+const DEMO_DATA = [
+  {id:'p1',name:'Escalera de Descuento',gestor:'Ana Torres',pm:'Ana Lucía Grimaldi',estado:'Retrasada',pct_plan:66,pct_real:54,fecha_inicio:'10/02/2026',fecha_fin:'06/07/2026',
+   fases:[
+    {id:'1.1',name:'Definición',estado:'Completada',pct_plan:100,pct_real:100,start_off:0,dur:22,tasks:[
+      {edt:'1.1.2001',name:'Identificación de stakeholders',estado:'Completada',pct_plan:100,pct_real:100,start:'10/02',end:'11/02'},
+      {edt:'1.1.2002',name:'Objetivo y alcance del proyecto',estado:'Completada',pct_plan:100,pct_real:100,start:'12/02',end:'13/02'},
+      {edt:'1.1.2003',name:'Diagnóstico de situación actual',estado:'Completada',pct_plan:100,pct_real:100,start:'16/02',end:'16/02'},
+      {edt:'1.1.2005',name:'Requerimiento funcional',estado:'Completada',pct_plan:100,pct_real:100,start:'17/02',end:'17/02'},
+      {edt:'1.1.2006',name:'Definición y aprobación de escenarios',estado:'Completada',pct_plan:100,pct_real:100,start:'18/02',end:'25/02'},
+    ]},
+    {id:'1.2',name:'Planificación',estado:'Completada',pct_plan:100,pct_real:100,start_off:18,dur:20,tasks:[
+      {edt:'1.2.2001',name:'Entendimiento funcional',estado:'Completada',pct_plan:100,pct_real:100,start:'18/03',end:'26/03'},
+      {edt:'1.2.2002',name:'Cotización del desarrollo',estado:'Completada',pct_plan:100,pct_real:100,start:'27/03',end:'02/04'},
+      {edt:'1.2.2006',name:'EDT',estado:'Completada',pct_plan:100,pct_real:100,start:'09/03',end:'10/03'},
+      {edt:'1.2.2008',name:'Cronograma',estado:'Completada',pct_plan:100,pct_real:100,start:'31/03',end:'06/04'},
+    ]},
+    {id:'1.3.1',name:'Ejecución — Desarrollo BI',estado:'Retrasada',pct_plan:100,pct_real:77,start_off:27,dur:38,tasks:[
+      {edt:'1.3.1.1',name:'Definición BI',estado:'Completada',pct_plan:100,pct_real:100,start:'23/03',end:'14/04'},
+      {edt:'1.3.1.2',name:'Desarrollo de la Solución',estado:'Completada',pct_plan:100,pct_real:100,start:'17/04',end:'07/05'},
+      {edt:'1.3.1.3.1',name:'Certificación y validación',estado:'Retrasada',pct_plan:100,pct_real:15,start:'08/05',end:'21/05',atraso:'7 días',riesgo:''},
+      {edt:'1.3.1.3.2',name:'Compartir accesos SFTP a SAP',estado:'Retrasada',pct_plan:100,pct_real:0,start:'13/05',end:'13/05',atraso:'Bloqueada'},
+      {edt:'1.3.2004',name:'Gestión PAP BI — Documentación',estado:'Retrasada',pct_plan:100,pct_real:0,start:'22/05',end:'22/05',atraso:'+9 días'},
+    ]},
+    {id:'1.3.2',name:'Ejecución — Desarrollo SAP',estado:'Retrasada',pct_plan:72,pct_real:47,start_off:27,dur:50,tasks:[
+      {edt:'1.3.2.1',name:'Análisis SAP',estado:'Completada',pct_plan:100,pct_real:100,start:'23/03',end:'30/03'},
+      {edt:'1.3.2.2.1',name:'Diseño funcionalidad',estado:'Completada',pct_plan:100,pct_real:100,start:'30/03',end:'31/03'},
+      {edt:'1.3.2.2.3.3',name:'Arquitectura de Solución',estado:'Retrasada',pct_plan:100,pct_real:0,start:'09/04',end:'10/04',atraso:'Sin iniciar'},
+      {edt:'1.3.2.3.2.3',name:'Visibilidad de Datos Maestros',estado:'Retrasada',pct_plan:70,pct_real:25,start:'07/05',end:'20/05',atraso:'Brecha 45%'},
+      {edt:'1.3.2.3.2.5',name:'Actualización PPI nueva contabilización',estado:'Retrasada',pct_plan:70,pct_real:5,start:'07/05',end:'20/05',atraso:'Brecha 65%'},
+      {edt:'1.3.2.3.3',name:'Pruebas de Consultoría',estado:'Retrasada',pct_plan:0,pct_real:0,start:'25/05',end:'29/05',atraso:'Bloqueada'},
+    ]},
+    {id:'1.3.3',name:'Pruebas UAT',estado:'Tarea futura',pct_plan:0,pct_real:0,start_off:75,dur:15,tasks:[
+      {edt:'1.3.3.1.1',name:'Creación escenarios pruebas QAS',estado:'Tarea futura',pct_plan:0,pct_real:0,start:'05/06',end:'08/06'},
+      {edt:'1.3.3.2.2',name:'Ejecución pruebas usuario',estado:'Tarea futura',pct_plan:0,pct_real:0,start:'10/06',end:'17/06'},
+    ]},
+    {id:'1.4',name:'Despliegue',estado:'Tarea futura',pct_plan:0,pct_real:0,start_off:83,dur:12,tasks:[
+      {edt:'1.4.1.1',name:'Capacitación final a usuarios',estado:'Tarea futura',pct_plan:0,pct_real:0,start:'18/06',end:'19/06'},
+      {edt:'1.3.5.4',name:'Paso a Producción',estado:'Tarea futura',pct_plan:0,pct_real:0,start:'18/06',end:'18/06'},
+    ]},
+    {id:'1.5',name:'Go Live',estado:'Tarea futura',pct_plan:0,pct_real:0,start_off:90,dur:10,tasks:[
+      {edt:'1.5.2001',name:'Monitoreo post producción',estado:'Tarea futura',pct_plan:0,pct_real:0,start:'18/06',end:'02/07'},
+      {edt:'1.5.2.2',name:'Acta de cierre y aceptación final',estado:'Tarea futura',pct_plan:0,pct_real:0,start:'02/07',end:'03/07'},
+    ]},
+  ]},
+  {id:'p2',name:'Migradown',gestor:'Carlos Vega',pm:'Carlos Vega',estado:'Amarillo',pct_plan:40,pct_real:38,fecha_inicio:'01/01/2026',fecha_fin:'15/10/2026',
+   fases:[
+    {id:'2.1',name:'Definición',estado:'Completada',pct_plan:100,pct_real:100,start_off:0,dur:20,tasks:[
+      {edt:'2.1.1',name:'Levantamiento de requisitos',estado:'Completada',pct_plan:100,pct_real:100,start:'01/01',end:'15/01'},
+      {edt:'2.1.2',name:'Aprobación de alcance',estado:'Completada',pct_plan:100,pct_real:100,start:'16/01',end:'25/01'},
+    ]},
+    {id:'2.2',name:'Diseño',estado:'Completada',pct_plan:100,pct_real:100,start_off:20,dur:20,tasks:[
+      {edt:'2.2.1',name:'Arquitectura técnica',estado:'Completada',pct_plan:100,pct_real:100,start:'01/02',end:'20/02'},
+    ]},
+    {id:'2.3',name:'Desarrollo',estado:'Amarillo',pct_plan:65,pct_real:60,start_off:40,dur:35,tasks:[
+      {edt:'2.3.1',name:'Módulo de migración core',estado:'Completada',pct_plan:100,pct_real:100,start:'15/03',end:'10/04'},
+      {edt:'2.3.2',name:'Interfaz de usuario',estado:'Amarillo',pct_plan:80,pct_real:65,start:'11/04',end:'05/05',atraso:'Riesgo 15%'},
+      {edt:'2.3.3',name:'API de integración',estado:'Tarea futura',pct_plan:0,pct_real:0,start:'06/05',end:'30/05'},
+    ]},
+    {id:'2.4',name:'Pruebas',estado:'Tarea futura',pct_plan:0,pct_real:0,start_off:75,dur:15,tasks:[
+      {edt:'2.4.1',name:'Pruebas unitarias',estado:'Tarea futura',pct_plan:0,pct_real:0,start:'01/06',end:'20/06'},
+      {edt:'2.4.2',name:'UAT con usuarios finales',estado:'Tarea futura',pct_plan:0,pct_real:0,start:'21/06',end:'15/07'},
+    ]},
+    {id:'2.5',name:'Despliegue',estado:'Tarea futura',pct_plan:0,pct_real:0,start_off:90,dur:10,tasks:[
+      {edt:'2.5.1',name:'Migración a producción',estado:'Tarea futura',pct_plan:0,pct_real:0,start:'16/07',end:'31/07'},
+    ]},
+  ]},
+  {id:'p3',name:'Nexus Core',gestor:'María Quispe',pm:'María Quispe',estado:'Retrasada',pct_plan:90,pct_real:65,fecha_inicio:'15/01/2026',fecha_fin:'30/06/2026',
+   fases:[
+    {id:'3.1',name:'Definición',estado:'Completada',pct_plan:100,pct_real:100,start_off:0,dur:15,tasks:[
+      {edt:'3.1.1',name:'Kickoff y alineación',estado:'Completada',pct_plan:100,pct_real:100,start:'15/01',end:'25/01'},
+    ]},
+    {id:'3.2',name:'Desarrollo',estado:'Retrasada',pct_plan:100,pct_real:70,start_off:15,dur:55,tasks:[
+      {edt:'3.2.1',name:'Backend API',estado:'Completada',pct_plan:100,pct_real:100,start:'01/02',end:'15/03'},
+      {edt:'3.2.2',name:'Frontend módulo A',estado:'Retrasada',pct_plan:100,pct_real:60,start:'16/03',end:'15/04',atraso:'40% pendiente'},
+      {edt:'3.2.3',name:'Frontend módulo B',estado:'Retrasada',pct_plan:100,pct_real:30,start:'16/04',end:'15/05',atraso:'Crítico 70%'},
+    ]},
+    {id:'3.3',name:'Integración',estado:'Retrasada',pct_plan:80,pct_real:40,start_off:70,dur:20,tasks:[
+      {edt:'3.3.1',name:'Integración con ERP',estado:'Retrasada',pct_plan:80,pct_real:40,start:'16/05',end:'10/06',atraso:'Brecha 40%'},
+      {edt:'3.3.2',name:'Pruebas integración',estado:'Tarea futura',pct_plan:0,pct_real:0,start:'11/06',end:'25/06'},
+    ]},
+    {id:'3.4',name:'Go Live',estado:'Tarea futura',pct_plan:0,pct_real:0,start_off:90,dur:10,tasks:[
+      {edt:'3.4.1',name:'Paso a producción',estado:'Tarea futura',pct_plan:0,pct_real:0,start:'26/06',end:'30/06'},
+    ]},
+  ]},
+  {id:'p4',name:'DataSync Pro',gestor:'Ana Torres',pm:'Ana Torres',estado:'Verde',pct_plan:45,pct_real:50,fecha_inicio:'01/03/2026',fecha_fin:'20/11/2026',
+   fases:[
+    {id:'4.1',name:'Análisis',estado:'Completada',pct_plan:100,pct_real:100,start_off:0,dur:25,tasks:[
+      {edt:'4.1.1',name:'Levantamiento de fuentes de datos',estado:'Completada',pct_plan:100,pct_real:100,start:'01/03',end:'20/03'},
+      {edt:'4.1.2',name:'Mapeo de integraciones',estado:'Completada',pct_plan:100,pct_real:100,start:'21/03',end:'10/04'},
+    ]},
+    {id:'4.2',name:'Desarrollo',estado:'Verde',pct_plan:50,pct_real:55,start_off:25,dur:45,tasks:[
+      {edt:'4.2.1',name:'Conectores de datos',estado:'Completada',pct_plan:100,pct_real:100,start:'11/04',end:'30/04'},
+      {edt:'4.2.2',name:'Pipeline ETL',estado:'Verde',pct_plan:50,pct_real:60,start:'01/05',end:'15/06'},
+      {edt:'4.2.3',name:'Dashboard analítico',estado:'Tarea futura',pct_plan:0,pct_real:0,start:'16/06',end:'31/07'},
+    ]},
+    {id:'4.3',name:'Pruebas y Despliegue',estado:'Tarea futura',pct_plan:0,pct_real:0,start_off:70,dur:30,tasks:[
+      {edt:'4.3.1',name:'QA de datos',estado:'Tarea futura',pct_plan:0,pct_real:0,start:'01/08',end:'30/09'},
+      {edt:'4.4.1',name:'Pase a producción',estado:'Tarea futura',pct_plan:0,pct_real:0,start:'01/10',end:'20/10'},
+    ]},
+  ]},
+  {id:'p5',name:'Portal Cliente v3',gestor:'Carlos Vega',pm:'Carlos Vega',estado:'Retrasada',pct_plan:60,pct_real:40,fecha_inicio:'01/01/2026',fecha_fin:'28/02/2027',
+   fases:[
+    {id:'5.1',name:'Diseño UX',estado:'Completada',pct_plan:100,pct_real:100,start_off:0,dur:20,tasks:[
+      {edt:'5.1.1',name:'Research de usuarios',estado:'Completada',pct_plan:100,pct_real:100,start:'01/01',end:'20/01'},
+      {edt:'5.1.2',name:'Prototipo y aprobación',estado:'Completada',pct_plan:100,pct_real:100,start:'21/01',end:'10/02'},
+    ]},
+    {id:'5.2',name:'Desarrollo frontend',estado:'Retrasada',pct_plan:80,pct_real:45,start_off:20,dur:40,tasks:[
+      {edt:'5.2.1',name:'Componentes base',estado:'Completada',pct_plan:100,pct_real:100,start:'11/02',end:'05/03'},
+      {edt:'5.2.2',name:'Módulo autenticación',estado:'Retrasada',pct_plan:100,pct_real:50,start:'06/03',end:'30/03',atraso:'50% pendiente'},
+      {edt:'5.2.3',name:'Módulo de pedidos',estado:'Retrasada',pct_plan:80,pct_real:20,start:'01/04',end:'30/04',atraso:'Brecha 60%'},
+    ]},
+    {id:'5.3',name:'Backend',estado:'Tarea futura',pct_plan:0,pct_real:0,start_off:60,dur:25,tasks:[
+      {edt:'5.3.1',name:'APIs REST',estado:'Tarea futura',pct_plan:0,pct_real:0,start:'01/06',end:'31/07'},
+    ]},
+    {id:'5.4',name:'Go Live',estado:'Tarea futura',pct_plan:0,pct_real:0,start_off:85,dur:15,tasks:[
+      {edt:'5.4.2',name:'Despliegue producción',estado:'Tarea futura',pct_plan:0,pct_real:0,start:'01/10',end:'31/10'},
+    ]},
+  ]},
 ];
 
-// ─── STATE ────────────────────────────────────────────────────────────────────
-let projects = DEMO_PROJECTS;
+// ════════ HELPERS ════════
+const eColor = e => e==='Completada'||e==='Verde'?'var(--green)':e==='Retrasada'?'var(--red)':e==='Amarillo'?'var(--amber)':'var(--gray)';
+const eBadge = e => e==='Completada'||e==='Verde'?'badge-green':e==='Retrasada'?'badge-red':e==='Amarillo'?'badge-amber':'badge-gray';
+const eDot   = e => e==='Completada'||e==='Verde'?'badge-dot-green':e==='Retrasada'?'badge-dot-red':e==='Amarillo'?'badge-dot-amber':'badge-dot-gray';
+const eBar   = e => e==='Completada'||e==='Verde'?'g-bar-green':e==='Retrasada'?'g-bar-red':e==='Amarillo'?'g-bar-amber':'g-bar-gray';
+const pctCls = (e,pp,pr) => e==='Tarea futura'?'pct-real-gray':pr>=pp?'pct-real-green':(pp-pr)>20?'pct-real-red':'pct-real-amber';
+const gestorColors = {'Ana Torres':'#6366f1','Carlos Vega':'#22c55e','María Quispe':'#f59e0b'};
+const gestorInitials = n => n.split(' ').map(w=>w[0]).slice(0,2).join('');
+
+// ════════ STATE ════════
+let projects = DEMO_DATA;
 let currentProject = null;
 let expandedPhases = {};
 let currentView = 'portfolio';
 let filterEstado = '';
+let sbExpanded = {};
+const gestores = [...new Set(DEMO_DATA.map(p=>p.gestor))];
+gestores.forEach(g => sbExpanded[g] = true);
 
-// ─── HELPERS ─────────────────────────────────────────────────────────────────
-function estadoColor(e) {
-  if (e === 'Completada' || e === 'Verde') return 'var(--green)';
-  if (e === 'Retrasada') return 'var(--red)';
-  if (e === 'Amarillo') return 'var(--amber)';
-  return 'var(--gray)';
-}
-function estadoBadgeClass(e) {
-  if (e === 'Completada' || e === 'Verde') return 'badge-green';
-  if (e === 'Retrasada') return 'badge-red';
-  if (e === 'Amarillo') return 'badge-amber';
-  return 'badge-gray';
-}
-function estadoDotClass(e) {
-  if (e === 'Completada' || e === 'Verde') return 'badge-dot-green';
-  if (e === 'Retrasada') return 'badge-dot-red';
-  if (e === 'Amarillo') return 'badge-dot-amber';
-  return 'badge-dot-gray';
-}
-function barColorClass(e) {
-  if (e === 'Completada' || e === 'Verde') return 'g-bar-green';
-  if (e === 'Retrasada') return 'g-bar-red';
-  if (e === 'Amarillo') return 'g-bar-amber';
-  return 'g-bar-gray';
-}
-function pctColorClass(e, pctPlan, pctReal) {
-  if (e === 'Tarea futura') return 'pct-real-gray';
-  if (pctReal >= pctPlan) return 'pct-real-green';
-  if ((pctPlan - pctReal) > 20) return 'pct-real-red';
-  return 'pct-real-amber';
-}
-function getAlerts(proj) {
-  const alerts = [];
-  proj.fases.forEach(f => {
-    f.tasks.forEach(t => {
-      if (t.atraso && (t.estado === 'Retrasada' || t.estado === 'Amarillo')) {
-        alerts.push({ fase: f.name, tarea: t.name, edt: t.edt, atraso: t.atraso, gap: t.pct_plan - t.pct_real });
-      }
-    });
-  });
-  return alerts.sort((a, b) => b.gap - a.gap);
-}
-
-// ─── SIDEBAR ─────────────────────────────────────────────────────────────────
+// ════════ SIDEBAR ════════
 function buildSidebar() {
-  const container = document.getElementById('sb-projects');
   document.getElementById('badge-total').textContent = projects.length;
-  document.getElementById('last-update').textContent = new Date().toLocaleDateString('es-PE', { day:'2-digit', month:'short', year:'numeric' });
-  container.innerHTML = projects.map(p => `
-    <div class="sb-item ${currentProject && currentProject.id === p.id ? 'active' : ''}" onclick="showProject('${p.id}')" id="sb-${p.id}">
-      <span class="sb-item-dot" style="background:${estadoColor(p.estado)}"></span>
-      <span class="sb-item-name">${p.name}</span>
-      <span class="sb-item-badge" style="background:${estadoColor(p.estado)}22;color:${estadoColor(p.estado)};font-size:9px">${p.pct_real}%</span>
-    </div>
-  `).join('');
-  document.getElementById('nav-portfolio').className = `sb-item ${currentView === 'portfolio' ? 'active' : ''}`;
+  document.getElementById('last-update').textContent = new Date().toLocaleDateString('es-PE',{day:'2-digit',month:'short',year:'numeric'});
+  const grouped = {};
+  projects.forEach(p => { if(!grouped[p.gestor]) grouped[p.gestor]=[]; grouped[p.gestor].push(p); });
+  let html = '';
+  Object.entries(grouped).forEach(([gestor, projs]) => {
+    const color = gestorColors[gestor]||'var(--text2)';
+    const isOpen = sbExpanded[gestor]!==false;
+    html += `<div class="sb-gestor-hdr" onclick="toggleGestor('${gestor}')">
+      <div style="width:18px;height:18px;border-radius:50%;background:${color}22;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:${color};flex-shrink:0">${gestorInitials(gestor)}</div>
+      <span style="flex:1;color:${color}">${gestor}</span>
+      <span class="sb-gestor-chev ${isOpen?'open':''}">›</span>
+    </div>`;
+    if(isOpen) {
+      projs.forEach(p => {
+        html += `<div class="sb-item ${currentProject&&currentProject.id===p.id?'active':''}" onclick="showProject('${p.id}')">
+          <span class="sb-item-dot" style="background:${eColor(p.estado)}"></span>
+          <span class="sb-item-name">${p.name}</span>
+          <span class="sb-item-badge" style="background:${eColor(p.estado)}22;color:${eColor(p.estado)}">${p.pct_real}%</span>
+        </div>`;
+      });
+    }
+  });
+  document.getElementById('sb-projects').innerHTML = html;
+  document.getElementById('nav-portfolio').className = `sb-item ${currentView==='portfolio'?'active':''}`;
+  document.getElementById('nav-config').className = `sb-item ${currentView==='config'?'active':''}`;
 }
 
-// ─── PORTFOLIO VIEW ───────────────────────────────────────────────────────────
-function showPortfolio() {
-  currentProject = null;
-  currentView = 'portfolio';
-  buildSidebar();
-  document.getElementById('view-detail').style.display = 'none';
-  document.getElementById('view-portfolio').style.display = '';
-  renderPortfolio();
-}
+function toggleGestor(g){ sbExpanded[g]=!sbExpanded[g]; buildSidebar(); }
 
-function renderPortfolio() {
-  const total = projects.length;
-  const retrasados = projects.filter(p => p.estado === 'Retrasada').length;
-  const enRiesgo = projects.filter(p => p.estado === 'Amarillo').length;
-  const alDia = projects.filter(p => p.estado === 'Verde' || p.estado === 'Completada').length;
-  const avgReal = Math.round(projects.reduce((a, p) => a + p.pct_real, 0) / total);
+// ════════ PORTFOLIO ════════
+function showPortfolio(){ currentProject=null; currentView='portfolio'; buildSidebar(); document.getElementById('view-detail').style.display='none'; document.getElementById('view-config').style.display='none'; document.getElementById('view-portfolio').style.display=''; renderPortfolio(); }
 
-  let filtered = filterEstado ? projects.filter(p => p.estado === filterEstado) : projects;
-
+function renderPortfolio(){
+  const total=projects.length, retrasados=projects.filter(p=>p.estado==='Retrasada').length, enRiesgo=projects.filter(p=>p.estado==='Amarillo').length, alDia=projects.filter(p=>p.estado==='Verde'||p.estado==='Completada').length, avgReal=Math.round(projects.reduce((a,p)=>a+p.pct_real,0)/total);
+  const grouped = {};
+  const filtered = filterEstado ? projects.filter(p=>p.estado===filterEstado) : projects;
+  filtered.forEach(p => { if(!grouped[p.gestor]) grouped[p.gestor]=[]; grouped[p.gestor].push(p); });
+  const hasSheets = Object.keys(SHEET_CONFIG).length > 0;
+  const syncBanner = hasSheets ? `<div class="sync-banner"><div class="sync-info">Conectado a <strong>Google Sheets</strong> · Los datos se actualizan automáticamente al abrir</div><button class="sync-btn" onclick="loadFromSheets()">↻ Sincronizar ahora</button></div>` : `<div class="sync-banner"><div class="sync-info">Usando <strong>datos de ejemplo</strong> · <span style="color:var(--accent);cursor:pointer" onclick="showConfig()">Conecta tu Google Sheets</span> para ver datos reales</div></div>`;
+  const gestorasHtml = Object.entries(grouped).map(([gestor, projs]) => {
+    const color = gestorColors[gestor]||'var(--text2)';
+    const cards = projs.map(p => {
+      const gap = p.pct_plan - p.pct_real;
+      return `<div class="proj-card" onclick="showProject('${p.id}')">
+        <div class="pc-top">
+          <div><div class="pc-name">${p.name}</div><div class="pc-pm">PM: ${p.pm}</div></div>
+          <div class="pc-pct-wrap"><div class="pc-pct-plan">plan ${p.pct_plan}%</div><div class="pc-pct-real" style="color:${eColor(p.estado)}">${p.pct_real}%</div></div>
+        </div>
+        <div class="pc-bar-bg">
+          <div class="pc-bar-plan" style="width:${p.pct_plan}%"></div>
+          <div class="pc-bar-real" style="width:${p.pct_real}%;background:${eColor(p.estado)}"></div>
+        </div>
+        <div class="pc-footer">
+          <div class="pc-dates">${p.fecha_inicio} → ${p.fecha_fin}</div>
+          <span class="badge ${eBadge(p.estado)}"><span class="badge-dot ${eDot(p.estado)}"></span>${p.estado}${gap>0?' −'+gap+'%':''}</span>
+        </div>
+      </div>`;
+    }).join('');
+    return `<div class="gestor-section">
+      <div class="gestor-title">
+        <div class="gestor-avatar" style="background:${color}22;color:${color}">${gestorInitials(gestor)}</div>
+        ${gestor} <span style="font-weight:400;color:var(--text3);font-size:12px">${projs.length} proyecto${projs.length>1?'s':''}</span>
+      </div>
+      <div class="portfolio-grid">${cards}</div>
+    </div>`;
+  }).join('');
   document.getElementById('view-portfolio').innerHTML = `
     <div class="topbar">
-      <div class="topbar-left">
-        <h2>Portfolio de proyectos</h2>
-        <p>${total} proyectos activos · Promedio de avance real: ${avgReal}%</p>
-      </div>
+      <div class="topbar-left"><h2>Portfolio de proyectos</h2><p>${total} proyectos activos · Promedio de avance real: ${avgReal}%</p></div>
       <div class="topbar-right">
         <select style="background:var(--bg3);color:var(--text2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:7px 12px;font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer" onchange="filterEstado=this.value;renderPortfolio()">
           <option value="">Todos los estados</option>
           <option value="Retrasada" ${filterEstado==='Retrasada'?'selected':''}>Retrasados</option>
           <option value="Amarillo" ${filterEstado==='Amarillo'?'selected':''}>En riesgo</option>
           <option value="Verde" ${filterEstado==='Verde'?'selected':''}>Al día</option>
-          <option value="Completada" ${filterEstado==='Completada'?'selected':''}>Completados</option>
         </select>
       </div>
     </div>
-
     <div class="metrics">
-      <div class="metric info">
-        <div class="metric-label">Total activos</div>
-        <div class="metric-value">${total}</div>
-        <div class="metric-sub">en portfolio</div>
-      </div>
-      <div class="metric" style="">
-        <div class="metric-label">Avance promedio</div>
-        <div class="metric-value" style="color:var(--text)">${avgReal}%</div>
-        <div class="metric-sub">avance real</div>
-      </div>
-      <div class="metric success">
-        <div class="metric-label">Al día</div>
-        <div class="metric-value">${alDia}</div>
-        <div class="metric-sub">${enRiesgo} en riesgo</div>
-      </div>
-      <div class="metric danger">
-        <div class="metric-label">Con atraso</div>
-        <div class="metric-value">${retrasados}</div>
-        <div class="metric-sub">acción requerida</div>
-      </div>
+      <div class="metric info"><div class="metric-label">Total activos</div><div class="metric-value">${total}</div><div class="metric-sub">en portfolio</div></div>
+      <div class="metric"><div class="metric-label">Avance promedio</div><div class="metric-value" style="color:var(--text)">${avgReal}%</div><div class="metric-sub">avance real</div></div>
+      <div class="metric success"><div class="metric-label">Al día</div><div class="metric-value">${alDia}</div><div class="metric-sub">${enRiesgo} en riesgo</div></div>
+      <div class="metric danger"><div class="metric-label">Con atraso</div><div class="metric-value">${retrasados}</div><div class="metric-sub">acción requerida</div></div>
     </div>
-
-    <div class="section-title">Selecciona un proyecto para ver su cronograma detallado</div>
-    <div class="portfolio-grid">
-      ${filtered.map(p => {
-        const gap = p.pct_plan - p.pct_real;
-        return `
-        <div class="proj-card" onclick="showProject('${p.id}')">
-          <div class="pc-top">
-            <div>
-              <div class="pc-name">${p.name}</div>
-              <div class="pc-pm">PM: ${p.pm}</div>
-            </div>
-            <div class="pc-pct-wrap">
-              <div class="pc-pct-plan">plan ${p.pct_plan}%</div>
-              <div class="pc-pct-real" style="color:${estadoColor(p.estado)}">${p.pct_real}%</div>
-            </div>
-          </div>
-          <div class="pc-bar-bg">
-            <div class="pc-bar-plan" style="width:${p.pct_plan}%">
-              <div class="pc-bar-real" style="width:${p.pct_real > 0 ? Math.round((p.pct_real/p.pct_plan)*100) : 0}%;background:${estadoColor(p.estado)}"></div>
-            </div>
-          </div>
-          <div class="pc-footer">
-            <div class="pc-dates">${p.fecha_inicio} → ${p.fecha_fin}</div>
-            <span class="badge ${estadoBadgeClass(p.estado)}">
-              <span class="badge-dot ${estadoDotClass(p.estado)}"></span>
-              ${p.estado}${gap > 0 ? ' −'+gap+'%' : ''}
-            </span>
-          </div>
-        </div>`;
-      }).join('')}
-    </div>
-  `;
+    ${syncBanner}
+    ${gestorasHtml}`;
 }
 
-// ─── DETAIL VIEW ─────────────────────────────────────────────────────────────
-function showProject(id) {
-  currentProject = projects.find(p => p.id === id);
-  currentView = 'detail';
-  expandedPhases = {};
-  buildSidebar();
-  document.getElementById('view-portfolio').style.display = 'none';
-  document.getElementById('view-detail').style.display = '';
-  renderDetail();
-}
+// ════════ DETAIL ════════
+function showProject(id){ currentProject=projects.find(p=>p.id===id); currentView='detail'; expandedPhases={}; buildSidebar(); document.getElementById('view-portfolio').style.display='none'; document.getElementById('view-config').style.display='none'; document.getElementById('view-detail').style.display=''; renderDetail(); }
 
-function renderDetail() {
-  const p = currentProject;
-  if (!p) return;
-  const alerts = getAlerts(p);
-  const totalTasks = p.fases.reduce((a, f) => a + f.tasks.length, 0);
-  const retrasadas = p.fases.reduce((a, f) => a + f.tasks.filter(t => t.estado === 'Retrasada').length, 0);
-  const completadas = p.fases.reduce((a, f) => a + f.tasks.filter(t => t.estado === 'Completada').length, 0);
-  const gap = p.pct_plan - p.pct_real;
-
-  const alertHtml = alerts.length > 0 ? `
-    <div class="alert-banner">
-      <div class="alert-banner-title">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="m12 17 .01 0"/></svg>
-        ${alerts.length} actividad${alerts.length > 1 ? 'es' : ''} con atraso — requieren acción
-      </div>
-      <div class="alert-list">
-        ${alerts.slice(0, 6).map(a => `
-          <div class="alert-list-item">
-            <span style="font-family:'DM Mono',monospace;font-size:10px;opacity:0.7">${a.edt}</span>
-            · ${a.tarea}
-            <span style="margin-left:6px;padding:1px 6px;background:rgba(239,68,68,0.2);border-radius:10px;font-size:10px">${a.atraso}</span>
-          </div>
-        `).join('')}
-      </div>
-    </div>
-  ` : '';
-
-  // Build gantt table
-  const monthLabels = ['Feb','Mar','Abr','May','Jun','Jul'];
-  const ganttRows = p.fases.map(f => {
-    const isOpen = expandedPhases[f.id];
-    const pctColorCls = pctColorClass(f.estado, f.pct_plan, f.pct_real);
-    const barClass = barColorClass(f.estado);
-    const realWidth = f.pct_plan > 0 ? Math.round((f.pct_real / f.pct_plan) * f.dur_pct) : 0;
-
-    let taskRows = '';
-    if (isOpen) {
-      taskRows = `<div class="task-rows">` + f.tasks.map(t => {
-        const tpctCls = pctColorClass(t.estado, t.pct_plan, t.pct_real);
-        const isRetrasada = t.estado === 'Retrasada';
-        return `
-        <div class="task-row">
-          <div class="task-name-cell">
-            <span class="task-edt">${t.edt}</span>
-            <span class="task-name ${isRetrasada ? 'retrasada' : ''}">${t.name}</span>
-            ${t.atraso ? `<span class="task-atraso">${t.atraso}</span>` : ''}
-          </div>
-          <div class="pct-cell pct-plan">${t.pct_plan}%</div>
-          <div class="pct-cell ${tpctCls}">${t.pct_real}%</div>
-          <div class="status-cell">
-            <span class="badge ${estadoBadgeClass(t.estado)}" style="font-size:10px;padding:2px 7px">${t.estado}</span>
-          </div>
-          <div class="gantt-cell">
-            <div class="gantt-track">
-              <div class="g-bar-plan" style="left:${f.start_offset}%;width:${f.dur_pct}%"></div>
-              <div class="g-bar-real ${barColorClass(t.estado)}" style="left:${f.start_offset}%;width:${t.pct_plan > 0 ? Math.round((t.pct_real/Math.max(t.pct_plan,1))*f.dur_pct) : 0}%"></div>
-            </div>
-          </div>
-          <div style="text-align:right;font-size:10px;color:var(--text3);font-family:'DM Mono',monospace">${t.start}→${t.end}</div>
-        </div>`;
-      }).join('') + '</div>';
+function renderDetail(){
+  const p=currentProject; if(!p) return;
+  const alerts=[]; p.fases.forEach(f=>f.tasks.forEach(t=>{if(t.atraso&&(t.estado==='Retrasada'||t.estado==='Amarillo')) alerts.push({...t,faseNombre:f.name,gap:t.pct_plan-t.pct_real});})); alerts.sort((a,b)=>b.gap-a.gap);
+  const totalTasks=p.fases.reduce((a,f)=>a+f.tasks.length,0), retrasadas=p.fases.reduce((a,f)=>a+f.tasks.filter(t=>t.estado==='Retrasada').length,0), completadas=p.fases.reduce((a,f)=>a+f.tasks.filter(t=>t.estado==='Completada').length,0);
+  const gap=p.pct_plan-p.pct_real;
+  const months=['Feb','Mar','Abr','May','Jun','Jul'];
+  const alertHtml = alerts.length>0?`<div class="alert-banner"><div class="alert-banner-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="m12 17 .01 0"/></svg>${alerts.length} actividad${alerts.length>1?'es':''} con atraso crítico</div><div class="alert-list">${alerts.slice(0,5).map(a=>`<div class="alert-list-item"><span style="font-family:'DM Mono',monospace;font-size:10px;opacity:0.7">${a.edt}</span> · ${a.name} <span style="margin-left:6px;padding:1px 6px;background:rgba(239,68,68,0.2);border-radius:10px;font-size:10px">${a.atraso}</span></div>`).join('')}</div></div>`:'';
+  const ganttRows=p.fases.map(f=>{
+    const isOpen=expandedPhases[f.id];
+    const rw=f.pct_plan>0?Math.round((f.pct_real/f.pct_plan)*f.dur):0;
+    let taskRows='';
+    if(isOpen){
+      taskRows=`<div class="task-rows">${f.tasks.map(t=>`<div class="task-row">
+        <div class="task-name-cell"><span class="task-edt">${t.edt}</span><span class="task-name ${t.estado==='Retrasada'?'retrasada':''}">${t.name}</span>${t.atraso?`<span class="task-atraso">${t.atraso}</span>`:''}</div>
+        <div class="pct-cell pct-plan">${t.pct_plan}%</div>
+        <div class="pct-cell ${pctCls(t.estado,t.pct_plan,t.pct_real)}">${t.pct_real}%</div>
+        <div class="status-cell"><span class="badge ${eBadge(t.estado)}" style="font-size:10px;padding:2px 7px">${t.estado}</span></div>
+        <div class="gantt-cell"><div class="gantt-track"><div class="g-bar-plan" style="left:${f.start_off}%;width:${f.dur}%"></div><div class="g-bar-real ${eBar(t.estado)}" style="left:${f.start_off}%;width:${t.pct_plan>0?Math.round((t.pct_real/Math.max(t.pct_plan,1))*f.dur):0}%"></div></div></div>
+        <div style="text-align:right;font-size:10px;color:var(--text3);font-family:'DM Mono',monospace">${t.start}→${t.end}</div>
+      </div>`).join('')}</div>`;
     }
-
-    return `
-      <div class="phase-row">
-        <div class="phase-hdr" onclick="togglePhase('${f.id}')">
-          <div class="ph-name-cell">
-            <div class="ph-chevron ${isOpen ? 'open' : ''}">›</div>
-            <div>
-              <div class="ph-name">${f.id} · ${f.name}</div>
-            </div>
-          </div>
-          <div class="pct-cell pct-plan">${f.pct_plan}%</div>
-          <div class="pct-cell ${pctColorCls}">${f.pct_real}%</div>
-          <div class="status-cell">
-            <span class="badge ${estadoBadgeClass(f.estado)}">
-              <span class="badge-dot ${estadoDotClass(f.estado)}"></span>
-              ${f.estado}
-            </span>
-          </div>
-          <div class="gantt-cell">
-            <div class="gantt-track">
-              <div class="g-bar-plan" style="left:${f.start_offset}%;width:${f.dur_pct}%"></div>
-              <div class="g-bar-real ${barClass}" style="left:${f.start_offset}%;width:${realWidth}%"></div>
-              <div class="g-today" style="left:54%"></div>
-            </div>
-          </div>
-          <div style="text-align:right;font-size:10px;color:var(--text3);font-family:'DM Mono',monospace">${p.fecha_inicio.slice(0,5)}</div>
-        </div>
-        ${taskRows}
-      </div>`;
+    return `<div class="phase-row"><div class="phase-hdr" onclick="togglePhase('${f.id}')">
+      <div class="ph-name-cell"><div class="ph-chevron ${isOpen?'open':''}">›</div><div><div class="ph-name">${f.id} · ${f.name}</div></div></div>
+      <div class="pct-cell pct-plan">${f.pct_plan}%</div>
+      <div class="pct-cell ${pctCls(f.estado,f.pct_plan,f.pct_real)}">${f.pct_real}%</div>
+      <div class="status-cell"><span class="badge ${eBadge(f.estado)}"><span class="badge-dot ${eDot(f.estado)}"></span>${f.estado}</span></div>
+      <div class="gantt-cell"><div class="gantt-track"><div class="g-bar-plan" style="left:${f.start_off}%;width:${f.dur}%"></div><div class="g-bar-real ${eBar(f.estado)}" style="left:${f.start_off}%;width:${rw}%"></div><div class="g-today" style="left:54%"></div></div></div>
+      <div style="text-align:right;font-size:10px;color:var(--text3);font-family:'DM Mono',monospace">${p.fecha_inicio.slice(0,5)}</div>
+    </div>${taskRows}</div>`;
   }).join('');
-
-  document.getElementById('view-detail').innerHTML = `
-    <div class="back-btn" onclick="showPortfolio()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
-      Volver al portfolio
-    </div>
-
+  document.getElementById('view-detail').innerHTML=`
+    <div class="back-btn" onclick="showPortfolio()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg> Volver al portfolio</div>
     <div class="detail-header">
       <div class="dh-top">
-        <div>
-          <div class="dh-name">${p.name}</div>
-          <div class="dh-pm">PM: ${p.pm} · ${p.fecha_inicio} → ${p.fecha_fin}</div>
-        </div>
-        <div class="dh-right">
-          <span class="badge ${estadoBadgeClass(p.estado)}" style="font-size:12px;padding:5px 12px">
-            <span class="badge-dot ${estadoDotClass(p.estado)}"></span>
-            ${p.estado}
-          </span>
-        </div>
+        <div><div class="dh-name">${p.name}</div><div class="dh-pm">Gestor: ${p.gestor} · PM: ${p.pm} · ${p.fecha_inicio} → ${p.fecha_fin}</div></div>
+        <span class="badge ${eBadge(p.estado)}" style="font-size:12px;padding:5px 12px"><span class="badge-dot ${eDot(p.estado)}"></span>${p.estado}</span>
       </div>
       <div class="dh-stats">
-        <div class="dh-stat">
-          <div class="dh-stat-label">Avance esperado</div>
-          <div class="dh-stat-value" style="color:var(--text2)">${p.pct_plan}%</div>
-        </div>
-        <div class="dh-stat">
-          <div class="dh-stat-label">Avance real</div>
-          <div class="dh-stat-value" style="color:${estadoColor(p.estado)}">${p.pct_real}%</div>
-        </div>
-        <div class="dh-stat">
-          <div class="dh-stat-label">Brecha</div>
-          <div class="dh-stat-value" style="color:${gap > 0 ? 'var(--red)' : 'var(--green)'}">
-            ${gap > 0 ? '−' : '+'}${Math.abs(gap)}%
-          </div>
-        </div>
-        <div class="dh-stat">
-          <div class="dh-stat-label">Monto</div>
-          <div class="dh-stat-value" style="color:var(--text);font-size:13px">${p.monto}</div>
-        </div>
+        <div class="dh-stat"><div class="dh-stat-label">Avance esperado</div><div class="dh-stat-value" style="color:var(--text2)">${p.pct_plan}%</div></div>
+        <div class="dh-stat"><div class="dh-stat-label">Avance real</div><div class="dh-stat-value" style="color:${eColor(p.estado)}">${p.pct_real}%</div></div>
+        <div class="dh-stat"><div class="dh-stat-label">Brecha</div><div class="dh-stat-value" style="color:${gap>0?'var(--red)':'var(--green)'}">${gap>0?'−':'+'}${Math.abs(gap)}%</div></div>
+        
       </div>
     </div>
-
     ${alertHtml}
-
-    <div class="section-title">Cronograma — haz clic en cada fase para ver las tareas</div>
-
+    <div class="section-title">Cronograma — clic en cada fase para ver tareas</div>
     <div style="display:flex;gap:16px;font-size:10px;color:var(--text3);margin-bottom:8px;flex-wrap:wrap">
       <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:6px;background:rgba(99,102,241,0.4);border-radius:1px;display:inline-block"></span>Planificado</span>
       <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:6px;background:var(--green);opacity:0.7;border-radius:1px;display:inline-block"></span>Real completado</span>
-      <span style="display:flex;align-items:center;gap:4px"><span style="width:1px;height:12px;background:rgba(99,102,241,0.6);display:inline-block"></span>Hoy</span>
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:1px;height:12px;background:rgba(99,102,241,0.8);display:inline-block"></span>Hoy</span>
     </div>
-
-    <div class="month-labels">
-      ${monthLabels.map(m => `<span class="month-label">${m}</span>`).join('')}
-    </div>
-
+    <div class="month-labels">${months.map(m=>`<span class="month-label">${m}</span>`).join('')}</div>
     <div class="gantt-wrap">
-      <div class="gantt-header">
-        <span>Fase / Tarea</span>
-        <span style="text-align:right;padding-right:16px">Esperado</span>
-        <span style="text-align:right;padding-right:16px">Real</span>
-        <span style="text-align:right;padding-right:8px">Estado</span>
-        <div class="gh-timeline">
-          ${monthLabels.map(m => `<span>${m}</span>`).join('')}
-        </div>
-        <span style="text-align:right">Fechas</span>
-      </div>
+      <div class="gantt-header"><span>Fase / Tarea</span><span style="text-align:right;padding-right:16px">Esp.</span><span style="text-align:right;padding-right:16px">Real</span><span style="text-align:right;padding-right:8px">Estado</span><div style="display:flex;justify-content:space-between;padding:0 4px">${months.map(m=>`<span>${m}</span>`).join('')}</div><span style="text-align:right">Fechas</span></div>
       ${ganttRows}
     </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
       <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px">
         <div class="section-title" style="margin-bottom:8px">Resumen de tareas</div>
         <div style="display:flex;flex-direction:column;gap:6px">
-          <div style="display:flex;justify-content:space-between;font-size:12px">
-            <span style="color:var(--green)">● Completadas</span><span style="font-family:'DM Mono',monospace">${completadas}</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;font-size:12px">
-            <span style="color:var(--red)">● Retrasadas</span><span style="font-family:'DM Mono',monospace">${retrasadas}</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;font-size:12px">
-            <span style="color:var(--gray)">● Futuras</span><span style="font-family:'DM Mono',monospace">${totalTasks - completadas - retrasadas}</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;font-size:12px;border-top:1px solid var(--border);padding-top:6px">
-            <span style="color:var(--text2)">Total</span><span style="font-family:'DM Mono',monospace">${totalTasks}</span>
-          </div>
+          <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--green)">● Completadas</span><span style="font-family:'DM Mono',monospace">${completadas}</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--red)">● Retrasadas</span><span style="font-family:'DM Mono',monospace">${retrasadas}</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--gray)">● Futuras</span><span style="font-family:'DM Mono',monospace">${totalTasks-completadas-retrasadas}</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;border-top:1px solid var(--border);padding-top:6px"><span style="color:var(--text2)">Total</span><span style="font-family:'DM Mono',monospace">${totalTasks}</span></div>
         </div>
       </div>
       <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px">
         <div class="section-title" style="margin-bottom:8px">Información del proyecto</div>
         <div style="display:flex;flex-direction:column;gap:6px">
-          <div style="display:flex;justify-content:space-between;font-size:12px">
-            <span style="color:var(--text3)">Gestor</span><span style="color:var(--text2)">${p.gestor}</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;font-size:12px">
-            <span style="color:var(--text3)">Inicio</span><span style="color:var(--text2);font-family:'DM Mono',monospace">${p.fecha_inicio}</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;font-size:12px">
-            <span style="color:var(--text3)">Fin planificado</span><span style="color:var(--text2);font-family:'DM Mono',monospace">${p.fecha_fin}</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;font-size:12px">
-            <span style="color:var(--text3)">Monto</span><span style="color:var(--text2)">${p.monto}</span>
-          </div>
+          <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--text3)">Gestor</span><span style="color:var(--text2)">${p.gestor}</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--text3)">PM</span><span style="color:var(--text2)">${p.pm}</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--text3)">Inicio</span><span style="color:var(--text2);font-family:'DM Mono',monospace">${p.fecha_inicio}</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--text3)">Fin planificado</span><span style="color:var(--text2);font-family:'DM Mono',monospace">${p.fecha_fin}</span></div>
+          
         </div>
       </div>
+    </div>`;
+}
+
+function togglePhase(id){ expandedPhases[id]=!expandedPhases[id]; renderDetail(); }
+
+// ════════ CONFIG ════════
+function showConfig(){ currentView='config'; buildSidebar(); document.getElementById('view-portfolio').style.display='none'; document.getElementById('view-detail').style.display='none'; document.getElementById('view-config').style.display=''; renderConfig(); }
+
+function renderConfig(){
+  document.getElementById('view-config').innerHTML=`
+    <div class="topbar"><div class="topbar-left"><h2>Conectar Google Sheets</h2><p>Vincula los cronogramas de tus gestores en tiempo real</p></div></div>
+    <div class="config-box">
+      <div class="config-box-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Paso 1 — Configura tu Google Sheet</div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.8;margin-bottom:16px">
+        <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:8px"><span style="background:var(--accent-bg);color:var(--accent);width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0">1</span><span>Crea un Google Sheet con <strong style="color:var(--text)">una pestaña por gestor</strong>. Nombre de pestaña = nombre del gestor exacto.</span></div>
+        <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:8px"><span style="background:var(--accent-bg);color:var(--accent);width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0">2</span><span>En cada pestaña, la <strong style="color:var(--text)">fila 1 son los encabezados</strong>. Los datos desde fila 2.</span></div>
+        <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:8px"><span style="background:var(--accent-bg);color:var(--accent);width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0">3</span><span>Ve a <strong style="color:var(--text)">Archivo → Compartir → Publicar en la web</strong> → selecciona cada pestaña → CSV → Publicar. Copia la URL.</span></div>
+      </div>
+      <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:12px">
+        <div style="font-size:11px;color:var(--text3);margin-bottom:6px;font-weight:600;letter-spacing:0.06em">ENCABEZADOS REQUERIDOS (copiar exacto)</div>
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);word-break:break-all">EDT | Nombre de tarea | Proyecto | Fase | % esperado | % completado | Estado | Comienzo | Fin | Var. Duración | Var. Duración | Riesgos</div>
+      </div>
     </div>
-  `;
+    <div class="config-box">
+      <div class="config-box-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>Paso 2 — Pega las URLs de cada gestor</div>
+      <div style="font-size:12px;color:var(--text3);margin-bottom:14px">Edita el archivo <span style="font-family:'DM Mono',monospace;color:var(--accent)">index.html</span> en GitHub. Busca la sección <span style="font-family:'DM Mono',monospace;color:var(--accent)">SHEET_CONFIG</span> y pega:</div>
+      <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:14px;font-family:'DM Mono',monospace;font-size:12px;color:var(--text2);line-height:1.8">
+        <span style="color:var(--text3)">const</span> <span style="color:var(--blue)">SHEET_CONFIG</span> = {<br>
+        &nbsp;&nbsp;<span style="color:var(--green)">'Ana Torres'</span>:   <span style="color:var(--amber)">'https://docs.google.com/spreadsheets/d/<span style="color:var(--red)">TU_ID</span>/export?format=csv&gid=<span style="color:var(--red)">0</span>'</span>,<br>
+        &nbsp;&nbsp;<span style="color:var(--green)">'Carlos Vega'</span>:  <span style="color:var(--amber)">'https://docs.google.com/spreadsheets/d/<span style="color:var(--red)">TU_ID</span>/export?format=csv&gid=<span style="color:var(--red)">111111</span>'</span>,<br>
+        &nbsp;&nbsp;<span style="color:var(--green)">'María Quispe'</span>: <span style="color:var(--amber)">'https://docs.google.com/spreadsheets/d/<span style="color:var(--red)">TU_ID</span>/export?format=csv&gid=<span style="color:var(--red)">222222</span>'</span>,<br>
+        };
+      </div>
+      <div class="config-note">El <span style="font-family:'DM Mono',monospace;color:var(--accent)">gid</span> es el ID de cada pestaña. Lo encuentras en la URL del Sheet cuando estás en esa pestaña: <span style="font-family:'DM Mono',monospace;color:var(--text2)">...spreadsheets/d/ID/edit#gid=<strong style="color:var(--amber)">NUMERO</strong></span></div>
+    </div>
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px">
+      <div class="section-title" style="margin-bottom:8px">¿Cómo actualizan los gestores?</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+        <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:12px"><div style="font-size:12px;font-weight:500;color:var(--text);margin-bottom:4px">MS Project</div><div style="font-size:11px;color:var(--text3)">Selecciona todas las filas del cronograma → Ctrl+C</div></div>
+        <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:12px"><div style="font-size:12px;font-weight:500;color:var(--text);margin-bottom:4px">Google Sheets</div><div style="font-size:11px;color:var(--text3)">Clic en A2 de su pestaña → Ctrl+V → listo</div></div>
+        <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:12px"><div style="font-size:12px;font-weight:500;color:var(--text);margin-bottom:4px">Dashboard</div><div style="font-size:11px;color:var(--text3)">Se actualiza automáticamente al abrir o al sincronizar</div></div>
+      </div>
+    </div>`;
 }
 
-function togglePhase(id) {
-  expandedPhases[id] = !expandedPhases[id];
-  renderDetail();
-}
-
-// ─── INIT ─────────────────────────────────────────────────────────────────────
+// ════════ INIT ════════
 buildSidebar();
 showPortfolio();
 </script>
