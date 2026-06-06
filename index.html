@@ -295,27 +295,27 @@ function eCol(e){
   if(e==='Completada'||e==='Verde') return 'var(--green)';
   if(e==='Retrasada') return 'var(--red)';
   if(e==='Amarillo') return 'var(--amber)';
-  if(e==='Según lo programado') return 'var(--blue)';
+  if(e==='Según lo programado') return 'var(--green)';
   return 'var(--gray)';
 }
 function eBadge(e){
   if(e==='Completada'||e==='Verde') return 'b-green';
   if(e==='Retrasada') return 'b-red';
   if(e==='Amarillo') return 'b-amber';
-  if(e==='Según lo programado') return 'b-blue';
+  if(e==='Según lo programado') return 'b-green';
   return 'b-gray';
 }
 function eBarC(e){
   if(e==='Completada'||e==='Verde') return 'rgba(34,197,94,.75)';
   if(e==='Retrasada') return 'rgba(239,68,68,.75)';
   if(e==='Amarillo') return 'rgba(245,158,11,.75)';
-  if(e==='Según lo programado') return 'rgba(59,130,246,.75)';
+  if(e==='Según lo programado') return 'rgba(34,197,94,.75)';
   if(e==='Tarea futura') return 'rgba(99,102,241,.3)';
   return 'rgba(107,114,128,.4)';
 }
 function pCls(e,pp,pr){
   if(e==='Tarea futura') return 'pct-gray';
-  if(e==='Según lo programado') return 'pct-blue';
+  if(e==='Según lo programado') return 'pct-green';
   if(e==='Completada') return 'pct-green';
   if(e==='Verde') return 'pct-green';
   if(e==='Retrasada') return 'pct-red';
@@ -333,7 +333,7 @@ function faseColor(name,estado,idx){
   if(estado==='Retrasada') return '#ef4444';
   if(estado==='Tarea futura') return 'rgba(99,102,241,0.3)';
   if(estado==='Amarillo') return '#f59e0b';
-  if(estado==='Según lo programado') return '#3b82f6';
+  if(estado==='Según lo programado') return '#22c55e';
   if(estado==='Completada') return '#22c55e';
   const n=name.toLowerCase();
   if(n.includes('definici')) return '#22c55e';
@@ -561,7 +561,20 @@ function renderResumen(){
 function setFilter(type,val){if(type==='st')filterSt=val;else filterGestor=val;renderResumen();}
 
 function buildProjectCard(p){
+  // Recalculate estado at display time
+  if(p.pct_plan-p.pct_real<=0) p.estado='Según lo programado';
+  else if(p.pct_plan-p.pct_real<=3) p.estado='Amarillo';
+  else p.estado='Retrasada';
   const col=gcol(p.gestor),gap=p.pct_plan-p.pct_real;
+  // Recalc phase estados too
+  p.fases.forEach(f=>{
+    if(f.pct_real===100){f.estado='Completada';return;}
+    if(f.pct_plan===0&&f.pct_real===0){f.estado='Tarea futura';return;}
+    const fg=f.pct_plan-f.pct_real;
+    if(fg<=0) f.estado='Según lo programado';
+    else if(fg<=3) f.estado='Amarillo';
+    else f.estado='Retrasada';
+  });
   const months=getProjectMonths(p),today=p.today_pct||50;
   const rows=computeRows(p.fases);
   const totalRowH=rows.length*28+(rows.length-1)*5;
@@ -724,6 +737,10 @@ function renderDetail(){
   const totalT=p.fases.reduce((a,f)=>a+f.tasks.length,0);
   const doneT=p.fases.reduce((a,f)=>a+f.tasks.filter(t=>t.estado==='Completada').length,0);
   const lateT=p.fases.reduce((a,f)=>a+f.tasks.filter(t=>t.estado==='Retrasada').length,0);
+  // Recalculate estado at display time
+  if(p.pct_plan-p.pct_real<=0) p.estado='Según lo programado';
+  else if(p.pct_plan-p.pct_real<=3) p.estado='Amarillo';
+  else p.estado='Retrasada';
   const gap=p.pct_plan-p.pct_real,col=gcol(p.gestor);
   const months=getProjectMonths(p),today=p.today_pct||50;
   const alertHtml=alerts.length?`<div class="alert-box">
