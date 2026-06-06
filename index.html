@@ -192,7 +192,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .ph-chev.open{transform:rotate(90deg)}
 .ph-name{font-size:12px;font-weight:500;color:var(--text)}
 .pct-cell{font-family:'DM Mono',monospace;font-size:11px;text-align:right;padding-right:14px}
-.pct-muted{color:var(--text3)}.pct-green{color:var(--green)}.pct-amber{color:var(--amber)}.pct-red{color:var(--red)}.pct-gray{color:var(--text3)}
+.pct-muted{color:var(--text3)}.pct-green{color:var(--green)}.pct-amber{color:var(--amber)}.pct-red{color:var(--red)}.pct-gray{color:var(--text3)}.pct-blue{color:var(--blue)}
 .st-cell{display:flex;justify-content:flex-end;padding-right:6px}
 .g-track{height:18px;background:var(--bg4);border-radius:3px;position:relative;overflow:hidden}
 .g-plan{position:absolute;height:8px;top:1px;border-radius:2px;background:rgba(99,102,241,.35)}
@@ -310,10 +310,16 @@ function eBarC(e){
   if(e==='Retrasada') return 'rgba(239,68,68,.75)';
   if(e==='Amarillo') return 'rgba(245,158,11,.75)';
   if(e==='Según lo programado') return 'rgba(59,130,246,.75)';
-  return 'rgba(107,114,128,.35)';
+  if(e==='Tarea futura') return 'rgba(99,102,241,.3)';
+  return 'rgba(107,114,128,.4)';
 }
 function pCls(e,pp,pr){
   if(e==='Tarea futura') return 'pct-gray';
+  if(e==='Según lo programado') return 'pct-blue';
+  if(e==='Completada') return 'pct-green';
+  if(e==='Verde') return 'pct-green';
+  if(e==='Retrasada') return 'pct-red';
+  if(e==='Amarillo') return 'pct-amber';
   if(pr>=pp) return 'pct-green';
   if((pp-pr)>20) return 'pct-red';
   return 'pct-amber';
@@ -328,6 +334,7 @@ function faseColor(name,estado,idx){
   if(estado==='Tarea futura') return 'rgba(99,102,241,0.3)';
   if(estado==='Amarillo') return '#f59e0b';
   if(estado==='Según lo programado') return '#3b82f6';
+  if(estado==='Completada') return '#22c55e';
   const n=name.toLowerCase();
   if(n.includes('definici')) return '#22c55e';
   if(n.includes('planific')) return '#3b82f6';
@@ -647,7 +654,7 @@ function buildProjectCard(p){
         <div class="rsm-divider"></div>
         <div class="rsm-stat"><div class="rsm-stat-lbl">Real</div><div class="rsm-stat-val" style="color:${eCol(p.estado)}">${p.pct_real}%</div></div>
         <div class="rsm-divider"></div>
-        <div class="rsm-stat"><div class="rsm-stat-lbl">Brecha</div><div class="rsm-stat-val" style="color:${gap>0?'var(--red)':gap<0?'var(--green)':'var(--text2)'}">${gap>0?'−':''}${Math.abs(gap)}%</div></div>
+        <div class="rsm-stat"><div class="rsm-stat-lbl">Brecha</div><div class="rsm-stat-val" style="color:${gap>0?'var(--red)':gap<0?'var(--green)':'var(--text2)'}">${gap>0?'−':gap<0?'+':''}${Math.abs(gap)}%</div></div>
       </div>
     </div>
     <div class="rsm-roadmap">
@@ -784,7 +791,7 @@ function renderDetail(){
       <div class="dh-stats">
         <div class="dh-stat"><div class="dh-stat-lbl">Avance esperado</div><div class="dh-stat-val" style="color:var(--text2)">${p.pct_plan}%</div></div>
         <div class="dh-stat"><div class="dh-stat-lbl">Avance real</div><div class="dh-stat-val" style="color:${eCol(p.estado)}">${p.pct_real}%</div></div>
-        <div class="dh-stat"><div class="dh-stat-lbl">Brecha</div><div class="dh-stat-val" style="color:${gap>0?'var(--red)':'var(--green)'}">${gap>0?'−':'+'}${Math.abs(gap)}%</div></div>
+        <div class="dh-stat"><div class="dh-stat-lbl">Brecha</div><div class="dh-stat-val" style="color:${gap>0?'var(--red)':gap<0?'var(--green)':'var(--text2)'}">${gap>0?'−':gap<0?'+':''}${Math.abs(gap)}%</div></div>
       </div>
     </div>
     ${alertHtml}
