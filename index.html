@@ -60,7 +60,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .sync-btn{font-size:11px;padding:6px 12px;background:rgba(99,102,241,.12);color:var(--accent);border:1px solid rgba(99,102,241,.25);border-radius:var(--radius-sm);cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .13s}
 .sync-btn:hover{background:rgba(99,102,241,.22)}
 .badge{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:500;white-space:nowrap}
-.b-green{background:rgba(34,197,94,.12);color:var(--green)}
+.b-green{background:rgba(34,197,94,.18);color:var(--green)}
 .b-red{background:rgba(239,68,68,.12);color:var(--red)}
 .b-amber{background:rgba(245,158,11,.12);color:var(--amber)}
 .b-gray{background:rgba(107,114,128,.12);color:var(--gray)}
@@ -454,7 +454,7 @@ function renderPortfolio(){
         </div>
         <div class="pc-footer">
           <div class="pc-dates">${p.fecha_inicio} → ${p.fecha_fin}</div>
-          <span class="badge ${eBadge(p.estado)}"><span class="bdot" style="background:${eCol(p.estado)}"></span>${p.estado}${gap>0?' −'+gap+'%':''}</span>
+          <span class="badge ${eBadge(p.estado)}" style="color:${eCol(p.estado)};background:${eCol(p.estado)}18"><span class="bdot" style="background:${eCol(p.estado)}"></span>${p.estado}${gap>0?' −'+gap+'%':''}</span>
         </div>
       </div>`;
     }).join('');
@@ -536,7 +536,7 @@ function renderResumen(){
         <span class="filter-label">Estado</span>
         <div class="filter-pills">
           <button class="pill ${filterSt===''?'pill-active':''}" data-action="filter-st" data-val=""><span class="pill-dot" style="background:var(--text3)"></span>Todos</button>
-          <button class="pill ${filterSt==='Según lo programado'?'pill-active pill-green':''}" data-action="filter-st" data-val="Según lo programado"><span class="pill-dot" style="background:var(--blue)"></span>Conforme</button>
+          <button class="pill ${filterSt==='Según lo programado'?'pill-active pill-green':''}" data-action="filter-st" data-val="Según lo programado"><span class="pill-dot" style="background:var(--green)"></span>Conforme</button>
           <button class="pill ${filterSt==='Amarillo'?'pill-active pill-amber':''}" data-action="filter-st" data-val="Amarillo"><span class="pill-dot" style="background:var(--amber)"></span>Alerta</button>
           <button class="pill ${filterSt==='Retrasada'?'pill-active pill-red':''}" data-action="filter-st" data-val="Retrasada"><span class="pill-dot" style="background:var(--red)"></span>Retraso</button>
         </div>
@@ -653,7 +653,7 @@ function buildProjectCard(p){
         <div class="rsm-proj-name">
           <div class="rsm-chev ${isOpen?'open':''}">›</div>
           ${esc(p.name)}
-          <span class="badge ${eBadge(p.estado)}" style="font-size:10px"><span class="bdot" style="background:${eCol(p.estado)}"></span>${p.estado}</span>
+          <span class="badge ${eBadge(p.estado)}" style="font-size:10px;color:${eCol(p.estado)};background:${eCol(p.estado)}18;border:1px solid ${eCol(p.estado)}20"><span class="bdot" style="background:${eCol(p.estado)}"></span>${p.estado}</span>
         </div>
         <div class="rsm-meta">
           <div class="rsm-av" style="background:${col}20;color:${col}">${gini(p.gestor)}</div>
@@ -803,7 +803,7 @@ function renderDetail(){
             <span>${p.fecha_inicio} → ${p.fecha_fin}</span>
           </div>
         </div>
-        <span class="badge ${eBadge(p.estado)}" style="font-size:11px;padding:5px 12px"><span class="bdot" style="background:${eCol(p.estado)}"></span>${p.estado}</span>
+        <span class="badge ${eBadge(p.estado)}" style="font-size:11px;padding:5px 12px;background:${p.estado==='Según lo programado'?'rgba(34,197,94,.18)':''};color:${eCol(p.estado)};border:1px solid ${eCol(p.estado)}20"><span class="bdot" style="background:${eCol(p.estado)}"></span>${p.estado}</span>
       </div>
       <div class="dh-stats">
         <div class="dh-stat"><div class="dh-stat-lbl">Avance esperado</div><div class="dh-stat-val" style="color:var(--text2)">${p.pct_plan}%</div></div>
