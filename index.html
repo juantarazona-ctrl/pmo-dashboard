@@ -253,6 +253,16 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .fstat-amber{background:rgba(245,158,11,.08);color:var(--amber)}
 .fstat-red{background:rgba(239,68,68,.08);color:var(--red)}
 
+
+/* ── SKELETON LOADING ── */
+.skeleton{background:linear-gradient(90deg,var(--bg3) 25%,var(--bg4) 50%,var(--bg3) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:var(--radius-sm)}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skeleton-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:16px}
+.skeleton-line{height:14px;margin-bottom:10px}
+.skeleton-bar{height:32px;margin:14px 0 8px}
+.loading-overlay{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text3);padding:8px 0;margin-bottom:12px}
+.loading-spinner{width:14px;height:14px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
@@ -582,7 +592,45 @@ function setFilter(type,val){
   else filterGestor=val;
   renderResumen();
 }
-function showResumen(){curProj=null;switchView('resumen');renderResumen();}
+function showResumen(){
+  curProj=null;switchView('resumen');
+  // Show skeleton immediately while sheets load
+  if(Object.keys(SHEET_CONFIG).length>0 && document.getElementById('sb-source').textContent!=='Google Sheets conectado'){
+    showSkeletonResumen();
+    loadFromSheets();
+  } else {
+    renderResumen();
+  }
+}
+function showSkeletonResumen(){
+  const n=Object.keys(SHEET_CONFIG).length||4;
+  const skeletons=Array(n).fill(0).map((_,i)=>`
+    <div class="skeleton-card">
+      <div style="display:grid;grid-template-columns:1fr auto;gap:24px;margin-bottom:16px">
+        <div>
+          <div class="skeleton skeleton-line" style="width:${180+i*20}px"></div>
+          <div class="skeleton skeleton-line" style="width:140px;height:11px;opacity:.6"></div>
+        </div>
+        <div style="display:flex;gap:18px">
+          <div class="skeleton" style="width:52px;height:40px;border-radius:var(--radius-sm)"></div>
+          <div class="skeleton" style="width:52px;height:40px;border-radius:var(--radius-sm)"></div>
+          <div class="skeleton" style="width:52px;height:40px;border-radius:var(--radius-sm)"></div>
+        </div>
+      </div>
+      <div class="skeleton skeleton-bar"></div>
+      <div style="display:flex;justify-content:space-between;margin-top:6px">
+        <div class="skeleton" style="width:80px;height:10px"></div>
+        <div class="skeleton" style="width:80px;height:10px"></div>
+      </div>
+    </div>`).join('');
+  document.getElementById('view-resumen').innerHTML=`
+    <div class="topbar"><div><h2>Resumen de proyectos</h2><p>Cargando datos desde Google Sheets...</p></div></div>
+    <div class="loading-overlay">
+      <div class="loading-spinner"></div>
+      <span>Conectando con Google Sheets · cargando ${n} proyecto${n>1?'s':''}...</span>
+    </div>
+    ${skeletons}`;
+}
 
 function buildRoadmapRows(p){
   const today=p.today_pct||50;
@@ -961,7 +1009,6 @@ function parseCSV(csv){
 // ══ INIT ══
 buildSidebar();
 showResumen();
-if(Object.keys(SHEET_CONFIG).length)loadFromSheets();
 </script>
 </body>
 </html>
