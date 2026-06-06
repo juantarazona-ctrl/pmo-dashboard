@@ -983,6 +983,21 @@ function parseCSV(csv){
       const total=(end-start)/86400000;
       p.today_pct=Math.max(2,Math.min(97,((today-start)/86400000/total*100)));
     }
+    // Recalculate estado based on real gap (overrides MS Project value)
+    const gap=p.pct_plan-p.pct_real;
+    if(gap<=0)       p.estado='Según lo programado'; // on time or ahead
+    else if(gap<=3)  p.estado='Amarillo';             // 1-3% warning
+    else             p.estado='Retrasada';             // 4%+ critical
+
+    // Also recalculate estado for each phase
+    p.fases.forEach(f=>{
+      if(f.estado==='Tarea futura') return; // keep future tasks as-is
+      if(f.estado==='Completada'&&f.pct_real===100) return; // keep completed
+      const fg=f.pct_plan-f.pct_real;
+      if(fg<=0)      f.estado='Según lo programado';
+      else if(fg<=3) f.estado='Amarillo';
+      else           f.estado='Retrasada';
+    });
   });
   return projs;
 }
