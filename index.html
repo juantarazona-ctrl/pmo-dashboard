@@ -280,6 +280,17 @@ const SHEET_CONFIG={
 };
 
 // ══ HELPERS ══
+// HTML escape for safe innerHTML insertion
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+// Safe ID registry - maps safe DOM IDs to original values
+const _reg={};let _regN=0;
+function regId(val){ 
+  const existing=Object.keys(_reg).find(k=>_reg[k]===val);
+  if(existing) return existing;
+  const id='r'+(++_regN);_reg[id]=val;return id;
+}
+function regGet(id){ return _reg[id]||id; }
+
 function eCol(e){
   if(e==='Completada'||e==='Verde') return 'var(--green)';
   if(e==='Retrasada') return 'var(--red)';
@@ -368,15 +379,15 @@ function buildSidebar(){
     const col=gcol(g),ini=gini(g),isOpen=sbOpen[g];
     const late=projs.filter(p=>p.estado==='Retrasada').length;
     html+=`<div class="sb-gestor">
-      <div class="sb-gestor-hdr" data-g="${g}" onclick="_pmo.toggleGestor(this.dataset.g)">
+      <div class="sb-gestor-hdr" data-g="${regId(g)}" onclick="_pmo.toggleGestor(regGet(this.dataset.g))">
         <div class="sb-av" style="background:${col}20;color:${col}">${ini}</div>
-        <span class="sb-gestor-name" style="color:${col}">${g}</span>
+        <span class="sb-gestor-name" style="color:${col}">${esc(g)}</span>
         ${late?`<span style="font-size:9px;padding:1px 5px;border-radius:8px;background:rgba(239,68,68,.15);color:var(--red)">${late}▲</span>`:''}
         <span class="sb-gestor-count">${projs.length}</span>
         <span class="sb-chev ${isOpen?'open':''}">›</span>
       </div>
       <div class="sb-projects" style="max-height:${isOpen?projs.length*34+'px':'0'}">
-        ${projs.map(p=>`<div class="sb-proj ${curProj&&curProj.id===p.id?'active':''}" data-pid="${p.id}" onclick="_pmo.showProjectById(this.dataset.pid)">
+        ${projs.map(p=>`<div class="sb-proj ${curProj&&curProj.id===p.id?'active':''}" data-pid="${regId(p.id)}" onclick="_pmo.showProjectById(regGet(this.dataset.pid))">
           <span class="sb-proj-dot" style="background:${eCol(p.estado)}"></span>
           <span class="sb-proj-name">${p.name}</span>
           <span class="sb-proj-pct" style="color:${eCol(p.estado)}">${p.pct_real}%</span>
@@ -424,9 +435,9 @@ function renderPortfolio(){
     const col=gcol(gestor);
     const cards=projs.map(p=>{
       const gap=p.pct_plan-p.pct_real;
-      return `<div class="proj-card" data-pid="${p.id}" onclick="_pmo.showProjectById(this.dataset.pid)">
+      return `<div class="proj-card" data-pid="${regId(p.id)}" onclick="_pmo.showProjectById(regGet(this.dataset.pid))">
         <div class="pc-top">
-          <div><div class="pc-name">${p.name}</div><div class="pc-pm">Gestor: ${p.gestor}</div></div>
+          <div><div class="pc-name">${esc(p.name)}</div><div class="pc-pm">Gestor: ${esc(p.gestor)}</div></div>
           <div><div class="pc-pct-plan">plan ${p.pct_plan}%</div><div class="pc-pct-real" style="color:${eCol(p.estado)}">${p.pct_real}%</div></div>
         </div>
         <div class="pc-track">
@@ -527,7 +538,7 @@ function renderResumen(){
         <span class="filter-label">Gestor</span>
         <div class="filter-pills">
           <button class="pill ${filterGestor===''?'pill-active':''}" onclick="_pmo.setFilter('g','')">Todos</button>
-          ${gestores.map(g=>`<button class="pill ${filterGestor===g?'pill-active':''}" data-gv="${g}" onclick="_pmo.setFilter('g',this.dataset.gv)"><span style="width:6px;height:6px;border-radius:50%;background:${gcol(g)};display:inline-block;margin-right:3px;vertical-align:1px"></span>${g.split(' ')[0]}</button>`).join('')}
+          ${gestores.map(g=>`<button class="pill ${filterGestor===g?'pill-active':''}" data-gv="${regId(g)}" onclick="_pmo.setFilter('g',regGet(this.dataset.gv))"><span style="width:6px;height:6px;border-radius:50%;background:${gcol(g)};display:inline-block;margin-right:3px;vertical-align:1px"></span>${g.split(' ')[0]}</button>`).join('')}
         </div>
       </div>
       <div class="filter-stats">
@@ -554,7 +565,7 @@ function buildProjectCard(p){
         const shortName=f.name.split('—')[0].trim().split(' ').slice(0,2).join(' ');
         const progW=f.pct_plan>0?Math.round((f.pct_real/f.pct_plan)*f.dur):0;
         return `<div class="rsm-seg" style="left:${f.start_off}%;width:${f.dur}%;background:${fc}" title="${f.id} · ${f.name} — ${f.pct_real}% · ${f.estado}">
-          <span class="rsm-seg-lbl">${f.id} ${shortName}${f.dur>10?' · '+f.pct_real+'%':''}</span>
+          <span class="rsm-seg-lbl">${esc(f.id)} ${esc(shortName)}${f.dur>10?' · '+f.pct_real+'%':''}</span>
           <div class="rsm-seg-prog" style="width:${progW}%"></div>
         </div>`;
       }).join('')
@@ -577,7 +588,7 @@ function buildProjectCard(p){
         return `<div class="rsm-task-row">
           <div class="rsm-task-name-cell">
             <span class="rsm-task-edt">${t.edt}</span>
-            <span class="rsm-task-name ${isLate?'late':''}">${t.name}</span>
+            <span class="rsm-task-name ${isLate?'late':''}">${esc(t.name)}</span>
             ${t.atraso?`<span class="rsm-task-chip">${t.atraso}</span>`:''}
           </div>
           <div class="rsm-pct">${t.pct_plan}%</div>
@@ -593,12 +604,12 @@ function buildProjectCard(p){
       }).join('')
     }</div>`:'';
     return `<div>
-      <div class="rsm-phase-row ${phOpen?'expanded':''}" data-pid="${p.id}" data-fid="${f.id}" onclick="_pmo.toggleRsmPhase(this.dataset.pid,this.dataset.fid)">
+      <div class="rsm-phase-row ${phOpen?'expanded':''}" data-pid="${regId(p.id)}" data-fid="${regId(f.id)}" onclick="_pmo.toggleRsmPhase(regGet(this.dataset.pid),regGet(this.dataset.fid))">
         <div class="rsm-phase-name-cell">
           <div class="rsm-ph-chev ${phOpen?'open':''}">›</div>
           <div class="rsm-phase-dot" style="background:${fc}"></div>
           <span class="rsm-phase-edt">${f.id}</span>
-          <span class="rsm-phase-name">${f.name}</span>
+          <span class="rsm-phase-name">${esc(f.name)}</span>
           ${f.tasks.length?`<span style="font-size:9px;color:var(--text3);margin-left:4px">(${f.tasks.length})</span>`:''}
         </div>
         <div class="rsm-pct">${f.pct_plan}%</div>
@@ -616,16 +627,16 @@ function buildProjectCard(p){
   }).join(''):'';
 
   return `<div class="rsm-card" id="card-${p.id}">
-    <div class="rsm-top" data-pid="${p.id}" onclick="_pmo.toggleRsmCard(this.dataset.pid)">
+    <div class="rsm-top" data-pid="${regId(p.id)}" onclick="_pmo.toggleRsmCard(regGet(this.dataset.pid))">
       <div>
         <div class="rsm-proj-name">
           <div class="rsm-chev ${isOpen?'open':''}">›</div>
-          ${p.name}
+          ${esc(p.name)}
           <span class="badge ${eBadge(p.estado)}" style="font-size:10px"><span class="bdot" style="background:${eCol(p.estado)}"></span>${p.estado}</span>
         </div>
         <div class="rsm-meta">
           <div class="rsm-av" style="background:${col}20;color:${col}">${gini(p.gestor)}</div>
-          <span style="color:${col};font-weight:500">${p.gestor}</span>
+          <span style="color:${col};font-weight:500">${esc(p.gestor)}</span>
           <span style="color:var(--border2)">·</span>
           <span>${p.fecha_inicio} → ${p.fecha_fin}</span>
         </div>
@@ -715,7 +726,7 @@ function renderDetail(){
       <div class="task-row">
         <div class="task-name-cell">
           <span class="task-edt">${t.edt}</span>
-          <span class="task-name ${t.estado==='Retrasada'?'late':''}">${t.name}</span>
+          <span class="task-name ${t.estado==='Retrasada'?'late':''}">${esc(t.name)}</span>
           ${t.atraso?`<span class="task-chip">${t.atraso}</span>`:''}
         </div>
         <div class="pct-cell pct-muted">${t.pct_plan}%</div>
@@ -728,11 +739,11 @@ function renderDetail(){
         <div style="text-align:right;font-size:10px;color:var(--text3);font-family:'DM Mono',monospace">${t.start||''}→${t.end||''}</div>
       </div>`).join('')}</div>`:'';
     return `<div class="phase-block">
-      <div class="phase-hdr" data-pid="${p.id}" data-fid="${f.id}" onclick="_pmo.togglePhaseDetail(this.dataset.pid,this.dataset.fid)">
+      <div class="phase-hdr" data-pid="${regId(p.id)}" data-fid="${regId(f.id)}" onclick="_pmo.togglePhaseDetail(regGet(this.dataset.pid),regGet(this.dataset.fid))">
         <div class="ph-name-cell">
           <div class="ph-chev ${isOpen?'open':''}">›</div>
           <div style="width:10px;height:10px;border-radius:3px;background:${fc};flex-shrink:0"></div>
-          <span class="ph-name">${f.id} · ${f.name}</span>
+          <span class="ph-name">${esc(f.id)} · ${esc(f.name)}</span>
           ${f.tasks.length?`<span style="font-size:10px;color:var(--text3);margin-left:4px">(${f.tasks.length})</span>`:''}
         </div>
         <div class="pct-cell pct-muted">${f.pct_plan}%</div>
@@ -754,10 +765,10 @@ function renderDetail(){
     <div class="detail-hdr">
       <div class="dh-top">
         <div>
-          <div class="dh-name">${p.name}</div>
+          <div class="dh-name">${esc(p.name)}</div>
           <div class="dh-sub">
             <span style="width:20px;height:20px;border-radius:50%;background:${col}20;color:${col};font-size:9px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0">${gini(p.gestor)}</span>
-            <span style="color:${col};font-weight:500">${p.gestor}</span>
+            <span style="color:${col};font-weight:500">${esc(p.gestor)}</span>
             <span style="color:var(--text3)">·</span>
             <span>${p.fecha_inicio} → ${p.fecha_fin}</span>
           </div>
@@ -799,7 +810,7 @@ function renderDetail(){
       <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px">
         <div class="section-lbl" style="margin-bottom:10px">Información</div>
         <div style="display:flex;flex-direction:column;gap:7px">
-          <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--text3)">Gestor PMO</span><span style="color:${col};font-weight:500">${p.gestor}</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--text3)">Gestor PMO</span><span style="color:${col};font-weight:500">${esc(p.gestor)}</span></div>
           <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--text3)">Inicio</span><span style="color:var(--text2);font-family:'DM Mono',monospace">${p.fecha_inicio}</span></div>
           <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--text3)">Fin planificado</span><span style="color:var(--text2);font-family:'DM Mono',monospace">${p.fecha_fin}</span></div>
           <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--text3)">Fases</span><span style="color:var(--text2);font-family:'DM Mono',monospace">${p.fases.length}</span></div>
@@ -963,7 +974,7 @@ function parseCSV(csv){
 }
 
 // ══ INIT ══
-window._pmo={get projects(){return projects;},showProjectById,toggleRsmCard,toggleRsmPhase,togglePhaseDetail,setFilter,toggleGestor,showPortfolio,showResumen,showConfig,loadFromSheets,renderResumen,renderPortfolio,buildSidebar};
+window._pmo={get projects(){return projects;},regGet,regId,showProjectById,toggleRsmCard,toggleRsmPhase,togglePhaseDetail,setFilter,toggleGestor,showPortfolio,showResumen,showConfig,loadFromSheets,renderResumen,renderPortfolio,buildSidebar};
 buildSidebar();
 showResumen();
 loadFromSheets();
