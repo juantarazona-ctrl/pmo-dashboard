@@ -234,16 +234,16 @@ select{background:var(--bg3);color:var(--text2);border:1px solid var(--border2);
     <div class="sb-logo-title">Portfolio de Proyectos</div>
   </div>
   <div class="sb-nav">
-    <div class="sb-nav-item" id="nav-all" onclick="_pmo.showPortfolio()">
+    <div class="sb-nav-item" id="nav-all" data-action="show-portfolio">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
       <span style="flex:1">Todos los proyectos</span>
       <span id="badge-total" style="font-size:10px;font-family:'DM Mono',monospace;background:var(--bg4);color:var(--text3);padding:1px 7px;border-radius:10px">—</span>
     </div>
-    <div class="sb-nav-item" id="nav-rsm" onclick="_pmo.showResumen()">
+    <div class="sb-nav-item" id="nav-rsm" data-action="show-resumen">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
       <span>Resumen de proyectos</span>
     </div>
-    <div class="sb-nav-item" id="nav-cfg" onclick="_pmo.showConfig()" style="display:none">
+    <div class="sb-nav-item" id="nav-cfg" data-action="show-config" style="display:none">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
       <span>Conectar Google Sheets</span>
     </div>
@@ -255,7 +255,7 @@ select{background:var(--bg3);color:var(--text2);border:1px solid var(--border2);
     <div class="sb-footer-text" id="sb-source">Cargando...</div>
     <div class="sb-footer-text" style="font-family:'DM Mono',monospace" id="sb-date"></div>
     <div id="sb-cfg-footer" style="margin-top:6px;display:none">
-      <div class="sb-nav-item" style="padding:4px 8px;opacity:.5;font-size:10px" onclick="_pmo.showConfig()">
+      <div class="sb-nav-item" style="padding:4px 8px;opacity:.5;font-size:10px" data-action="show-config">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
         <span>Configuración</span>
       </div>
@@ -380,7 +380,7 @@ function buildSidebar(){
     const col=gcol(g),ini=gini(g),isOpen=sbOpen[g];
     const late=projs.filter(p=>p.estado==='Retrasada').length;
     html+=`<div class="sb-gestor">
-      <div class="sb-gestor-hdr" data-g="${regId(g)}" onclick="_pmo.toggleGestor(regGet(this.dataset.g))">
+      <div class="sb-gestor-hdr" data-action="toggle-gestor" data-g="${regId(g)}">
         <div class="sb-av" style="background:${col}20;color:${col}">${ini}</div>
         <span class="sb-gestor-name" style="color:${col}">${esc(g)}</span>
         ${late?`<span style="font-size:9px;padding:1px 5px;border-radius:8px;background:rgba(239,68,68,.15);color:var(--red)">${late}▲</span>`:''}
@@ -388,7 +388,7 @@ function buildSidebar(){
         <span class="sb-chev ${isOpen?'open':''}">›</span>
       </div>
       <div class="sb-projects" style="max-height:${isOpen?projs.length*34+'px':'0'}">
-        ${projs.map(p=>`<div class="sb-proj ${curProj&&curProj.id===p.id?'active':''}" data-pid="${regId(p.id)}" onclick="_pmo.showProjectById(regGet(this.dataset.pid))">
+        ${projs.map(p=>`<div class="sb-proj ${curProj&&curProj.id===p.id?'active':''}" data-action="show-project" data-pid="${regId(p.id)}">
           <span class="sb-proj-dot" style="background:${eCol(p.estado)}"></span>
           <span class="sb-proj-name">${p.name}</span>
           <span class="sb-proj-pct" style="color:${eCol(p.estado)}">${p.pct_real}%</span>
@@ -417,8 +417,8 @@ function switchView(v){
 function syncBarHTML(){
   const on=Object.keys(SHEET_CONFIG).length>0;
   return on
-    ?`<div class="sync-bar"><div class="sync-info">Conectado a <strong style="color:var(--text)">Google Sheets</strong> · ${projects.length} proyectos cargados</div><button class="sync-btn" onclick="_pmo.loadFromSheets()">↻ Sincronizar</button></div>`
-    :`<div class="sync-bar"><div class="sync-info">⚙️ Datos de ejemplo · <span style="color:var(--accent);cursor:pointer;text-decoration:underline" onclick="_pmo.showConfig()">Conecta tu Google Sheets →</span></div></div>`;
+    ?`<div class="sync-bar"><div class="sync-info">Conectado a <strong style="color:var(--text)">Google Sheets</strong> · ${projects.length} proyectos cargados</div><button class="sync-btn" data-action="sync">↻ Sincronizar</button></div>`
+    :`<div class="sync-bar"><div class="sync-info">⚙️ Datos de ejemplo · <span style="color:var(--accent);cursor:pointer;text-decoration:underline" data-action="show-config">Conecta tu Google Sheets →</span></div></div>`;
 }
 
 // ══ PORTFOLIO ══
@@ -436,7 +436,7 @@ function renderPortfolio(){
     const col=gcol(gestor);
     const cards=projs.map(p=>{
       const gap=p.pct_plan-p.pct_real;
-      return `<div class="proj-card" data-pid="${regId(p.id)}" onclick="_pmo.showProjectById(regGet(this.dataset.pid))">
+      return `<div class="proj-card" data-action="show-project" data-pid="${regId(p.id)}">
         <div class="pc-top">
           <div><div class="pc-name">${esc(p.name)}</div><div class="pc-pm">Gestor: ${esc(p.gestor)}</div></div>
           <div><div class="pc-pct-plan">plan ${p.pct_plan}%</div><div class="pc-pct-real" style="color:${eCol(p.estado)}">${p.pct_real}%</div></div>
@@ -528,18 +528,18 @@ function renderResumen(){
       <div class="filter-group">
         <span class="filter-label">Estado</span>
         <div class="filter-pills">
-          <button class="pill ${filterSt===''?'pill-active':''}" onclick="_pmo.setFilter('st','')"><span class="pill-dot" style="background:var(--text3)"></span>Todos</button>
-          <button class="pill ${filterSt==='Según lo programado'?'pill-active pill-green':''}" onclick="_pmo.setFilter('st','Según lo programado')"><span class="pill-dot" style="background:var(--blue)"></span>Conforme</button>
-          <button class="pill ${filterSt==='Amarillo'?'pill-active pill-amber':''}" onclick="_pmo.setFilter('st','Amarillo')"><span class="pill-dot" style="background:var(--amber)"></span>Alerta</button>
-          <button class="pill ${filterSt==='Retrasada'?'pill-active pill-red':''}" onclick="_pmo.setFilter('st','Retrasada')"><span class="pill-dot" style="background:var(--red)"></span>Retraso</button>
+          <button class="pill ${filterSt===''?'pill-active':''}" data-action="filter-st" data-val=""><span class="pill-dot" style="background:var(--text3)"></span>Todos</button>
+          <button class="pill ${filterSt==='Según lo programado'?'pill-active pill-green':''}" data-action="filter-st" data-val="Según lo programado"><span class="pill-dot" style="background:var(--blue)"></span>Conforme</button>
+          <button class="pill ${filterSt==='Amarillo'?'pill-active pill-amber':''}" data-action="filter-st" data-val="Amarillo"><span class="pill-dot" style="background:var(--amber)"></span>Alerta</button>
+          <button class="pill ${filterSt==='Retrasada'?'pill-active pill-red':''}" data-action="filter-st" data-val="Retrasada"><span class="pill-dot" style="background:var(--red)"></span>Retraso</button>
         </div>
       </div>
       <div class="filter-sep"></div>
       <div class="filter-group">
         <span class="filter-label">Gestor</span>
         <div class="filter-pills">
-          <button class="pill ${filterGestor===''?'pill-active':''}" onclick="_pmo.setFilter('g','')">Todos</button>
-          ${gestores.map(g=>`<button class="pill ${filterGestor===g?'pill-active':''}" data-gv="${regId(g)}" onclick="_pmo.setFilter('g',regGet(this.dataset.gv))"><span style="width:6px;height:6px;border-radius:50%;background:${gcol(g)};display:inline-block;margin-right:3px;vertical-align:1px"></span>${g.split(' ')[0]}</button>`).join('')}
+          <button class="pill ${filterGestor===''?'pill-active':''}" data-action="filter-g" data-gv="">Todos</button>
+          ${gestores.map(g=>`<button class="pill ${filterGestor===g?'pill-active':''}" data-action="filter-g" data-gv="${regId(g)}"><span style="width:6px;height:6px;border-radius:50%;background:${gcol(g)};display:inline-block;margin-right:3px;vertical-align:1px"></span>${g.split(' ')[0]}</button>`).join('')}
         </div>
       </div>
       <div class="filter-stats">
@@ -605,7 +605,7 @@ function buildProjectCard(p){
       }).join('')
     }</div>`:'';
     return `<div>
-      <div class="rsm-phase-row ${phOpen?'expanded':''}" data-pid="${regId(p.id)}" data-fid="${regId(f.id)}" onclick="_pmo.toggleRsmPhase(regGet(this.dataset.pid),regGet(this.dataset.fid))">
+      <div class="rsm-phase-row ${phOpen?'expanded':''}" data-action="toggle-phase" data-pid="${regId(p.id)}" data-fid="${regId(f.id)}">
         <div class="rsm-phase-name-cell">
           <div class="rsm-ph-chev ${phOpen?'open':''}">›</div>
           <div class="rsm-phase-dot" style="background:${fc}"></div>
@@ -628,7 +628,7 @@ function buildProjectCard(p){
   }).join(''):'';
 
   return `<div class="rsm-card" id="card-${p.id}">
-    <div class="rsm-top" data-pid="${regId(p.id)}" onclick="_pmo.toggleRsmCard(regGet(this.dataset.pid))">
+    <div class="rsm-top" data-action="toggle-card" data-pid="${regId(p.id)}">
       <div>
         <div class="rsm-proj-name">
           <div class="rsm-chev ${isOpen?'open':''}">›</div>
@@ -745,7 +745,7 @@ function renderDetail(){
         <div style="text-align:right;font-size:10px;color:var(--text3);font-family:'DM Mono',monospace">${t.start||''}→${t.end||''}</div>
       </div>`).join('')}</div>`:'';
     return `<div class="phase-block">
-      <div class="phase-hdr" data-pid="${regId(p.id)}" data-fid="${regId(f.id)}" onclick="_pmo.togglePhaseDetail(regGet(this.dataset.pid),regGet(this.dataset.fid))">
+      <div class="phase-hdr" data-action="toggle-phase-detail" data-pid="${regId(p.id)}" data-fid="${regId(f.id)}">
         <div class="ph-name-cell">
           <div class="ph-chev ${isOpen?'open':''}">›</div>
           <div style="width:10px;height:10px;border-radius:3px;background:${fc};flex-shrink:0"></div>
@@ -764,7 +764,7 @@ function renderDetail(){
       </div>${taskRows}</div>`;
   }).join('');
   document.getElementById('view-detail').innerHTML=`
-    <div class="back-btn" onclick="_pmo.showResumen()">
+    <div class="back-btn" data-action="show-resumen">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
       Volver al resumen
     </div>
@@ -981,7 +981,33 @@ function parseCSV(csv){
 }
 
 // ══ INIT ══
-window._pmo={get projects(){return projects;},regGet,regId,showProjectById,toggleRsmCard,toggleRsmPhase,togglePhaseDetail,setFilter,toggleGestor,showPortfolio,showResumen,showConfig,loadFromSheets,renderResumen,renderPortfolio,buildSidebar};
+// Single event delegation listener - handles ALL clicks
+document.addEventListener('click', function(e){
+  const el = e.target.closest('[data-action]');
+  if(!el) return;
+  e.stopPropagation();
+  const action = el.dataset.action;
+  const pid    = el.dataset.pid ? regGet(el.dataset.pid) : null;
+  const fid    = el.dataset.fid ? regGet(el.dataset.fid) : null;
+  const gid    = el.dataset.g   ? regGet(el.dataset.g)   : null;
+  const gvid   = el.dataset.gv !== undefined ? (el.dataset.gv ? regGet(el.dataset.gv) : '') : null;
+  const val    = el.dataset.val !== undefined ? el.dataset.val : null;
+
+  switch(action){
+    case 'show-project':       showProjectById(pid); break;
+    case 'toggle-card':        toggleRsmCard(pid); break;
+    case 'toggle-phase':       toggleRsmPhase(pid, fid); break;
+    case 'toggle-phase-detail':togglePhaseDetail(pid, fid); break;
+    case 'toggle-gestor':      toggleGestor(gid); break;
+    case 'show-portfolio':     showPortfolio(); break;
+    case 'show-resumen':       showResumen(); break;
+    case 'show-config':        showConfig(); break;
+    case 'sync':               loadFromSheets(); break;
+    case 'filter-st':          setFilter('st', val); break;
+    case 'filter-g':           setFilter('g', gvid); break;
+  }
+});
+
 buildSidebar();
 showResumen();
 loadFromSheets();
