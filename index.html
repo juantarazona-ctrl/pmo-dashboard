@@ -905,12 +905,33 @@ function renderConfig(){
 // ══ CSV PARSER ══
 async function loadFromSheets(){
   const entries=Object.entries(SHEET_CONFIG);if(!entries.length)return;
+  // CORS proxies — tries each one in order until one works
+  const PROXIES=[
+    url=>`https://corsproxy.io/?${encodeURIComponent(url)}`,
+    url=>`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+    url=>`https://cors-anywhere.herokuapp.com/${url}`,
+  ];
   const all=[];
   for(const [name,url] of entries){
-    try{const r=await fetch(url);const csv=await r.text();const parsed=parseCSV(csv);if(parsed.length)all.push(...parsed);}
-    catch(e){console.warn('Error loading',name,e);}
+    let loaded=false;
+    for(const proxy of PROXIES){
+      try{
+        const r=await fetch(proxy(url),{headers:{'X-Requested-With':'XMLHttpRequest'}});
+        if(!r.ok) continue;
+        const csv=await r.text();
+        if(csv.includes(',')&&csv.length>50){
+          const parsed=parseCSV(csv);
+          if(parsed.length){all.push(...parsed);loaded=true;break;}
+        }
+      }catch(e){continue;}
+    }
+    if(!loaded) console.warn('No se pudo cargar:',name);
   }
-  if(all.length){projects=all;document.getElementById('sb-source').textContent='Google Sheets conectado';}
+  if(all.length){
+    projects=all;
+    document.getElementById('sb-source').textContent='Google Sheets conectado';
+    document.getElementById('sb-date').textContent=new Date().toLocaleDateString('es-PE',{day:'2-digit',month:'short',year:'numeric'});
+  }
   buildSidebar();
   if(curView==='resumen')renderResumen();else if(curView==='portfolio')renderPortfolio();
 }
