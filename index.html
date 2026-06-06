@@ -17,8 +17,6 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.5;min-height:100vh}
 .shell{display:grid;grid-template-columns:260px 1fr;min-height:100vh}
-
-/* ── SIDEBAR ── */
 .sidebar{background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
 .sb-logo{padding:22px 18px 14px;border-bottom:1px solid var(--border)}
 .sb-logo-eyebrow{font-size:10px;font-weight:600;letter-spacing:.14em;color:var(--text3);text-transform:uppercase;margin-bottom:3px}
@@ -47,41 +45,51 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .sb-divider{height:1px;background:var(--border);margin:8px 16px}
 .sb-footer{margin-top:auto;padding:14px 18px;border-top:1px solid var(--border)}
 .sb-footer-text{font-size:10px;color:var(--text3);line-height:1.7}
-
-/* ── MAIN ── */
 .main{overflow-y:auto;padding:28px 36px}
-.topbar{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:28px}
+.topbar{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px}
 .topbar h2{font-size:22px;font-weight:600}
 .topbar p{font-size:13px;color:var(--text2);margin-top:3px}
-
-/* ── METRICS ── */
 .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
 .metric{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
 .metric-lbl{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:8px}
 .metric-val{font-size:28px;font-weight:600;font-family:'DM Mono',monospace;line-height:1}
 .metric-sub{font-size:11px;color:var(--text3);margin-top:5px}
-.m-red .metric-val{color:var(--red)}
-.m-green .metric-val{color:var(--green)}
-.m-blue .metric-val{color:var(--blue)}
-
-/* ── SYNC BAR ── */
-.sync-bar{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:12px 18px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between}
+.m-red .metric-val{color:var(--red)}.m-green .metric-val{color:var(--green)}.m-blue .metric-val{color:var(--blue)}
+.sync-bar{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:12px 18px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between}
 .sync-info{font-size:12px;color:var(--text2)}
 .sync-btn{font-size:11px;padding:6px 12px;background:rgba(99,102,241,.12);color:var(--accent);border:1px solid rgba(99,102,241,.25);border-radius:var(--radius-sm);cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .13s}
 .sync-btn:hover{background:rgba(99,102,241,.22)}
-
-/* ── BADGES ── */
 .badge{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:500;white-space:nowrap}
 .b-green{background:rgba(34,197,94,.12);color:var(--green)}
 .b-red{background:rgba(239,68,68,.12);color:var(--red)}
 .b-amber{background:rgba(245,158,11,.12);color:var(--amber)}
 .b-gray{background:rgba(107,114,128,.12);color:var(--gray)}
+.b-blue{background:rgba(59,130,246,.12);color:var(--blue)}
 .bdot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
-
-/* ── PORTFOLIO ── */
+/* FILTER BAR */
+.filter-bar{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.filter-group{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.filter-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);white-space:nowrap}
+.filter-pills{display:flex;gap:6px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:500;background:var(--bg3);color:var(--text2);border:1px solid var(--border);cursor:pointer;transition:all .13s;font-family:'DM Sans',sans-serif;white-space:nowrap}
+.pill:hover{background:var(--bg4);color:var(--text);border-color:var(--border2)}
+.pill.pill-active{background:var(--bg4);color:var(--text);border-color:var(--border2)}
+.pill.pill-green.pill-active{background:rgba(34,197,94,.15);color:var(--green);border-color:rgba(34,197,94,.3)}
+.pill.pill-amber.pill-active{background:rgba(245,158,11,.15);color:var(--amber);border-color:rgba(245,158,11,.3)}
+.pill.pill-red.pill-active{background:rgba(239,68,68,.15);color:var(--red);border-color:rgba(239,68,68,.3)}
+.pill-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.filter-sep{width:1px;height:32px;background:var(--border2);flex-shrink:0}
+.filter-stats{display:flex;gap:10px;margin-left:auto}
+.fstat{display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 14px;border-radius:var(--radius-sm);min-width:58px}
+.fstat span:first-child{font-size:20px;font-weight:600;font-family:'DM Mono',monospace;line-height:1}
+.fstat span:last-child{font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:.06em}
+.fstat-green{background:rgba(34,197,94,.08);color:var(--green)}
+.fstat-amber{background:rgba(245,158,11,.08);color:var(--amber)}
+.fstat-red{background:rgba(239,68,68,.08);color:var(--red)}
+/* PORTFOLIO */
 .gestor-section{margin-bottom:32px}
 .gestor-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
-.gestor-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.gestor-av-lg{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
 .proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
 .proj-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px;cursor:pointer;transition:all .15s}
 .proj-card:hover{border-color:var(--border2);background:var(--bg3);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
@@ -95,13 +103,9 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .pc-bar-real{position:absolute;top:0;left:0;height:4px;border-radius:2px}
 .pc-footer{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
 .pc-dates{font-size:10px;color:var(--text3);font-family:'DM Mono',monospace}
-
-/* ══════════════════════════════════════════
-   RESUMEN CARD
-══════════════════════════════════════════ */
+/* RESUMEN CARD */
 .rsm-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:16px;overflow:hidden;transition:border-color .15s}
 .rsm-card:hover{border-color:var(--border2)}
-
 .rsm-top{display:grid;grid-template-columns:1fr auto;gap:24px;padding:20px 24px 16px;cursor:pointer;transition:background .12s;border-bottom:1px solid var(--border)}
 .rsm-top:hover{background:rgba(255,255,255,.015)}
 .rsm-proj-name{font-size:15px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:8px;margin-bottom:6px}
@@ -113,55 +117,54 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .rsm-stat{text-align:center;min-width:50px}
 .rsm-stat-lbl{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
 .rsm-stat-val{font-size:22px;font-weight:600;font-family:'DM Mono',monospace;line-height:1}
-.rsm-divider{width:0.5px;height:40px;background:var(--border2)}
-
-/* roadmap section */
+.rsm-divider{width:.5px;height:40px;background:var(--border2)}
 .rsm-roadmap{padding:14px 24px 18px}
 .rsm-month-axis{display:flex;border-bottom:1px solid var(--border);margin-bottom:10px;padding-bottom:4px}
 .rsm-month-cell{flex:1;font-size:9px;font-weight:500;color:var(--text3);position:relative}
-.rsm-month-cell::before{content:'';position:absolute;left:0;top:-3px;bottom:0;width:0.5px;background:var(--border)}
-
-/* multi-row gantt */
+.rsm-month-cell::before{content:'';position:absolute;left:0;top:-3px;bottom:0;width:.5px;background:var(--border)}
 .rsm-gantt-rows{position:relative;display:flex;flex-direction:column;gap:5px;margin-bottom:8px}
 .rsm-gantt-row{position:relative;height:28px}
 .rsm-row-bg{position:absolute;top:0;left:0;right:0;height:100%;background:var(--bg4);border-radius:4px}
-
-.rsm-seg{
-  position:absolute;top:2px;height:24px;
-  border-radius:4px;
-  display:flex;align-items:center;justify-content:center;
-  overflow:hidden;cursor:default;transition:filter .15s;
-}
+.rsm-seg{position:absolute;top:2px;height:24px;border-radius:4px;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:default;transition:filter .15s}
 .rsm-seg:hover{filter:brightness(1.15)}
 .rsm-seg-lbl{font-size:9px;font-weight:500;color:rgba(255,255,255,.9);white-space:nowrap;padding:0 6px;overflow:hidden;text-overflow:ellipsis;width:100%;text-align:center}
 .rsm-seg-prog{position:absolute;bottom:0;left:0;height:3px;background:rgba(255,255,255,.3);border-radius:0 0 2px 2px}
-
 .rsm-today{position:absolute;top:-6px;width:2px;background:var(--accent);opacity:.85;border-radius:1px;z-index:5;pointer-events:none}
 .rsm-today::before{content:'Hoy';position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:8px;font-weight:500;color:var(--accent);white-space:nowrap;font-family:'DM Sans',sans-serif}
 .rsm-today::after{content:'▼';position:absolute;top:-6px;left:50%;transform:translateX(-50%);font-size:7px;color:var(--accent)}
-
 .rsm-date-range{display:flex;justify-content:space-between;font-size:9px;color:var(--text3);font-family:'DM Mono',monospace;margin-top:6px}
-
-/* expanded phases */
+/* EXPANDED PHASES in resumen */
 .rsm-phases{border-top:1px solid var(--border);background:var(--bg3)}
 .rsm-phases-hdr{display:grid;grid-template-columns:1fr 58px 58px 112px 190px 82px;padding:7px 24px;border-bottom:1px solid var(--border)}
 .rsm-phases-hdr span{font-size:9px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em}
-.rsm-phase-row{display:grid;grid-template-columns:1fr 58px 58px 112px 190px 82px;padding:10px 24px;border-bottom:0.5px solid rgba(255,255,255,.04);align-items:center;transition:background .1s}
+.rsm-phase-row{display:grid;grid-template-columns:1fr 58px 58px 112px 190px 82px;padding:10px 24px;border-bottom:.5px solid rgba(255,255,255,.04);align-items:center;cursor:pointer;transition:background .1s}
 .rsm-phase-row:last-child{border-bottom:none}
-.rsm-phase-row:hover{background:rgba(255,255,255,.02)}
+.rsm-phase-row:hover{background:rgba(255,255,255,.03)}
+.rsm-phase-row.expanded{background:rgba(99,102,241,.05)}
 .rsm-phase-name-cell{display:flex;align-items:center;gap:8px}
 .rsm-phase-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
 .rsm-phase-edt{font-size:10px;color:var(--text3);font-family:'DM Mono',monospace}
 .rsm-phase-name{font-size:12px;color:var(--text2);font-weight:500}
+.rsm-ph-chev{width:14px;height:14px;background:var(--bg4);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--text3);flex-shrink:0;transition:transform .18s}
+.rsm-ph-chev.open{transform:rotate(90deg)}
 .rsm-pct{font-family:'DM Mono',monospace;font-size:12px;text-align:right;padding-right:14px;color:var(--text3)}
 .rsm-mini-wrap{position:relative;height:18px}
-.rsm-mini-bg{position:absolute;top:3px;left:0;right:0;height:12px;background:var(--bg4);border-radius:3px;overflow:hidden;border:0.5px solid var(--border)}
+.rsm-mini-bg{position:absolute;top:3px;left:0;right:0;height:12px;background:var(--bg4);border-radius:3px;overflow:hidden;border:.5px solid var(--border)}
 .rsm-mini-plan{position:absolute;top:0;height:5px;border-radius:1px;opacity:.4}
 .rsm-mini-real{position:absolute;bottom:0;height:5px;border-radius:1px}
 .rsm-mini-today{position:absolute;top:0;bottom:0;width:1px;background:var(--accent);opacity:.7}
 .rsm-phase-dates{font-size:10px;color:var(--text3);font-family:'DM Mono',monospace;text-align:right;line-height:1.5}
-
-/* ── DETAIL ── */
+/* TASK ROWS inside phase */
+.rsm-task-rows{background:var(--bg2);border-top:.5px solid var(--border)}
+.rsm-task-row{display:grid;grid-template-columns:1fr 58px 58px 112px 190px 82px;padding:7px 24px 7px 56px;border-bottom:.5px solid rgba(255,255,255,.03);align-items:center;transition:background .1s}
+.rsm-task-row:last-child{border-bottom:none}
+.rsm-task-row:hover{background:rgba(255,255,255,.02)}
+.rsm-task-name-cell{display:flex;align-items:center;gap:6px;overflow:hidden}
+.rsm-task-edt{font-size:10px;font-family:'DM Mono',monospace;color:var(--text3);flex-shrink:0}
+.rsm-task-name{font-size:11px;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rsm-task-name.late{color:#fca5a5}
+.rsm-task-chip{font-size:9px;padding:1px 5px;border-radius:8px;background:rgba(239,68,68,.15);color:var(--red);flex-shrink:0;margin-left:3px;white-space:nowrap}
+/* DETAIL */
 .back-btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);cursor:pointer;margin-bottom:16px;padding:6px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);transition:all .13s}
 .back-btn:hover{color:var(--text);background:var(--bg3)}
 .detail-hdr{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:22px 26px;margin-bottom:20px}
@@ -204,65 +207,19 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .task-name{font-size:11px;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .task-name.late{color:#fca5a5}
 .task-chip{font-size:9px;padding:1px 5px;border-radius:8px;background:rgba(239,68,68,.15);color:var(--red);flex-shrink:0;margin-left:3px;white-space:nowrap}
-
-/* config */
+/* SKELETON */
+.skeleton{background:linear-gradient(90deg,var(--bg3) 25%,var(--bg4) 50%,var(--bg3) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:var(--radius-sm)}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skeleton-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:16px}
+.loading-overlay{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text3);padding:8px 0;margin-bottom:12px}
+.loading-spinner{width:14px;height:14px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* CONFIG */
 .config-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:16px}
 .config-title{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:14px;display:flex;align-items:center;gap:7px}
 .code-block{background:var(--bg3);border-radius:var(--radius-sm);padding:14px 16px;font-family:'DM Mono',monospace;font-size:11px;color:var(--text2);line-height:2;overflow-x:auto}
 .step-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;font-size:12px;color:var(--text2)}
 .step-num{width:20px;height:20px;border-radius:50%;background:rgba(99,102,241,.15);color:var(--accent);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
-
-
-/* ── FILTER BAR ── */
-.filter-bar{
-  background:var(--bg2);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:14px 18px;
-  margin-bottom:20px;
-  display:flex;
-  align-items:center;
-  gap:16px;
-  flex-wrap:wrap;
-}
-.filter-group{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.filter-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);white-space:nowrap}
-.filter-pills{display:flex;gap:6px;flex-wrap:wrap}
-.pill{
-  display:inline-flex;align-items:center;gap:5px;
-  padding:5px 12px;border-radius:20px;
-  font-size:11px;font-weight:500;
-  background:var(--bg3);color:var(--text2);
-  border:1px solid var(--border);
-  cursor:pointer;transition:all .13s;
-  font-family:'DM Sans',sans-serif;
-  white-space:nowrap;
-}
-.pill:hover{background:var(--bg4);color:var(--text);border-color:var(--border2)}
-.pill-active{background:var(--bg4);color:var(--text);border-color:var(--border2)}
-.pill-green.pill-active{background:rgba(34,197,94,.15);color:var(--green);border-color:rgba(34,197,94,.3)}
-.pill-amber.pill-active{background:rgba(245,158,11,.15);color:var(--amber);border-color:rgba(245,158,11,.3)}
-.pill-red.pill-active{background:rgba(239,68,68,.15);color:var(--red);border-color:rgba(239,68,68,.3)}
-.pill-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.filter-sep{width:1px;height:32px;background:var(--border2);flex-shrink:0}
-.filter-stats{display:flex;gap:12px;margin-left:auto}
-.fstat{display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 12px;border-radius:var(--radius-sm);min-width:56px}
-.fstat span:first-child{font-size:18px;font-weight:600;font-family:'DM Mono',monospace;line-height:1}
-.fstat span:last-child{font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:.06em}
-.fstat-green{background:rgba(34,197,94,.08);color:var(--green)}
-.fstat-amber{background:rgba(245,158,11,.08);color:var(--amber)}
-.fstat-red{background:rgba(239,68,68,.08);color:var(--red)}
-
-
-/* ── SKELETON LOADING ── */
-.skeleton{background:linear-gradient(90deg,var(--bg3) 25%,var(--bg4) 50%,var(--bg3) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:var(--radius-sm)}
-@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-.skeleton-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:16px}
-.skeleton-line{height:14px;margin-bottom:10px}
-.skeleton-bar{height:32px;margin:14px 0 8px}
-.loading-overlay{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text3);padding:8px 0;margin-bottom:12px}
-.loading-spinner{width:14px;height:14px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
-@keyframes spin{to{transform:rotate(360deg)}}
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
@@ -271,8 +228,6 @@ select{background:var(--bg3);color:var(--text2);border:1px solid var(--border2);
 </head>
 <body>
 <div class="shell">
-
-<!-- ════════ SIDEBAR ════════ -->
 <aside class="sidebar">
   <div class="sb-logo">
     <div class="sb-logo-eyebrow">PMO Dashboard</div>
@@ -297,18 +252,16 @@ select{background:var(--bg3);color:var(--text2);border:1px solid var(--border2);
   <div id="sb-gestores"></div>
   <div class="sb-divider"></div>
   <div class="sb-footer">
-    <div class="sb-footer-text" id="sb-source">Datos de ejemplo</div>
+    <div class="sb-footer-text" id="sb-source">Cargando...</div>
     <div class="sb-footer-text" style="font-family:'DM Mono',monospace" id="sb-date"></div>
-    <div id="sb-cfg-footer" style="margin-top:8px;display:none">
-      <div class="sb-nav-item" style="padding:5px 8px;opacity:.5" onclick="showConfig()" title="Configuración de Google Sheets">
+    <div id="sb-cfg-footer" style="margin-top:6px;display:none">
+      <div class="sb-nav-item" style="padding:4px 8px;opacity:.5;font-size:10px" onclick="showConfig()">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
-        <span style="font-size:10px">Configuración</span>
+        <span>Configuración</span>
       </div>
     </div>
   </div>
 </aside>
-
-<!-- ════════ MAIN ════════ -->
 <main class="main">
   <div id="view-portfolio" style="display:none"></div>
   <div id="view-resumen"   style="display:none"></div>
@@ -316,156 +269,78 @@ select{background:var(--bg3);color:var(--text2);border:1px solid var(--border2);
   <div id="view-config"    style="display:none"></div>
 </main>
 </div>
-
 <script>
 // ══ CONFIG ══
-// Paso 1: Crea tu Google Apps Script proxy (ver instrucciones en el dashboard)
-// Paso 2: Pega la URL del script aquí
-const GAS_PROXY_URL = 'https://script.google.com/macros/s/AKfycbww8KkViFYcZx2LkEHamu9Oqts-wfPs0EfJqNDBQ2xEbMTACXaP4g25ia8cHMT6zjVXuQ/exec';
-
-const SHEET_CONFIG = {
-  'Cobranza Omnicanal - SAP':           'https://docs.google.com/spreadsheets/d/e/2PACX-1vTpYfDYx3mFt77cJ0tAf8W84sLFQp66p1mkr2EU8pKcQ3ktRBH3GbwHqlqJDfylJ2jY1hO6ByI6XKVH/pub?gid=0&single=true&output=csv',
-  'Escalera de Descuento':              'https://docs.google.com/spreadsheets/d/e/2PACX-1vTpYfDYx3mFt77cJ0tAf8W84sLFQp66p1mkr2EU8pKcQ3ktRBH3GbwHqlqJDfylJ2jY1hO6ByI6XKVH/pub?gid=794965495&single=true&output=csv',
+const GAS_PROXY_URL='https://script.google.com/macros/s/AKfycbww8KkViFYcZx2LkEHamu9Oqts-wfPs0EfJqNDBQ2xEbMTACXaP4g25ia8cHMT6zjVXuQ/exec';
+const SHEET_CONFIG={
+  'Cobranza Omnicanal - SAP':            'https://docs.google.com/spreadsheets/d/e/2PACX-1vTpYfDYx3mFt77cJ0tAf8W84sLFQp66p1mkr2EU8pKcQ3ktRBH3GbwHqlqJDfylJ2jY1hO6ByI6XKVH/pub?gid=0&single=true&output=csv',
+  'Escalera de Descuento':               'https://docs.google.com/spreadsheets/d/e/2PACX-1vTpYfDYx3mFt77cJ0tAf8W84sLFQp66p1mkr2EU8pKcQ3ktRBH3GbwHqlqJDfylJ2jY1hO6ByI6XKVH/pub?gid=794965495&single=true&output=csv',
   'Plataforma de Autorizaciones Médicas':'https://docs.google.com/spreadsheets/d/e/2PACX-1vTpYfDYx3mFt77cJ0tAf8W84sLFQp66p1mkr2EU8pKcQ3ktRBH3GbwHqlqJDfylJ2jY1hO6ByI6XKVH/pub?gid=1417158828&single=true&output=csv',
-  'Validación Parentesco Fase2':        'https://docs.google.com/spreadsheets/d/e/2PACX-1vTpYfDYx3mFt77cJ0tAf8W84sLFQp66p1mkr2EU8pKcQ3ktRBH3GbwHqlqJDfylJ2jY1hO6ByI6XKVH/pub?gid=1555503359&single=true&output=csv',
+  'Validación Parentesco Fase2':         'https://docs.google.com/spreadsheets/d/e/2PACX-1vTpYfDYx3mFt77cJ0tAf8W84sLFQp66p1mkr2EU8pKcQ3ktRBH3GbwHqlqJDfylJ2jY1hO6ByI6XKVH/pub?gid=1555503359&single=true&output=csv',
 };
 
-// ══ FASE COLORS ══
-const FASE_PAL = ['#22c55e','#3b82f6','#f59e0b','#8b5cf6','#06b6d4','#ec4899','#14b8a6','#f97316'];
-function faseColor(name, estado, idx) {
+// ══ HELPERS ══
+function eCol(e){
+  if(e==='Completada'||e==='Verde') return 'var(--green)';
+  if(e==='Retrasada') return 'var(--red)';
+  if(e==='Amarillo') return 'var(--amber)';
+  if(e==='Según lo programado') return 'var(--blue)';
+  return 'var(--gray)';
+}
+function eBadge(e){
+  if(e==='Completada'||e==='Verde') return 'b-green';
+  if(e==='Retrasada') return 'b-red';
+  if(e==='Amarillo') return 'b-amber';
+  if(e==='Según lo programado') return 'b-blue';
+  return 'b-gray';
+}
+function eBarC(e){
+  if(e==='Completada'||e==='Verde') return 'rgba(34,197,94,.75)';
+  if(e==='Retrasada') return 'rgba(239,68,68,.75)';
+  if(e==='Amarillo') return 'rgba(245,158,11,.75)';
+  if(e==='Según lo programado') return 'rgba(59,130,246,.75)';
+  return 'rgba(107,114,128,.35)';
+}
+function pCls(e,pp,pr){
+  if(e==='Tarea futura') return 'pct-gray';
+  if(pr>=pp) return 'pct-green';
+  if((pp-pr)>20) return 'pct-red';
+  return 'pct-amber';
+}
+const GCOLS={'Frank Valenzuela':'#6366f1','Gienpierre Francia':'#22c55e','Anthony Bonilla':'#f59e0b','Carlos Vega':'#3b82f6','María Quispe':'#ec4899','Ana Torres':'#06b6d4'};
+function gcol(g){ return GCOLS[g]||(GCOLS[g]='#'+Math.floor(Math.random()*0xffffff).toString(16).padStart(6,'0')); }
+function gini(g){ return g.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase(); }
+
+const FASE_PAL=['#22c55e','#3b82f6','#f59e0b','#8b5cf6','#06b6d4','#ec4899','#14b8a6','#f97316'];
+function faseColor(name,estado,idx){
   if(estado==='Retrasada') return '#ef4444';
   if(estado==='Tarea futura') return 'rgba(99,102,241,0.3)';
   if(estado==='Amarillo') return '#f59e0b';
-  const n = name.toLowerCase();
+  if(estado==='Según lo programado') return '#3b82f6';
+  const n=name.toLowerCase();
   if(n.includes('definici')) return '#22c55e';
   if(n.includes('planific')) return '#3b82f6';
   if(n.includes('ejecuci')||n.includes('desarroll')) return '#f59e0b';
   if(n.includes('prueba')||n.includes('uat')||n.includes('qa')) return '#8b5cf6';
-  if(n.includes('despliegue')||n.includes('go live')||n.includes('cierre')) return '#6366f1';
-  return FASE_PAL[idx % FASE_PAL.length];
+  if(n.includes('despliegue')||n.includes('go live')||n.includes('cierre')||n.includes('soporte')) return '#6366f1';
+  return FASE_PAL[idx%FASE_PAL.length];
 }
 
-// ══ OVERLAP LAYOUT ALGORITHM ══
-// Places phases into rows so overlapping ones never share a row.
-// Returns array of row arrays: [[fase, fase], [fase], ...]
-function computeRows(fases) {
-  const rows = []; // each row: array of {start_off, end_off}
-  const rowFases = []; // parallel: array of fase arrays
-  fases.forEach((f, fi) => {
-    const start = f.start_off;
-    const end   = f.start_off + f.dur;
-    let placed  = false;
-    for(let r = 0; r < rows.length; r++) {
-      const overlaps = rows[r].some(seg => start < seg.end && end > seg.start);
-      if(!overlaps) {
-        rows[r].push({start, end, fi});
-        rowFases[r].push(f);
-        placed = true;
-        break;
+// ══ OVERLAP ALGORITHM ══
+function computeRows(fases){
+  const rows=[],rowFases=[];
+  fases.forEach(f=>{
+    const start=f.start_off,end=f.start_off+f.dur;
+    let placed=false;
+    for(let r=0;r<rows.length;r++){
+      if(!rows[r].some(seg=>start<seg.end&&end>seg.start)){
+        rows[r].push({start,end});rowFases[r].push(f);placed=true;break;
       }
     }
-    if(!placed) {
-      rows.push([{start, end, fi}]);
-      rowFases.push([f]);
-    }
+    if(!placed){rows.push([{start,end}]);rowFases.push([f]);}
   });
   return rowFases;
 }
-
-// ══ DEMO DATA ══
-const DEMO = [
-  {id:'p1',name:'Escalera de Descuento',gestor:'Frank Valenzuela',estado:'Retrasada',
-   pct_plan:66,pct_real:54,fecha_inicio:'10/02/26',fecha_fin:'06/07/26',today_pct:54,
-   fases:[
-    {id:'1.1',name:'Definición',estado:'Completada',pct_plan:100,pct_real:100,start_off:0,dur:22,
-     tasks:[
-      {edt:'1.1.1',name:'Identificación de stakeholders',estado:'Completada',pct_plan:100,pct_real:100,start:'10/02',end:'11/02'},
-      {edt:'1.1.2',name:'Objetivo y alcance',estado:'Completada',pct_plan:100,pct_real:100,start:'12/02',end:'13/02'},
-      {edt:'1.1.5',name:'Requerimiento funcional',estado:'Completada',pct_plan:100,pct_real:100,start:'17/02',end:'17/02'},
-     ]},
-    {id:'1.2',name:'Planificación',estado:'Completada',pct_plan:100,pct_real:100,start_off:18,dur:16,
-     tasks:[
-      {edt:'1.2.1',name:'Entendimiento funcional',estado:'Completada',pct_plan:100,pct_real:100,start:'18/03',end:'26/03'},
-      {edt:'1.2.2',name:'Cotización del desarrollo',estado:'Completada',pct_plan:100,pct_real:100,start:'27/03',end:'02/04'},
-     ]},
-    {id:'1.3',name:'Ejecución — Desarrollo BI',estado:'Retrasada',pct_plan:100,pct_real:77,start_off:32,dur:28,
-     tasks:[
-      {edt:'1.3.1',name:'Definición BI',estado:'Completada',pct_plan:100,pct_real:100,start:'23/03',end:'14/04'},
-      {edt:'1.3.2',name:'Certificación y validación',estado:'Retrasada',pct_plan:100,pct_real:15,start:'08/05',end:'21/05',atraso:'-85%'},
-      {edt:'1.3.3',name:'Accesos SFTP',estado:'Retrasada',pct_plan:100,pct_real:0,start:'13/05',end:'13/05',atraso:'Bloqueada'},
-     ]},
-    {id:'1.4',name:'Ejecución — Desarrollo SAP',estado:'Retrasada',pct_plan:72,pct_real:47,start_off:32,dur:42,
-     tasks:[
-      {edt:'1.4.1',name:'Análisis SAP',estado:'Completada',pct_plan:100,pct_real:100,start:'23/03',end:'30/03'},
-      {edt:'1.4.2',name:'Arquitectura de Solución',estado:'Retrasada',pct_plan:100,pct_real:0,start:'09/04',end:'10/04',atraso:'Sin iniciar'},
-      {edt:'1.4.3',name:'Visibilidad Datos Maestros',estado:'Retrasada',pct_plan:70,pct_real:25,start:'07/05',end:'20/05',atraso:'-45%'},
-     ]},
-    {id:'1.5',name:'Pruebas UAT',estado:'Tarea futura',pct_plan:0,pct_real:0,start_off:74,dur:14,
-     tasks:[
-      {edt:'1.5.1',name:'Escenarios QAS',estado:'Tarea futura',pct_plan:0,pct_real:0,start:'05/06',end:'08/06'},
-      {edt:'1.5.2',name:'Ejecución UAT',estado:'Tarea futura',pct_plan:0,pct_real:0,start:'10/06',end:'17/06'},
-     ]},
-    {id:'1.6',name:'Go Live',estado:'Tarea futura',pct_plan:0,pct_real:0,start_off:88,dur:12,
-     tasks:[
-      {edt:'1.6.1',name:'Paso a Producción',estado:'Tarea futura',pct_plan:0,pct_real:0,start:'18/06',end:'18/06'},
-      {edt:'1.6.2',name:'Monitoreo post-producción',estado:'Tarea futura',pct_plan:0,pct_real:0,start:'18/06',end:'02/07'},
-     ]},
-   ]},
-  {id:'p2',name:'Migradown',gestor:'Carlos Vega',estado:'Amarillo',
-   pct_plan:40,pct_real:38,fecha_inicio:'01/01/26',fecha_fin:'15/10/26',today_pct:32,
-   fases:[
-    {id:'2.1',name:'Definición',estado:'Completada',pct_plan:100,pct_real:100,start_off:0,dur:18,
-     tasks:[{edt:'2.1.1',name:'Levantamiento de requisitos',estado:'Completada',pct_plan:100,pct_real:100,start:'01/01',end:'15/01'}]},
-    {id:'2.2',name:'Desarrollo',estado:'Amarillo',pct_plan:65,pct_real:60,start_off:14,dur:44,
-     tasks:[
-      {edt:'2.2.1',name:'Módulo migración core',estado:'Completada',pct_plan:100,pct_real:100,start:'15/03',end:'10/04'},
-      {edt:'2.2.2',name:'Interfaz de usuario',estado:'Amarillo',pct_plan:80,pct_real:65,start:'11/04',end:'05/05',atraso:'Riesgo'},
-      {edt:'2.2.3',name:'API de integración',estado:'Tarea futura',pct_plan:0,pct_real:0,start:'06/05',end:'30/05'},
-     ]},
-    {id:'2.3',name:'Pruebas',estado:'Tarea futura',pct_plan:0,pct_real:0,start_off:56,dur:22,
-     tasks:[{edt:'2.3.1',name:'Pruebas integración',estado:'Tarea futura',pct_plan:0,pct_real:0,start:'01/06',end:'30/06'}]},
-    {id:'2.4',name:'Despliegue',estado:'Tarea futura',pct_plan:0,pct_real:0,start_off:78,dur:22,
-     tasks:[{edt:'2.4.1',name:'Migración a producción',estado:'Tarea futura',pct_plan:0,pct_real:0,start:'16/07',end:'31/07'}]},
-   ]},
-  {id:'p3',name:'Parentesco',gestor:'Frank Valenzuela',estado:'Verde',
-   pct_plan:45,pct_real:50,fecha_inicio:'01/03/26',fecha_fin:'20/11/26',today_pct:38,
-   fases:[
-    {id:'3.1',name:'Análisis',estado:'Completada',pct_plan:100,pct_real:100,start_off:0,dur:22,
-     tasks:[{edt:'3.1.1',name:'Levantamiento de fuentes',estado:'Completada',pct_plan:100,pct_real:100,start:'01/03',end:'20/03'}]},
-    {id:'3.2',name:'Desarrollo',estado:'Verde',pct_plan:50,pct_real:55,start_off:18,dur:50,
-     tasks:[
-      {edt:'3.2.1',name:'Conectores de datos',estado:'Completada',pct_plan:100,pct_real:100,start:'11/04',end:'30/04'},
-      {edt:'3.2.2',name:'Pipeline ETL',estado:'Verde',pct_plan:50,pct_real:60,start:'01/05',end:'15/06'},
-     ]},
-    {id:'3.3',name:'Pruebas',estado:'Tarea futura',pct_plan:0,pct_real:0,start_off:68,dur:20,
-     tasks:[{edt:'3.3.1',name:'QA de datos',estado:'Tarea futura',pct_plan:0,pct_real:0,start:'01/08',end:'30/09'}]},
-    {id:'3.4',name:'Go Live',estado:'Tarea futura',pct_plan:0,pct_real:0,start_off:88,dur:12,
-     tasks:[{edt:'3.4.1',name:'Pase a producción',estado:'Tarea futura',pct_plan:0,pct_real:0,start:'01/10',end:'20/10'}]},
-   ]},
-  {id:'p4',name:'Scorinng',gestor:'María Quispe',estado:'Retrasada',
-   pct_plan:90,pct_real:65,fecha_inicio:'15/01/26',fecha_fin:'30/06/26',today_pct:72,
-   fases:[
-    {id:'4.1',name:'Definición',estado:'Completada',pct_plan:100,pct_real:100,start_off:0,dur:14,
-     tasks:[{edt:'4.1.1',name:'Kickoff',estado:'Completada',pct_plan:100,pct_real:100,start:'15/01',end:'25/01'}]},
-    {id:'4.2',name:'Desarrollo',estado:'Retrasada',pct_plan:100,pct_real:70,start_off:14,dur:58,
-     tasks:[
-      {edt:'4.2.1',name:'Backend API',estado:'Completada',pct_plan:100,pct_real:100,start:'01/02',end:'15/03'},
-      {edt:'4.2.2',name:'Frontend módulo A',estado:'Retrasada',pct_plan:100,pct_real:60,start:'16/03',end:'15/04',atraso:'-40%'},
-      {edt:'4.2.3',name:'Frontend módulo B',estado:'Retrasada',pct_plan:100,pct_real:30,start:'16/04',end:'15/05',atraso:'-70%'},
-     ]},
-    {id:'4.3',name:'Go Live',estado:'Tarea futura',pct_plan:0,pct_real:0,start_off:88,dur:12,
-     tasks:[{edt:'4.3.1',name:'Paso a producción',estado:'Tarea futura',pct_plan:0,pct_real:0,start:'26/06',end:'30/06'}]},
-   ]},
-];
-
-// ══ HELPERS ══
-const eCol  = e=>e==='Completada'||e==='Verde'?'var(--green)':e==='Retrasada'?'var(--red)':e==='Amarillo'?'var(--amber)':'var(--gray)';
-const eBadge= e=>e==='Completada'||e==='Verde'?'b-green':e==='Retrasada'?'b-red':e==='Amarillo'?'b-amber':'b-gray';
-const eBarC = e=>e==='Completada'||e==='Verde'?'rgba(34,197,94,.75)':e==='Retrasada'?'rgba(239,68,68,.75)':e==='Amarillo'?'rgba(245,158,11,.75)':'rgba(107,114,128,.35)';
-const pCls  = (e,pp,pr)=>e==='Tarea futura'?'pct-gray':pr>=pp?'pct-green':(pp-pr)>20?'pct-red':'pct-amber';
-const GCOLS = {'Frank Valenzuela':'#6366f1','Carlos Vega':'#22c55e','María Quispe':'#f59e0b','Ana Torres':'#3b82f6'};
-const gcol  = g=>GCOLS[g]||'#9095a8';
-const gini  = g=>g.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
 
 function getProjectMonths(p){
   const pd=s=>{const a=s.split('/');return new Date(parseInt(a[2])+(parseInt(a[2])<100?2000:0),parseInt(a[1])-1,parseInt(a[0]));};
@@ -477,11 +352,13 @@ function getProjectMonths(p){
 }
 
 // ══ STATE ══
-let projects=DEMO,curProj=null,curView='resumen',expPhase={},expRsm={},sbOpen={},filterSt='',filterGestor='';
+let projects=[],curProj=null,curView='resumen';
+let expPhase={},expRsmPhase={},sbOpen={},filterSt='',filterGestor='';
+// expPhase key = projectId+'_'+phaseId to avoid clashes between projects
 
 // ══ SIDEBAR ══
 function buildSidebar(){
-  document.getElementById('badge-total').textContent=projects.length;
+  document.getElementById('badge-total').textContent=projects.length||'—';
   document.getElementById('sb-date').textContent=new Date().toLocaleDateString('es-PE',{day:'2-digit',month:'short',year:'numeric'});
   const byG={};
   projects.forEach(p=>{if(!byG[p.gestor])byG[p.gestor]=[];byG[p.gestor].push(p);});
@@ -491,7 +368,7 @@ function buildSidebar(){
     const col=gcol(g),ini=gini(g),isOpen=sbOpen[g];
     const late=projs.filter(p=>p.estado==='Retrasada').length;
     html+=`<div class="sb-gestor">
-      <div class="sb-gestor-hdr" onclick="toggleGestor('${g.replace(/'/g,"\\'")}')">
+      <div class="sb-gestor-hdr" onclick="toggleGestor(${JSON.stringify(g)})">
         <div class="sb-av" style="background:${col}20;color:${col}">${ini}</div>
         <span class="sb-gestor-name" style="color:${col}">${g}</span>
         ${late?`<span style="font-size:9px;padding:1px 5px;border-radius:8px;background:rgba(239,68,68,.15);color:var(--red)">${late}▲</span>`:''}
@@ -499,7 +376,7 @@ function buildSidebar(){
         <span class="sb-chev ${isOpen?'open':''}">›</span>
       </div>
       <div class="sb-projects" style="max-height:${isOpen?projs.length*34+'px':'0'}">
-        ${projs.map(p=>`<div class="sb-proj ${curProj&&curProj.id===p.id?'active':''}" onclick="showProject('${p.id}')">
+        ${projs.map(p=>`<div class="sb-proj ${curProj&&curProj.id===p.id?'active':''}" onclick="showProjectById(${JSON.stringify(p.id)})">
           <span class="sb-proj-dot" style="background:${eCol(p.estado)}"></span>
           <span class="sb-proj-name">${p.name}</span>
           <span class="sb-proj-pct" style="color:${eCol(p.estado)}">${p.pct_real}%</span>
@@ -508,44 +385,46 @@ function buildSidebar(){
     </div>`;
   });
   document.getElementById('sb-gestores').innerHTML=html;
-  document.getElementById('nav-all').className='sb-nav-item'+(curView==='portfolio'?' active':'');
-  document.getElementById('nav-rsm').className='sb-nav-item'+(curView==='resumen'?' active':'');
-  // Show/hide config based on Sheets connection
-  const sheetsConnected=Object.keys(SHEET_CONFIG).length>0;
+  const sheetsOn=Object.keys(SHEET_CONFIG).length>0;
   const cfgEl=document.getElementById('nav-cfg');
   const cfgFooter=document.getElementById('sb-cfg-footer');
-  if(cfgEl){
-    cfgEl.style.display=sheetsConnected?'none':'flex';
-    cfgEl.className='sb-nav-item'+(curView==='config'?' active':'');
-  }
-  // When connected, show tiny gear in footer instead
-  if(cfgFooter) cfgFooter.style.display=sheetsConnected?'block':'none';
+  if(cfgEl){cfgEl.style.display=sheetsOn?'none':'flex';cfgEl.className='sb-nav-item'+(curView==='config'?' active':'');}
+  if(cfgFooter) cfgFooter.style.display=sheetsOn?'block':'none';
+  document.getElementById('nav-all').className='sb-nav-item'+(curView==='portfolio'?' active':'');
+  document.getElementById('nav-rsm').className='sb-nav-item'+(curView==='resumen'?' active':'');
 }
 function toggleGestor(g){sbOpen[g]=!sbOpen[g];buildSidebar();}
-function switchView(v){curView=v;['portfolio','resumen','detail','config'].forEach(id=>document.getElementById('view-'+id).style.display='none');document.getElementById('view-'+v).style.display='';buildSidebar();}
+function switchView(v){
+  curView=v;
+  ['portfolio','resumen','detail','config'].forEach(id=>document.getElementById('view-'+id).style.display='none');
+  document.getElementById('view-'+v).style.display='';
+  buildSidebar();
+}
 
-// ══════════════════════════════
-// PORTFOLIO
-// ══════════════════════════════
+// ══ SYNC BAR ══
+function syncBarHTML(){
+  const on=Object.keys(SHEET_CONFIG).length>0;
+  return on
+    ?`<div class="sync-bar"><div class="sync-info">Conectado a <strong style="color:var(--text)">Google Sheets</strong> · ${projects.length} proyectos cargados</div><button class="sync-btn" onclick="loadFromSheets()">↻ Sincronizar</button></div>`
+    :`<div class="sync-bar"><div class="sync-info">⚙️ Datos de ejemplo · <span style="color:var(--accent);cursor:pointer;text-decoration:underline" onclick="showConfig()">Conecta tu Google Sheets →</span></div></div>`;
+}
+
+// ══ PORTFOLIO ══
 function showPortfolio(){curProj=null;switchView('portfolio');renderPortfolio();}
 function renderPortfolio(){
-  const total=projects.length,retrasados=projects.filter(p=>p.estado==='Retrasada').length,
+  const total=projects.length;
+  if(!total){document.getElementById('view-portfolio').innerHTML=`<div style="padding:48px;text-align:center;color:var(--text3)">Cargando proyectos...</div>`;return;}
+  const retrasados=projects.filter(p=>p.estado==='Retrasada').length,
         riesgo=projects.filter(p=>p.estado==='Amarillo').length,
-        alDia=projects.filter(p=>p.estado==='Verde'||p.estado==='Completada').length,
+        alDia=projects.filter(p=>p.estado==='Verde'||p.estado==='Completada'||p.estado==='Según lo programado').length,
         avgReal=Math.round(projects.reduce((a,p)=>a+p.pct_real,0)/total);
-  let filtered=projects;
-  if(filterSt) filtered=filtered.filter(p=>p.estado===filterSt);
-  if(filterGestor) filtered=filtered.filter(p=>p.gestor===filterGestor);
+  const filtered=filterSt?projects.filter(p=>p.estado===filterSt):projects;
   const byG={};filtered.forEach(p=>{if(!byG[p.gestor])byG[p.gestor]=[];byG[p.gestor].push(p);});
-  const sheetsOn=Object.keys(SHEET_CONFIG).length>0;
-  const syncBar=sheetsOn
-    ?`<div class="sync-bar"><div class="sync-info">Conectado a <strong style="color:var(--text)">Google Sheets</strong> · ${projects.length} proyectos cargados</div><button class="sync-btn" onclick="loadFromSheets()">↻ Sincronizar</button></div>`
-    :`<div class="sync-bar"><div class="sync-info">⚙️ <strong style="color:var(--text)">Datos de ejemplo</strong> · <span style="color:var(--accent);cursor:pointer;text-decoration:underline" onclick="showConfig()">Conecta tu Google Sheets para ver datos reales →</span></div></div>`;
-  const gestorBlocks=Object.entries(byG).map(([gestor,projs])=>{
+  const blocks=Object.entries(byG).map(([gestor,projs])=>{
     const col=gcol(gestor);
     const cards=projs.map(p=>{
       const gap=p.pct_plan-p.pct_real;
-      return `<div class="proj-card" onclick="showProject('${p.id}')">
+      return `<div class="proj-card" onclick="showProjectById(${JSON.stringify(p.id)})">
         <div class="pc-top">
           <div><div class="pc-name">${p.name}</div><div class="pc-pm">Gestor: ${p.gestor}</div></div>
           <div><div class="pc-pct-plan">plan ${p.pct_plan}%</div><div class="pc-pct-real" style="color:${eCol(p.estado)}">${p.pct_real}%</div></div>
@@ -562,7 +441,7 @@ function renderPortfolio(){
     }).join('');
     return `<div class="gestor-section">
       <div class="gestor-header">
-        <div class="gestor-av" style="background:${col}20;color:${col}">${gini(gestor)}</div>
+        <div class="gestor-av-lg" style="background:${col}20;color:${col}">${gini(gestor)}</div>
         <span style="font-size:13px;font-weight:600;color:var(--text2)">${gestor}</span>
         <span style="font-size:11px;color:var(--text3)">${projs.length} proyecto${projs.length>1?'s':''}</span>
       </div>
@@ -575,8 +454,9 @@ function renderPortfolio(){
       <select onchange="filterSt=this.value;renderPortfolio()">
         <option value="">Todos los estados</option>
         <option value="Retrasada" ${filterSt==='Retrasada'?'selected':''}>Retrasados</option>
-        <option value="Amarillo"  ${filterSt==='Amarillo'?'selected':''}>En riesgo</option>
-        <option value="Verde"     ${filterSt==='Verde'?'selected':''}>Al día</option>
+        <option value="Amarillo" ${filterSt==='Amarillo'?'selected':''}>En riesgo</option>
+        <option value="Verde" ${filterSt==='Verde'?'selected':''}>Al día</option>
+        <option value="Según lo programado" ${filterSt==='Según lo programado'?'selected':''}>Según lo programado</option>
       </select>
     </div>
     <div class="metrics">
@@ -585,116 +465,158 @@ function renderPortfolio(){
       <div class="metric m-green"><div class="metric-lbl">Al día</div><div class="metric-val">${alDia}</div><div class="metric-sub">${riesgo} en riesgo</div></div>
       <div class="metric m-red"><div class="metric-lbl">Con atraso</div><div class="metric-val">${retrasados}</div><div class="metric-sub">acción requerida</div></div>
     </div>
-    ${syncBar}${gestorBlocks}`;
+    ${syncBarHTML()}${blocks}`;
 }
 
-// ══════════════════════════════
-// RESUMEN — with overlap algorithm
-// ══════════════════════════════
-function setFilter(type,val){
-  if(type==='st') filterSt=val;
-  else filterGestor=val;
-  renderResumen();
-}
+// ══ RESUMEN ══
 function showResumen(){
   curProj=null;switchView('resumen');
-  // Show skeleton immediately while sheets load
-  if(Object.keys(SHEET_CONFIG).length>0 && document.getElementById('sb-source').textContent!=='Google Sheets conectado'){
-    showSkeletonResumen();
-    loadFromSheets();
-  } else {
-    renderResumen();
-  }
+  if(Object.keys(SHEET_CONFIG).length>0&&document.getElementById('sb-source').textContent==='Cargando...'){
+    showSkeletonResumen();loadFromSheets();
+  } else { renderResumen(); }
 }
 function showSkeletonResumen(){
   const n=Object.keys(SHEET_CONFIG).length||4;
   const skeletons=Array(n).fill(0).map((_,i)=>`
     <div class="skeleton-card">
       <div style="display:grid;grid-template-columns:1fr auto;gap:24px;margin-bottom:16px">
-        <div>
-          <div class="skeleton skeleton-line" style="width:${180+i*20}px"></div>
-          <div class="skeleton skeleton-line" style="width:140px;height:11px;opacity:.6"></div>
-        </div>
+        <div><div class="skeleton" style="height:14px;width:${180+i*20}px;margin-bottom:10px"></div><div class="skeleton" style="height:11px;width:140px"></div></div>
         <div style="display:flex;gap:18px">
           <div class="skeleton" style="width:52px;height:40px;border-radius:var(--radius-sm)"></div>
           <div class="skeleton" style="width:52px;height:40px;border-radius:var(--radius-sm)"></div>
           <div class="skeleton" style="width:52px;height:40px;border-radius:var(--radius-sm)"></div>
         </div>
       </div>
-      <div class="skeleton skeleton-bar"></div>
+      <div class="skeleton" style="height:32px;margin:14px 0 8px"></div>
       <div style="display:flex;justify-content:space-between;margin-top:6px">
-        <div class="skeleton" style="width:80px;height:10px"></div>
-        <div class="skeleton" style="width:80px;height:10px"></div>
+        <div class="skeleton" style="width:80px;height:10px"></div><div class="skeleton" style="width:80px;height:10px"></div>
       </div>
     </div>`).join('');
   document.getElementById('view-resumen').innerHTML=`
     <div class="topbar"><div><h2>Resumen de proyectos</h2><p>Cargando datos desde Google Sheets...</p></div></div>
-    <div class="loading-overlay">
-      <div class="loading-spinner"></div>
-      <span>Conectando con Google Sheets · cargando ${n} proyecto${n>1?'s':''}...</span>
-    </div>
+    <div class="loading-overlay"><div class="loading-spinner"></div><span>Conectando · cargando ${n} proyecto${n>1?'s':''}...</span></div>
     ${skeletons}`;
 }
 
-function buildRoadmapRows(p){
-  const today=p.today_pct||50;
-  const rows=computeRows(p.fases);
-  const totalRowHeight=rows.length*28+(rows.length-1)*5;
-
-  const rowsHtml=rows.map((rowFases,ri)=>{
-    const segs=rowFases.map((f,fi)=>{
-      const globalFi=p.fases.indexOf(f);
-      const fc=faseColor(f.name,f.estado,globalFi);
-      const shortName=f.name.split('—')[0].trim().split(' ').slice(0,2).join(' ');
-      const progW=f.pct_plan>0?Math.round((f.pct_real/f.pct_plan)*f.dur):0;
-      const showPct=f.dur>10;
-      return `<div class="rsm-seg" style="left:${f.start_off}%;width:${f.dur}%;background:${fc}" title="${f.id} · ${f.name} — ${f.pct_real}% real · ${f.estado}">
-        <span class="rsm-seg-lbl">${f.id} ${shortName}${showPct?` · ${f.pct_real}%`:''}</span>
-        <div class="rsm-seg-prog" style="width:${progW}%"></div>
-      </div>`;
-    }).join('');
-    return `<div class="rsm-gantt-row"><div class="rsm-row-bg"></div>${segs}</div>`;
-  }).join('');
-
-  const rowCount=rows.length>1?`<span style="font-size:9px;background:rgba(99,102,241,.15);color:var(--accent);padding:1px 6px;border-radius:10px;margin-left:6px">${rows.length} filas por solapamiento</span>`:'';
-
-  return `<div class="rsm-gantt-rows" id="gr-${p.id}">${rowsHtml}<div class="rsm-today" id="td-${p.id}" style="left:${today}%;height:${totalRowHeight+16}px"></div></div>
-    <div class="rsm-date-range">
-      <span>${p.fecha_inicio}</span>
-      <span style="display:flex;align-items:center">${p.fases.length} fases${rowCount}</span>
-      <span>${p.fecha_fin}</span>
-    </div>`;
+function renderResumen(){
+  if(!projects.length){document.getElementById('view-resumen').innerHTML=`<div style="padding:48px;text-align:center;color:var(--text3)">No hay proyectos cargados</div>`;return;}
+  let filtered=projects;
+  if(filterSt) filtered=filtered.filter(p=>p.estado===filterSt);
+  if(filterGestor) filtered=filtered.filter(p=>p.gestor===filterGestor);
+  const gestores=[...new Set(projects.map(p=>p.gestor))];
+  const nConformes=projects.filter(p=>p.estado==='Verde'||p.estado==='Completada'||p.estado==='Según lo programado').length;
+  const nAlerta=projects.filter(p=>p.estado==='Amarillo').length;
+  const nRetraso=projects.filter(p=>p.estado==='Retrasada').length;
+  const cards=filtered.map(p=>buildProjectCard(p)).join('');
+  document.getElementById('view-resumen').innerHTML=`
+    <div class="topbar">
+      <div><h2>Resumen de proyectos</h2><p>${filtered.length} de ${projects.length} proyectos</p></div>
+    </div>
+    <div class="filter-bar">
+      <div class="filter-group">
+        <span class="filter-label">Estado</span>
+        <div class="filter-pills">
+          <button class="pill ${filterSt===''?'pill-active':''}" onclick="setFilter('st','')"><span class="pill-dot" style="background:var(--text3)"></span>Todos</button>
+          <button class="pill ${filterSt==='Según lo programado'?'pill-active pill-green':''}" onclick="setFilter('st','Según lo programado')"><span class="pill-dot" style="background:var(--blue)"></span>Conforme</button>
+          <button class="pill ${filterSt==='Amarillo'?'pill-active pill-amber':''}" onclick="setFilter('st','Amarillo')"><span class="pill-dot" style="background:var(--amber)"></span>Alerta</button>
+          <button class="pill ${filterSt==='Retrasada'?'pill-active pill-red':''}" onclick="setFilter('st','Retrasada')"><span class="pill-dot" style="background:var(--red)"></span>Retraso</button>
+        </div>
+      </div>
+      <div class="filter-sep"></div>
+      <div class="filter-group">
+        <span class="filter-label">Gestor</span>
+        <div class="filter-pills">
+          <button class="pill ${filterGestor===''?'pill-active':''}" onclick="setFilter('g','')">Todos</button>
+          ${gestores.map(g=>`<button class="pill ${filterGestor===g?'pill-active':''}" onclick="setFilter('g',${JSON.stringify(g)})"><span style="width:6px;height:6px;border-radius:50%;background:${gcol(g)};display:inline-block;margin-right:3px;vertical-align:1px"></span>${g.split(' ')[0]}</button>`).join('')}
+        </div>
+      </div>
+      <div class="filter-stats">
+        <div class="fstat fstat-green"><span>${nConformes}</span><span>Conformes</span></div>
+        <div class="fstat fstat-amber"><span>${nAlerta}</span><span>Alerta</span></div>
+        <div class="fstat fstat-red"><span>${nRetraso}</span><span>Retraso</span></div>
+      </div>
+    </div>
+    ${syncBarHTML()}
+    <div id="rsm-cards">${cards}</div>`;
 }
+function setFilter(type,val){if(type==='st')filterSt=val;else filterGestor=val;renderResumen();}
 
 function buildProjectCard(p){
-  const col=gcol(p.gestor),isOpen=expRsm[p.id],gap=p.pct_plan-p.pct_real;
-  const months=getProjectMonths(p);
+  const col=gcol(p.gestor),gap=p.pct_plan-p.pct_real;
+  const months=getProjectMonths(p),today=p.today_pct||50;
+  const rows=computeRows(p.fases);
+  const totalRowH=rows.length*28+(rows.length-1)*5;
+  const rowsHtml=rows.map(rowFases=>
+    `<div class="rsm-gantt-row"><div class="rsm-row-bg"></div>${
+      rowFases.map((f,fi)=>{
+        const globalFi=p.fases.indexOf(f);
+        const fc=faseColor(f.name,f.estado,globalFi);
+        const shortName=f.name.split('—')[0].trim().split(' ').slice(0,2).join(' ');
+        const progW=f.pct_plan>0?Math.round((f.pct_real/f.pct_plan)*f.dur):0;
+        return `<div class="rsm-seg" style="left:${f.start_off}%;width:${f.dur}%;background:${fc}" title="${f.id} · ${f.name} — ${f.pct_real}% · ${f.estado}">
+          <span class="rsm-seg-lbl">${f.id} ${shortName}${f.dur>10?' · '+f.pct_real+'%':''}</span>
+          <div class="rsm-seg-prog" style="width:${progW}%"></div>
+        </div>`;
+      }).join('')
+    }</div>`
+  ).join('');
+  const overlapNote=rows.length>1?`<span style="font-size:9px;background:rgba(99,102,241,.15);color:var(--accent);padding:1px 6px;border-radius:10px;margin-left:6px">${rows.length} filas por solapamiento</span>`:'';
   const monthAxis=months.map(m=>`<div class="rsm-month-cell">${m.label}</div>`).join('');
-  const today=p.today_pct||50;
+  const isOpen=expRsmPhase[p.id+'_open'];
 
-  const phaseRows=isOpen?p.fases.map((f,i)=>{
-    const fc=faseColor(f.name,f.estado,i);
+  // Phase rows with task expand
+  const phaseRowsHtml=isOpen?p.fases.map((f,fi)=>{
+    const fc=faseColor(f.name,f.estado,fi);
     const rw=f.pct_plan>0?Math.round((f.pct_real/f.pct_plan)*f.dur):0;
-    return `<div class="rsm-phase-row">
-      <div class="rsm-phase-name-cell">
-        <div class="rsm-phase-dot" style="background:${fc}"></div>
-        <span class="rsm-phase-edt">${f.id}</span>
-        <span class="rsm-phase-name">${f.name}</span>
+    const phKey=p.id+'_'+f.id;
+    const phOpen=expRsmPhase[phKey];
+    const taskRowsHtml=phOpen&&f.tasks.length?`<div class="rsm-task-rows">${
+      f.tasks.map(t=>{
+        const g2=t.pct_plan-t.pct_real;
+        const isLate=t.estado==='Retrasada';
+        return `<div class="rsm-task-row">
+          <div class="rsm-task-name-cell">
+            <span class="rsm-task-edt">${t.edt}</span>
+            <span class="rsm-task-name ${isLate?'late':''}">${t.name}</span>
+            ${t.atraso?`<span class="rsm-task-chip">${t.atraso}</span>`:''}
+          </div>
+          <div class="rsm-pct">${t.pct_plan}%</div>
+          <div class="rsm-pct" style="color:${eCol(t.estado)}">${t.pct_real}%</div>
+          <div><span class="badge ${eBadge(t.estado)}" style="font-size:9px">${t.estado}</span></div>
+          <div class="rsm-mini-wrap"><div class="rsm-mini-bg">
+            <div class="rsm-mini-plan" style="left:${f.start_off}%;width:${f.dur}%;background:${fc}"></div>
+            <div class="rsm-mini-real" style="left:${f.start_off}%;width:${rw}%;background:${fc}"></div>
+            <div class="rsm-mini-today" style="left:${today}%"></div>
+          </div></div>
+          <div class="rsm-phase-dates">${t.start||'—'}<br>${t.end||'—'}</div>
+        </div>`;
+      }).join('')
+    }</div>`:'';
+    return `<div>
+      <div class="rsm-phase-row ${phOpen?'expanded':''}" onclick="toggleRsmPhase(${JSON.stringify(p.id)},${JSON.stringify(f.id)})">
+        <div class="rsm-phase-name-cell">
+          <div class="rsm-ph-chev ${phOpen?'open':''}">›</div>
+          <div class="rsm-phase-dot" style="background:${fc}"></div>
+          <span class="rsm-phase-edt">${f.id}</span>
+          <span class="rsm-phase-name">${f.name}</span>
+          ${f.tasks.length?`<span style="font-size:9px;color:var(--text3);margin-left:4px">(${f.tasks.length})</span>`:''}
+        </div>
+        <div class="rsm-pct">${f.pct_plan}%</div>
+        <div class="rsm-pct" style="color:${eCol(f.estado)}">${f.pct_real}%</div>
+        <div><span class="badge ${eBadge(f.estado)}" style="font-size:9px">${f.estado}</span></div>
+        <div class="rsm-mini-wrap"><div class="rsm-mini-bg">
+          <div class="rsm-mini-plan" style="left:${f.start_off}%;width:${f.dur}%;background:${fc}"></div>
+          <div class="rsm-mini-real" style="left:${f.start_off}%;width:${rw}%;background:${fc}"></div>
+          <div class="rsm-mini-today" style="left:${today}%"></div>
+        </div></div>
+        <div class="rsm-phase-dates">${p.fecha_inicio.slice(0,5)}<br>${p.fecha_fin}</div>
       </div>
-      <div class="rsm-pct">${f.pct_plan}%</div>
-      <div class="rsm-pct" style="color:${eCol(f.estado)}">${f.pct_real}%</div>
-      <div><span class="badge ${eBadge(f.estado)}" style="font-size:9px">${f.estado}</span></div>
-      <div class="rsm-mini-wrap"><div class="rsm-mini-bg">
-        <div class="rsm-mini-plan" style="left:${f.start_off}%;width:${f.dur}%;background:${fc}"></div>
-        <div class="rsm-mini-real" style="left:${f.start_off}%;width:${rw}%;background:${fc}"></div>
-        <div class="rsm-mini-today" style="left:${today}%"></div>
-      </div></div>
-      <div class="rsm-phase-dates">${p.fecha_inicio.slice(0,5)}<br>${p.fecha_fin}</div>
+      ${taskRowsHtml}
     </div>`;
-  }).join(''):'' ;
+  }).join(''):'';
 
   return `<div class="rsm-card" id="card-${p.id}">
-    <div class="rsm-top" onclick="toggleRsm('${p.id}')">
+    <div class="rsm-top" onclick="toggleRsmCard(${JSON.stringify(p.id)})">
       <div>
         <div class="rsm-proj-name">
           <div class="rsm-chev ${isOpen?'open':''}">›</div>
@@ -718,7 +640,15 @@ function buildProjectCard(p){
     </div>
     <div class="rsm-roadmap">
       <div class="rsm-month-axis">${monthAxis}</div>
-      ${buildRoadmapRows(p)}
+      <div class="rsm-gantt-rows" style="margin-bottom:8px">
+        ${rowsHtml}
+        <div class="rsm-today" style="left:${today}%;height:${totalRowH+16}px"></div>
+      </div>
+      <div class="rsm-date-range">
+        <span>${p.fecha_inicio}</span>
+        <span style="display:flex;align-items:center">${p.fases.length} fases${overlapNote}</span>
+        <span>${p.fecha_fin}</span>
+      </div>
     </div>
     ${isOpen?`<div class="rsm-phases">
       <div class="rsm-phases-hdr">
@@ -726,105 +656,59 @@ function buildProjectCard(p){
         <span style="text-align:right;padding-right:14px">Esp.</span>
         <span style="text-align:right;padding-right:14px">Real</span>
         <span>Estado</span>
-        <span style="padding-left:4px">Gantt individual</span>
+        <span style="padding-left:4px">Gantt</span>
         <span style="text-align:right">Fechas</span>
       </div>
-      ${phaseRows}
+      ${phaseRowsHtml}
     </div>`:''}
   </div>`;
 }
 
-function renderResumen(){
-  let filtered=projects;
-  if(filterSt) filtered=filtered.filter(p=>p.estado===filterSt);
-  if(filterGestor) filtered=filtered.filter(p=>p.gestor===filterGestor);
-  const retrasados=filtered.filter(p=>p.estado==='Retrasada').length;
-  const sheetsOn=Object.keys(SHEET_CONFIG).length>0;
-  const syncBar=sheetsOn
-    ?`<div class="sync-bar"><div class="sync-info">Conectado a <strong style="color:var(--text)">Google Sheets</strong> · ${projects.length} proyectos cargados</div><button class="sync-btn" onclick="loadFromSheets()">↻ Sincronizar</button></div>`
-    :`<div class="sync-bar"><div class="sync-info">⚙️ <strong style="color:var(--text)">Datos de ejemplo</strong> · <span style="color:var(--accent);cursor:pointer;text-decoration:underline" onclick="showConfig()">Conecta tu Google Sheets para ver datos reales →</span></div></div>`;
-  const gestores=[...new Set(projects.map(p=>p.gestor))];
-  const nConformes=projects.filter(p=>p.estado==='Verde'||p.estado==='Completada').length;
-  const nAlerta=projects.filter(p=>p.estado==='Amarillo').length;
-  const nRetraso=projects.filter(p=>p.estado==='Retrasada').length;
-
-  document.getElementById('view-resumen').innerHTML=`
-    <div class="topbar">
-      <div><h2>Resumen de proyectos</h2><p>${filtered.length} de ${projects.length} proyectos</p></div>
-    </div>
-
-    <div class="filter-bar">
-      <div class="filter-group">
-        <span class="filter-label">Estado</span>
-        <div class="filter-pills">
-          <button class="pill ${filterSt===''?'pill-active':''}" onclick="setFilter('st','')">
-            <span class="pill-dot" style="background:var(--text3)"></span>Todos
-          </button>
-          <button class="pill ${filterSt==='Verde'?'pill-active pill-green':''}" onclick="setFilter('st','Verde')">
-            <span class="pill-dot" style="background:var(--green)"></span>Conforme
-          </button>
-          <button class="pill ${filterSt==='Amarillo'?'pill-active pill-amber':''}" onclick="setFilter('st','Amarillo')">
-            <span class="pill-dot" style="background:var(--amber)"></span>Alerta
-          </button>
-          <button class="pill ${filterSt==='Retrasada'?'pill-active pill-red':''}" onclick="setFilter('st','Retrasada')">
-            <span class="pill-dot" style="background:var(--red)"></span>Retraso
-          </button>
-        </div>
-      </div>
-      <div class="filter-sep"></div>
-      <div class="filter-group">
-        <span class="filter-label">Gestor</span>
-        <div class="filter-pills">
-          <button class="pill ${filterGestor===''?'pill-active':''}" onclick="setFilter('g','')">Todos</button>
-          ${gestores.map(g=>`<button class="pill ${filterGestor===g?'pill-active':''}" onclick="setFilter('g','${g.replace(/'/g,"\\'")}')">
-            <span style="width:6px;height:6px;border-radius:50%;background:${gcol(g)};display:inline-block;margin-right:3px;vertical-align:1px"></span>${g}
-          </button>`).join('')}
-        </div>
-      </div>
-      <div class="filter-stats">
-        <div class="fstat fstat-green"><span>${nConformes}</span><span>Conformes</span></div>
-        <div class="fstat fstat-amber"><span>${nAlerta}</span><span>Alerta</span></div>
-        <div class="fstat fstat-red"><span>${nRetraso}</span><span>Retraso</span></div>
-      </div>
-    </div>
-
-    ${syncBar}
-    <div id="rsm-cards">${filtered.map(p=>buildProjectCard(p)).join('')}</div>`;
+function toggleRsmCard(pid){
+  expRsmPhase[pid+'_open']=!expRsmPhase[pid+'_open'];
+  rerenderCard(pid);
+}
+function toggleRsmPhase(pid,fid){
+  const key=pid+'_'+fid;
+  expRsmPhase[key]=!expRsmPhase[key];
+  rerenderCard(pid);
+}
+function rerenderCard(pid){
+  const p=projects.find(x=>x.id===pid);
+  const el=document.getElementById('card-'+pid);
+  if(p&&el){
+    const newCard=document.createElement('div');
+    newCard.innerHTML=buildProjectCard(p);
+    el.replaceWith(newCard.firstElementChild);
+  }
 }
 
-function toggleRsm(id){
-  expRsm[id]=!expRsm[id];
+// ══ DETAIL VIEW ══
+function showProjectById(id){
   const p=projects.find(x=>x.id===id);
-  const el=document.getElementById('card-'+id);
-  if(el) el.outerHTML=buildProjectCard(p);
-}
-
-// ══════════════════════════════
-// DETAIL
-// ══════════════════════════════
-function showProject(id){
-  curProj=projects.find(p=>p.id===id);curView='detail';expPhase={};
+  if(!p) return;
+  curProj=p; curView='detail'; expPhase={};
   buildSidebar();
   ['portfolio','resumen','config'].forEach(v=>document.getElementById('view-'+v).style.display='none');
   document.getElementById('view-detail').style.display='';
   renderDetail();
 }
 function renderDetail(){
-  const p=curProj;if(!p) return;
-  const alerts=[];p.fases.forEach(f=>f.tasks.forEach(t=>{if(t.atraso&&t.estado==='Retrasada')alerts.push(t);}));
+  const p=curProj; if(!p) return;
+  const alerts=[];
+  p.fases.forEach(f=>f.tasks.forEach(t=>{if(t.atraso&&t.estado==='Retrasada')alerts.push(t);}));
   const totalT=p.fases.reduce((a,f)=>a+f.tasks.length,0);
   const doneT=p.fases.reduce((a,f)=>a+f.tasks.filter(t=>t.estado==='Completada').length,0);
   const lateT=p.fases.reduce((a,f)=>a+f.tasks.filter(t=>t.estado==='Retrasada').length,0);
   const gap=p.pct_plan-p.pct_real,col=gcol(p.gestor);
   const months=getProjectMonths(p),today=p.today_pct||50;
-
   const alertHtml=alerts.length?`<div class="alert-box">
     <div class="alert-title"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4m0 4h.01"/></svg>${alerts.length} actividad${alerts.length>1?'es':''} con atraso crítico</div>
     ${alerts.map(t=>`<div class="alert-item"><span style="font-family:'DM Mono',monospace;font-size:10px;opacity:.65">${t.edt}</span> · ${t.name} <span style="margin-left:5px;padding:1px 6px;background:rgba(239,68,68,.18);border-radius:8px;font-size:10px">${t.atraso}</span></div>`).join('')}
   </div>`:'';
-
   const ganttRows=p.fases.map((f,fi)=>{
-    const isOpen=expPhase[f.id];
+    const phKey=p.id+'_'+f.id;
+    const isOpen=expPhase[phKey];
     const rw=f.pct_plan>0?Math.round((f.pct_real/f.pct_plan)*f.dur):0;
     const fc=faseColor(f.name,f.estado,fi);
     const taskRows=isOpen?`<div class="task-rows">${f.tasks.map(t=>`
@@ -841,14 +725,15 @@ function renderDetail(){
           <div class="g-plan" style="left:${f.start_off}%;width:${f.dur}%"></div>
           <div class="g-real" style="left:${f.start_off}%;width:${t.pct_plan>0?Math.round((t.pct_real/Math.max(t.pct_plan,1))*f.dur):0}%;background:${eBarC(t.estado)}"></div>
         </div></div>
-        <div style="text-align:right;font-size:10px;color:var(--text3);font-family:'DM Mono',monospace">${t.start}→${t.end}</div>
+        <div style="text-align:right;font-size:10px;color:var(--text3);font-family:'DM Mono',monospace">${t.start||''}→${t.end||''}</div>
       </div>`).join('')}</div>`:'';
     return `<div class="phase-block">
-      <div class="phase-hdr" onclick="togglePhase('${f.id}')">
+      <div class="phase-hdr" onclick="togglePhaseDetail(${JSON.stringify(p.id)},${JSON.stringify(f.id)})">
         <div class="ph-name-cell">
           <div class="ph-chev ${isOpen?'open':''}">›</div>
           <div style="width:10px;height:10px;border-radius:3px;background:${fc};flex-shrink:0"></div>
           <span class="ph-name">${f.id} · ${f.name}</span>
+          ${f.tasks.length?`<span style="font-size:10px;color:var(--text3);margin-left:4px">(${f.tasks.length})</span>`:''}
         </div>
         <div class="pct-cell pct-muted">${f.pct_plan}%</div>
         <div class="pct-cell ${pCls(f.estado,f.pct_plan,f.pct_real)}">${f.pct_real}%</div>
@@ -861,7 +746,6 @@ function renderDetail(){
         <div style="text-align:right;font-size:10px;color:var(--text3);font-family:'DM Mono',monospace">${p.fecha_inicio.slice(0,5)}</div>
       </div>${taskRows}</div>`;
   }).join('');
-
   document.getElementById('view-detail').innerHTML=`
     <div class="back-btn" onclick="showResumen()">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
@@ -908,7 +792,7 @@ function renderDetail(){
         <div style="display:flex;flex-direction:column;gap:7px">
           <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--green)">● Completadas</span><span style="font-family:'DM Mono',monospace">${doneT}</span></div>
           <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--red)">● Retrasadas</span><span style="font-family:'DM Mono',monospace">${lateT}</span></div>
-          <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--gray)">● Futuras</span><span style="font-family:'DM Mono',monospace">${totalT-doneT-lateT}</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--gray)">● Futuras/Otras</span><span style="font-family:'DM Mono',monospace">${totalT-doneT-lateT}</span></div>
           <div style="display:flex;justify-content:space-between;font-size:12px;border-top:1px solid var(--border);padding-top:7px"><span style="color:var(--text2)">Total</span><span style="font-family:'DM Mono',monospace">${totalT}</span></div>
         </div>
       </div>
@@ -923,121 +807,79 @@ function renderDetail(){
       </div>
     </div>`;
 }
-function togglePhase(id){expPhase[id]=!expPhase[id];renderDetail();}
+function togglePhaseDetail(pid,fid){
+  const key=pid+'_'+fid;
+  expPhase[key]=!expPhase[key];
+  renderDetail();
+}
 
 // ══ CONFIG ══
-function showConfig(){curView='config';buildSidebar();['portfolio','resumen','detail'].forEach(v=>document.getElementById('view-'+v).style.display='none');document.getElementById('view-config').style.display='';renderConfig();}
-function renderConfig(){
+function showConfig(){curView='config';buildSidebar();['portfolio','resumen','detail'].forEach(v=>document.getElementById('view-'+v).style.display='none');document.getElementById('view-config').style.display='';
   document.getElementById('view-config').innerHTML=`
     <div class="topbar"><div><h2>Conectar Google Sheets</h2><p>Una pestaña por proyecto · copy-paste desde MS Project</p></div></div>
     <div class="config-card">
-      <div class="config-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Paso 0 — Crea tu proxy con Google Apps Script (1 sola vez)</div>
-      <div class="step-row"><div class="step-num">1</div><span>Ve a <strong style="color:var(--text)">script.google.com</strong> → clic en <strong style="color:var(--text)">Nuevo proyecto</strong></span></div>
-      <div class="step-row"><div class="step-num">2</div><span>Borra todo el código y pega este script:</span></div>
-      <div class="code-block" style="margin:0 0 10px">
-function doGet(e){<br>
-&nbsp;&nbsp;const url=e.parameter.url;<br>
-&nbsp;&nbsp;const res=UrlFetchApp.fetch(url);<br>
-&nbsp;&nbsp;return ContentService.createTextOutput(res.getContentText())<br>
-&nbsp;&nbsp;&nbsp;&nbsp;.setMimeType(ContentService.MimeType.TEXT);<br>
-}
-      </div>
-      <div class="step-row"><div class="step-num">3</div><span>Clic en <strong style="color:var(--text)">Implementar → Nueva implementación → Aplicación web</strong></span></div>
-      <div class="step-row"><div class="step-num">4</div><span>Ejecutar como: <strong style="color:var(--text)">Yo</strong> · Quién tiene acceso: <strong style="color:var(--text)">Cualquier persona</strong> → Implementar</span></div>
-      <div class="step-row"><div class="step-num">5</div><span>Copia la URL que aparece y pégala en <strong style="color:var(--text)">GAS_PROXY_URL</strong> del index.html en GitHub</span></div>
+      <div class="config-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>Apps Script Proxy</div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:8px">URL del proxy configurada: <span style="font-family:'DM Mono',monospace;color:var(--accent);font-size:11px">${GAS_PROXY_URL?'✓ Activo':'✗ No configurado'}</span></div>
     </div>
     <div class="config-card">
-      <div class="config-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Paso 1 — Google Sheet</div>
-      <div class="step-row"><div class="step-num">1</div><span>Una pestaña por proyecto. En la fila EDT=1 → gestor en <strong style="color:var(--text)">Nombres de los recursos</strong></span></div>
-      <div class="step-row"><div class="step-num">2</div><span>Archivo → Compartir → Publicar en la web → CSV → copia la URL de cada pestaña</span></div>
+      <div class="config-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Proyectos conectados</div>
+      ${Object.entries(SHEET_CONFIG).map(([name])=>`<div style="font-size:12px;color:var(--text2);padding:4px 0;border-bottom:.5px solid var(--border)">✓ ${name}</div>`).join('')}
     </div>
     <div class="config-card">
-      <div class="config-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>Paso 2 — SHEET_CONFIG en GitHub</div>
-      <div class="code-block">
-<span style="color:var(--text3)">const</span> <span style="color:var(--blue)">SHEET_CONFIG</span> = {<br>
-&nbsp;&nbsp;<span style="color:var(--green)">'Escalera de Descuento'</span>: <span style="color:var(--amber)">'https://…csv&gid=<span style="color:var(--red)">0</span>'</span>,<br>
-&nbsp;&nbsp;<span style="color:var(--green)">'Migradown'</span>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--amber)">'https://…csv&gid=<span style="color:var(--red)">111</span>'</span>,<br>
-&nbsp;&nbsp;<span style="color:var(--green)">'Parentesco'</span>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--amber)">'https://…csv&gid=<span style="color:var(--red)">222</span>'</span>,<br>
-};</div>
-    </div>
-    <div class="config-card">
-      <div class="config-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Flujo de actualización</div>
+      <div class="config-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Flujo de actualización para gestores</div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
         <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:14px 16px"><div style="font-size:12px;font-weight:500;color:var(--text);margin-bottom:4px">MS Project</div><div style="font-size:11px;color:var(--text3)">Seleccionar todo → Ctrl+C</div></div>
-        <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:14px 16px"><div style="font-size:12px;font-weight:500;color:var(--text);margin-bottom:4px">Google Sheets</div><div style="font-size:11px;color:var(--text3)">Pestaña del proyecto → A2 → Ctrl+V</div></div>
-        <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:14px 16px"><div style="font-size:12px;font-weight:500;color:var(--text);margin-bottom:4px">Dashboard</div><div style="font-size:11px;color:var(--text3)">Se actualiza al abrir o sincronizar</div></div>
+        <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:14px 16px"><div style="font-size:12px;font-weight:500;color:var(--text);margin-bottom:4px">Google Sheets</div><div style="font-size:11px;color:var(--text3)">Pestaña del proyecto → A1 → Ctrl+V</div></div>
+        <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:14px 16px"><div style="font-size:12px;font-weight:500;color:var(--text);margin-bottom:4px">Dashboard</div><div style="font-size:11px;color:var(--text3)">Clic en Sincronizar o recargar</div></div>
       </div>
-    </div>`;
-}
+    </div>`;}
 
-// ══ CSV PARSER ══
+// ══ CSV FETCH & PARSE ══
+function isValidCSV(text){
+  if(!text||text.length<50) return false;
+  if(text.trim().startsWith('<')) return false;
+  const firstLine=text.split('\n')[0].toLowerCase();
+  return firstLine.includes('edt')||firstLine.includes('nombre');
+}
 async function fetchCSV(url){
-  // Use Google Apps Script proxy (set GAS_PROXY_URL below)
   if(GAS_PROXY_URL){
     try{
       const r=await fetch(GAS_PROXY_URL+'?url='+encodeURIComponent(url));
       if(r.ok){const t=await r.text();if(isValidCSV(t))return t;}
-    }catch(e){console.warn('GAS proxy error:',e.message);}
+    }catch(e){}
   }
-  // Fallback: direct fetch
-  try{
-    const r=await fetch(url);
-    if(r.ok){const t=await r.text();if(isValidCSV(t))return t;}
-  }catch(e){}
+  try{const r=await fetch(url);if(r.ok){const t=await r.text();if(isValidCSV(t))return t;}}catch(e){}
   return null;
 }
-
-function isValidCSV(text){
-  if(!text||text.length<50) return false;
-  if(text.trim().startsWith('<')) return false; // HTML error page
-  // Must have EDT column header
-  const firstLine=text.split('\n')[0].toLowerCase();
-  return firstLine.includes('edt')||firstLine.includes('nombre');
-}
-
 async function loadFromSheets(){
-  const entries=Object.entries(SHEET_CONFIG);
-  if(!entries.length)return;
+  const entries=Object.entries(SHEET_CONFIG);if(!entries.length)return;
   const all=[];
-  let loaded=0;
   for(const [name,url] of entries){
     try{
       const csv=await fetchCSV(url);
       if(csv){
         const parsed=parseCSV(csv);
-        if(parsed.length){
-          all.push(...parsed);
-          loaded++;
-          console.log('✓ Cargado:',name,'→',parsed.length,'proyectos');
-        } else {
-          console.warn('✗ Sin proyectos parseados:',name);
-        }
-      } else {
-        console.warn('✗ No se pudo obtener CSV:',name);
-      }
-    }catch(e){
-      console.warn('✗ Error:',name,e.message);
-    }
+        if(parsed.length){all.push(...parsed);console.log('✓',name,'→',parsed.length,'proyectos');}
+        else console.warn('✗ Sin proyectos:',name);
+      } else console.warn('✗ Sin CSV:',name);
+    }catch(e){console.warn('✗ Error:',name,e.message);}
   }
-  console.log(`Cargados: ${loaded}/${entries.length} sheets, ${all.length} proyectos`);
+  console.log('Total cargados:',all.length,'proyectos');
   if(all.length){
     projects=all;
     document.getElementById('sb-source').textContent='Google Sheets conectado';
     document.getElementById('sb-date').textContent=new Date().toLocaleDateString('es-PE',{day:'2-digit',month:'short',year:'numeric'});
   } else {
-    // Show error in banner
-    const src=document.getElementById('sb-source');
-    if(src) src.textContent='Error al conectar Sheets';
+    document.getElementById('sb-source').textContent='Error al conectar';
   }
   buildSidebar();
-  if(curView==='resumen')renderResumen();
-  else if(curView==='portfolio')renderPortfolio();
+  if(curView==='resumen') renderResumen();
+  else if(curView==='portfolio') renderPortfolio();
 }
+
 function parseCSV(csv){
   const lines=csv.trim().split(/\r?\n/);
-  // Auto-detect separator: tab or comma
   const sep=lines[0].includes('\t')?'\t':',';
-  // Parse respecting quoted fields (Google Sheets CSV uses quotes for fields with commas)
   function splitRow(row){
     if(sep==='\t') return row.split('\t');
     const result=[];let cur='',inQ=false;
@@ -1047,8 +889,7 @@ function parseCSV(csv){
       else if(c===','&&!inQ){result.push(cur);cur='';}
       else cur+=c;
     }
-    result.push(cur);
-    return result;
+    result.push(cur);return result;
   }
   const headers=splitRow(lines[0]).map(h=>h.trim().replace(/^"|"$/g,''));
   const col=name=>headers.findIndex(h=>h.toLowerCase().includes(name.toLowerCase()));
@@ -1057,35 +898,27 @@ function parseCSV(csv){
         iVar=col('Var'),iRisk=col('Riesgos');
   const pct=v=>parseInt((v||'0').replace(/[^0-9\-]/g,'').trim())||0;
   const clean=v=>(v||'').trim().replace(/^"|"$/g,'');
-  // Calculate phase timeline offsets from dates
-  function dateToOffset(dateStr, projStart, projEnd){
+  function dateToOffset(dateStr,projStart,projEnd){
     if(!dateStr||!projStart||!projEnd) return 0;
-    const pd=s=>{
-      s=s.trim();
-      const parts=s.split('/');
-      if(parts.length<3) return null;
-      const d=parseInt(parts[0]),m=parseInt(parts[1]),y=parseInt(parts[2])+(parseInt(parts[2])<100?2000:0);
-      return new Date(y,m-1,d);
-    };
+    const pd=s=>{const a=s.trim().split('/');if(a.length<3)return null;return new Date(parseInt(a[2])+(parseInt(a[2])<100?2000:0),parseInt(a[1])-1,parseInt(a[0]));};
     const d=pd(dateStr),s=pd(projStart),e=pd(projEnd);
     if(!d||!s||!e) return 0;
-    const total=(e-s)/86400000;
-    if(total<=0) return 0;
+    const total=(e-s)/86400000;if(total<=0)return 0;
     return Math.max(0,Math.min(100,((d-s)/86400000/total*100)));
   }
   let project=null,currentFase=null;const projs=[];
   for(let i=1;i<lines.length;i++){
     if(!lines[i].trim()) continue;
-    const cols=splitRow(lines[i]);if(cols.length<3)continue;
-    const edt=clean(cols[iEDT]),nombre=clean(cols[iNombre]);if(!edt||!nombre)continue;
+    const cols=splitRow(lines[i]);if(cols.length<3) continue;
+    const edt=clean(cols[iEDT]),nombre=clean(cols[iNombre]);if(!edt||!nombre) continue;
     const isRoot=/^\d+$/.test(edt);
-    // Phase = exactly 2 levels deep (1.1, 1.2, 2.3 etc)
     const isPhase=/^\d+\.\d+$/.test(edt);
     if(isRoot){
-      const gestor=iRes>=0?clean(cols[iRes]).split(';')[0].trim().replace(/\.$/,''):'';
+      const gestor=iRes>=0?clean(cols[iRes]).split(';')[0].trim().replace(/\.$/,''):'Sin gestor';
       const fi=clean(cols[iStart]),fe=clean(cols[iEnd]);
       project={
-        id:'p_'+i+'_'+edt,name:nombre,gestor,
+        id:'proj_'+projs.length+'_'+edt,
+        name:nombre,gestor,
         pct_plan:pct(cols[iPlan]),pct_real:pct(cols[iReal]),
         estado:clean(cols[iEstado]),
         fecha_inicio:fi,fecha_fin:fe,
@@ -1097,21 +930,17 @@ function parseCSV(csv){
         const fi=clean(cols[iStart]),fe=clean(cols[iEnd]);
         const startOff=dateToOffset(fi,project.fecha_inicio,project.fecha_fin);
         const endOff=dateToOffset(fe,project.fecha_inicio,project.fecha_fin);
-        const dur=Math.max(2,endOff-startOff);
-        currentFase={
-          id:edt,name:nombre,
-          estado:clean(cols[iEstado]),
+        const dur=Math.max(3,endOff-startOff);
+        currentFase={id:edt,name:nombre,estado:clean(cols[iEstado]),
           pct_plan:pct(cols[iPlan]),pct_real:pct(cols[iReal]),
-          start_off:startOff,dur:dur,tasks:[]
-        };
+          start_off:startOff,dur,tasks:[]};
         project.fases.push(currentFase);
       } else if(currentFase){
+        const isLate=clean(cols[iEstado])==='Retrasada';
         const g=pct(cols[iPlan])-pct(cols[iReal]);
         const varDur=iVar>=0?clean(cols[iVar]):'';
-        const isLate=clean(cols[iEstado])==='Retrasada';
         currentFase.tasks.push({
-          edt,name:nombre,
-          estado:clean(cols[iEstado]),
+          edt,name:nombre,estado:clean(cols[iEstado]),
           pct_plan:pct(cols[iPlan]),pct_real:pct(cols[iReal]),
           start:clean(cols[iStart]),end:clean(cols[iEnd]),
           atraso:isLate&&g>0?`-${g}%`:(isLate&&varDur&&varDur!=='0 días'?varDur:''),
@@ -1120,18 +949,13 @@ function parseCSV(csv){
       }
     }
   }
-  // Calculate today_pct for each project based on actual date
+  // Calculate today_pct per project
   projs.forEach(p=>{
-    const pd=s=>{
-      if(!s) return null;
-      const parts=s.split('/');
-      if(parts.length<3) return null;
-      return new Date(parseInt(parts[2])+(parseInt(parts[2])<100?2000:0),parseInt(parts[1])-1,parseInt(parts[0]));
-    };
+    const pd=s=>{if(!s)return null;const a=s.split('/');if(a.length<3)return null;return new Date(parseInt(a[2])+(parseInt(a[2])<100?2000:0),parseInt(a[1])-1,parseInt(a[0]));};
     const start=pd(p.fecha_inicio),end=pd(p.fecha_fin),today=new Date();
     if(start&&end&&today>=start){
       const total=(end-start)/86400000;
-      p.today_pct=Math.max(0,Math.min(98,((today-start)/86400000/total*100)));
+      p.today_pct=Math.max(2,Math.min(97,((today-start)/86400000/total*100)));
     }
   });
   return projs;
@@ -1140,6 +964,7 @@ function parseCSV(csv){
 // ══ INIT ══
 buildSidebar();
 showResumen();
+loadFromSheets();
 </script>
 </body>
 </html>
