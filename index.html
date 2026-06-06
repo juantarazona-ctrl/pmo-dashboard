@@ -984,25 +984,106 @@ async function loadFromSheets(){
   if(curView==='resumen')renderResumen();else if(curView==='portfolio')renderPortfolio();
 }
 function parseCSV(csv){
-  const lines=csv.trim().split('\n');
-  const headers=lines[0].split('\t').map(h=>h.trim());
+  const lines=csv.trim().split(/\r?\n/);
+  // Auto-detect separator: tab or comma
+  const sep=lines[0].includes('\t')?'\t':',';
+  // Parse respecting quoted fields (Google Sheets CSV uses quotes for fields with commas)
+  function splitRow(row){
+    if(sep==='\t') return row.split('\t');
+    const result=[];let cur='',inQ=false;
+    for(let i=0;i<row.length;i++){
+      const c=row[i];
+      if(c==='"'){inQ=!inQ;}
+      else if(c===','&&!inQ){result.push(cur);cur='';}
+      else cur+=c;
+    }
+    result.push(cur);
+    return result;
+  }
+  const headers=splitRow(lines[0]).map(h=>h.trim().replace(/^"|"$/g,''));
   const col=name=>headers.findIndex(h=>h.toLowerCase().includes(name.toLowerCase()));
-  const iEDT=col('EDT'),iNombre=col('Nombre'),iPlan=col('esperado'),iReal=col('completado'),iEstado=col('Estado'),iStart=col('Comienzo'),iEnd=col('Fin'),iRes=col('recursos');
-  const pct=v=>parseInt((v||'0').replace('%','').trim())||0;
-  const clean=v=>(v||'').trim();
+  const iEDT=col('EDT'),iNombre=col('Nombre'),iPlan=col('esperado'),iReal=col('completado'),
+        iEstado=col('Estado'),iStart=col('Comienzo'),iEnd=col('Fin'),iRes=col('recursos'),
+        iVar=col('Var'),iRisk=col('Riesgos');
+  const pct=v=>parseInt((v||'0').replace(/[^0-9\-]/g,'').trim())||0;
+  const clean=v=>(v||'').trim().replace(/^"|"$/g,'');
+  // Calculate phase timeline offsets from dates
+  function dateToOffset(dateStr, projStart, projEnd){
+    if(!dateStr||!projStart||!projEnd) return 0;
+    const pd=s=>{
+      s=s.trim();
+      const parts=s.split('/');
+      if(parts.length<3) return null;
+      const d=parseInt(parts[0]),m=parseInt(parts[1]),y=parseInt(parts[2])+(parseInt(parts[2])<100?2000:0);
+      return new Date(y,m-1,d);
+    };
+    const d=pd(dateStr),s=pd(projStart),e=pd(projEnd);
+    if(!d||!s||!e) return 0;
+    const total=(e-s)/86400000;
+    if(total<=0) return 0;
+    return Math.max(0,Math.min(100,((d-s)/86400000/total*100)));
+  }
   let project=null,currentFase=null;const projs=[];
   for(let i=1;i<lines.length;i++){
-    const cols=lines[i].split('\t');if(cols.length<3)continue;
+    if(!lines[i].trim()) continue;
+    const cols=splitRow(lines[i]);if(cols.length<3)continue;
     const edt=clean(cols[iEDT]),nombre=clean(cols[iNombre]);if(!edt||!nombre)continue;
-    const isRoot=/^\d+$/.test(edt);const isPhase=/^\d+\.\d+$/.test(edt)&&edt.split('.').length===2;
+    const isRoot=/^\d+$/.test(edt);
+    // Phase = exactly 2 levels deep (1.1, 1.2, 2.3 etc)
+    const isPhase=/^\d+\.\d+$/.test(edt);
     if(isRoot){
-      project={id:'p_'+edt,name:nombre,gestor:clean(cols[iRes]).split(';')[0].trim().replace(/\.$/,''),pct_plan:pct(cols[iPlan]),pct_real:pct(cols[iReal]),estado:clean(cols[iEstado]),fecha_inicio:clean(cols[iStart]),fecha_fin:clean(cols[iEnd]),today_pct:50,fases:[]};
+      const gestor=iRes>=0?clean(cols[iRes]).split(';')[0].trim().replace(/\.$/,''):'';
+      const fi=clean(cols[iStart]),fe=clean(cols[iEnd]);
+      project={
+        id:'p_'+i+'_'+edt,name:nombre,gestor,
+        pct_plan:pct(cols[iPlan]),pct_real:pct(cols[iReal]),
+        estado:clean(cols[iEstado]),
+        fecha_inicio:fi,fecha_fin:fe,
+        today_pct:50,fases:[]
+      };
       projs.push(project);currentFase=null;
-    }else if(project){
-      if(isPhase){currentFase={id:edt,name:nombre,estado:clean(cols[iEstado]),pct_plan:pct(cols[iPlan]),pct_real:pct(cols[iReal]),start_off:0,dur:20,tasks:[]};project.fases.push(currentFase);}
-      else if(currentFase){const g=pct(cols[iPlan])-pct(cols[iReal]);currentFase.tasks.push({edt,name:nombre,estado:clean(cols[iEstado]),pct_plan:pct(cols[iPlan]),pct_real:pct(cols[iReal]),start:clean(cols[iStart]),end:clean(cols[iEnd]),atraso:clean(cols[iEstado])==='Retrasada'&&g>0?`-${g}%`:''});}
+    } else if(project){
+      if(isPhase){
+        const fi=clean(cols[iStart]),fe=clean(cols[iEnd]);
+        const startOff=dateToOffset(fi,project.fecha_inicio,project.fecha_fin);
+        const endOff=dateToOffset(fe,project.fecha_inicio,project.fecha_fin);
+        const dur=Math.max(2,endOff-startOff);
+        currentFase={
+          id:edt,name:nombre,
+          estado:clean(cols[iEstado]),
+          pct_plan:pct(cols[iPlan]),pct_real:pct(cols[iReal]),
+          start_off:startOff,dur:dur,tasks:[]
+        };
+        project.fases.push(currentFase);
+      } else if(currentFase){
+        const g=pct(cols[iPlan])-pct(cols[iReal]);
+        const varDur=iVar>=0?clean(cols[iVar]):'';
+        const isLate=clean(cols[iEstado])==='Retrasada';
+        currentFase.tasks.push({
+          edt,name:nombre,
+          estado:clean(cols[iEstado]),
+          pct_plan:pct(cols[iPlan]),pct_real:pct(cols[iReal]),
+          start:clean(cols[iStart]),end:clean(cols[iEnd]),
+          atraso:isLate&&g>0?`-${g}%`:(isLate&&varDur&&varDur!=='0 días'?varDur:''),
+          riesgo:iRisk>=0?clean(cols[iRisk]):''
+        });
+      }
     }
   }
+  // Calculate today_pct for each project based on actual date
+  projs.forEach(p=>{
+    const pd=s=>{
+      if(!s) return null;
+      const parts=s.split('/');
+      if(parts.length<3) return null;
+      return new Date(parseInt(parts[2])+(parseInt(parts[2])<100?2000:0),parseInt(parts[1])-1,parseInt(parts[0]));
+    };
+    const start=pd(p.fecha_inicio),end=pd(p.fecha_fin),today=new Date();
+    if(start&&end&&today>=start){
+      const total=(end-start)/86400000;
+      p.today_pct=Math.max(0,Math.min(98,((today-start)/86400000/total*100)));
+    }
+  });
   return projs;
 }
 
