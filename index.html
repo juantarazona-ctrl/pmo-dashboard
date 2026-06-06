@@ -319,6 +319,10 @@ select{background:var(--bg3);color:var(--text2);border:1px solid var(--border2);
 
 <script>
 // ══ CONFIG ══
+// Paso 1: Crea tu Google Apps Script proxy (ver instrucciones en el dashboard)
+// Paso 2: Pega la URL del script aquí
+const GAS_PROXY_URL = 'https://script.google.com/macros/s/AKfycbww8KkViFYcZx2LkEHamu9Oqts-wfPs0EfJqNDBQ2xEbMTACXaP4g25ia8cHMT6zjVXuQ/exec';
+
 const SHEET_CONFIG = {
   'Cobranza Omnicanal - SAP':           'https://docs.google.com/spreadsheets/d/e/2PACX-1vTpYfDYx3mFt77cJ0tAf8W84sLFQp66p1mkr2EU8pKcQ3ktRBH3GbwHqlqJDfylJ2jY1hO6ByI6XKVH/pub?gid=0&single=true&output=csv',
   'Escalera de Descuento':              'https://docs.google.com/spreadsheets/d/e/2PACX-1vTpYfDYx3mFt77cJ0tAf8W84sLFQp66p1mkr2EU8pKcQ3ktRBH3GbwHqlqJDfylJ2jY1hO6ByI6XKVH/pub?gid=794965495&single=true&output=csv',
@@ -927,6 +931,22 @@ function renderConfig(){
   document.getElementById('view-config').innerHTML=`
     <div class="topbar"><div><h2>Conectar Google Sheets</h2><p>Una pestaña por proyecto · copy-paste desde MS Project</p></div></div>
     <div class="config-card">
+      <div class="config-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Paso 0 — Crea tu proxy con Google Apps Script (1 sola vez)</div>
+      <div class="step-row"><div class="step-num">1</div><span>Ve a <strong style="color:var(--text)">script.google.com</strong> → clic en <strong style="color:var(--text)">Nuevo proyecto</strong></span></div>
+      <div class="step-row"><div class="step-num">2</div><span>Borra todo el código y pega este script:</span></div>
+      <div class="code-block" style="margin:0 0 10px">
+function doGet(e){<br>
+&nbsp;&nbsp;const url=e.parameter.url;<br>
+&nbsp;&nbsp;const res=UrlFetchApp.fetch(url);<br>
+&nbsp;&nbsp;return ContentService.createTextOutput(res.getContentText())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;.setMimeType(ContentService.MimeType.TEXT);<br>
+}
+      </div>
+      <div class="step-row"><div class="step-num">3</div><span>Clic en <strong style="color:var(--text)">Implementar → Nueva implementación → Aplicación web</strong></span></div>
+      <div class="step-row"><div class="step-num">4</div><span>Ejecutar como: <strong style="color:var(--text)">Yo</strong> · Quién tiene acceso: <strong style="color:var(--text)">Cualquier persona</strong> → Implementar</span></div>
+      <div class="step-row"><div class="step-num">5</div><span>Copia la URL que aparece y pégala en <strong style="color:var(--text)">GAS_PROXY_URL</strong> del index.html en GitHub</span></div>
+    </div>
+    <div class="config-card">
       <div class="config-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Paso 1 — Google Sheet</div>
       <div class="step-row"><div class="step-num">1</div><span>Una pestaña por proyecto. En la fila EDT=1 → gestor en <strong style="color:var(--text)">Nombres de los recursos</strong></span></div>
       <div class="step-row"><div class="step-num">2</div><span>Archivo → Compartir → Publicar en la web → CSV → copia la URL de cada pestaña</span></div>
@@ -952,25 +972,18 @@ function renderConfig(){
 
 // ══ CSV PARSER ══
 async function fetchCSV(url){
-  // Try direct fetch first (works in some environments)
+  // Use Google Apps Script proxy (set GAS_PROXY_URL below)
+  if(GAS_PROXY_URL){
+    try{
+      const r=await fetch(GAS_PROXY_URL+'?url='+encodeURIComponent(url));
+      if(r.ok){const t=await r.text();if(isValidCSV(t))return t;}
+    }catch(e){console.warn('GAS proxy error:',e.message);}
+  }
+  // Fallback: direct fetch
   try{
     const r=await fetch(url);
     if(r.ok){const t=await r.text();if(isValidCSV(t))return t;}
   }catch(e){}
-  // Try CORS proxies in order
-  const PROXIES=[
-    u=>`https://corsproxy.io/?${encodeURIComponent(u)}`,
-    u=>`https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
-    u=>`https://thingproxy.freeboard.io/fetch/${u}`,
-  ];
-  for(const proxy of PROXIES){
-    try{
-      const r=await fetch(proxy(url));
-      if(!r.ok) continue;
-      const t=await r.text();
-      if(isValidCSV(t)) return t;
-    }catch(e){continue;}
-  }
   return null;
 }
 
