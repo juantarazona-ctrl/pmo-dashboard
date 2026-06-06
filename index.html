@@ -951,37 +951,74 @@ function renderConfig(){
 }
 
 // ══ CSV PARSER ══
-async function loadFromSheets(){
-  const entries=Object.entries(SHEET_CONFIG);if(!entries.length)return;
-  // CORS proxies — tries each one in order until one works
+async function fetchCSV(url){
+  // Try direct fetch first (works in some environments)
+  try{
+    const r=await fetch(url);
+    if(r.ok){const t=await r.text();if(isValidCSV(t))return t;}
+  }catch(e){}
+  // Try CORS proxies in order
   const PROXIES=[
-    url=>`https://corsproxy.io/?${encodeURIComponent(url)}`,
-    url=>`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-    url=>`https://cors-anywhere.herokuapp.com/${url}`,
+    u=>`https://corsproxy.io/?${encodeURIComponent(u)}`,
+    u=>`https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+    u=>`https://thingproxy.freeboard.io/fetch/${u}`,
   ];
-  const all=[];
-  for(const [name,url] of entries){
-    let loaded=false;
-    for(const proxy of PROXIES){
-      try{
-        const r=await fetch(proxy(url),{headers:{'X-Requested-With':'XMLHttpRequest'}});
-        if(!r.ok) continue;
-        const csv=await r.text();
-        if(csv.includes(',')&&csv.length>50){
-          const parsed=parseCSV(csv);
-          if(parsed.length){all.push(...parsed);loaded=true;break;}
-        }
-      }catch(e){continue;}
-    }
-    if(!loaded) console.warn('No se pudo cargar:',name);
+  for(const proxy of PROXIES){
+    try{
+      const r=await fetch(proxy(url));
+      if(!r.ok) continue;
+      const t=await r.text();
+      if(isValidCSV(t)) return t;
+    }catch(e){continue;}
   }
+  return null;
+}
+
+function isValidCSV(text){
+  if(!text||text.length<50) return false;
+  if(text.trim().startsWith('<')) return false; // HTML error page
+  // Must have EDT column header
+  const firstLine=text.split('\n')[0].toLowerCase();
+  return firstLine.includes('edt')||firstLine.includes('nombre');
+}
+
+async function loadFromSheets(){
+  const entries=Object.entries(SHEET_CONFIG);
+  if(!entries.length)return;
+  const all=[];
+  let loaded=0;
+  for(const [name,url] of entries){
+    try{
+      const csv=await fetchCSV(url);
+      if(csv){
+        const parsed=parseCSV(csv);
+        if(parsed.length){
+          all.push(...parsed);
+          loaded++;
+          console.log('✓ Cargado:',name,'→',parsed.length,'proyectos');
+        } else {
+          console.warn('✗ Sin proyectos parseados:',name);
+        }
+      } else {
+        console.warn('✗ No se pudo obtener CSV:',name);
+      }
+    }catch(e){
+      console.warn('✗ Error:',name,e.message);
+    }
+  }
+  console.log(`Cargados: ${loaded}/${entries.length} sheets, ${all.length} proyectos`);
   if(all.length){
     projects=all;
     document.getElementById('sb-source').textContent='Google Sheets conectado';
     document.getElementById('sb-date').textContent=new Date().toLocaleDateString('es-PE',{day:'2-digit',month:'short',year:'numeric'});
+  } else {
+    // Show error in banner
+    const src=document.getElementById('sb-source');
+    if(src) src.textContent='Error al conectar Sheets';
   }
   buildSidebar();
-  if(curView==='resumen')renderResumen();else if(curView==='portfolio')renderPortfolio();
+  if(curView==='resumen')renderResumen();
+  else if(curView==='portfolio')renderPortfolio();
 }
 function parseCSV(csv){
   const lines=csv.trim().split(/\r?\n/);
