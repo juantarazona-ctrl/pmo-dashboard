@@ -364,6 +364,7 @@ function getProjectMonths(p){
 
 // ══ STATE ══
 let projects=[],curProj=null,curView='resumen';
+let _projCounter=0;
 let expPhase={},expRsmPhase={},sbOpen={},filterSt='',filterGestor='';
 // expPhase key = projectId+'_'+phaseId to avoid clashes between projects
 
@@ -685,13 +686,18 @@ function toggleRsmPhase(pid,fid){
   rerenderCard(pid);
 }
 function rerenderCard(pid){
-  const p=projects.find(x=>x.id===pid);
-  const el=document.getElementById('card-'+pid);
-  if(p&&el){
-    const newCard=document.createElement('div');
-    newCard.innerHTML=buildProjectCard(p);
-    el.replaceWith(newCard.firstElementChild);
-  }
+  // Re-render the full resumen view - simpler and more reliable
+  // We need to preserve scroll position
+  const container = document.getElementById('rsm-cards');
+  if(!container) { renderResumen(); return; }
+  const scrollY = window.scrollY;
+  // Rebuild only the cards container content
+  let filtered = projects;
+  if(filterSt) filtered = filtered.filter(p=>p.estado===filterSt);
+  if(filterGestor) filtered = filtered.filter(p=>p.gestor===filterGestor);
+  container.innerHTML = filtered.map(p=>buildProjectCard(p)).join('');
+  // Restore scroll
+  window.scrollTo(0, scrollY);
 }
 
 // ══ DETAIL VIEW ══
@@ -863,6 +869,7 @@ async function fetchCSV(url){
   return null;
 }
 async function loadFromSheets(){
+  _projCounter=0; // reset global counter
   const entries=Object.entries(SHEET_CONFIG);if(!entries.length)return;
   const all=[];
   for(const [name,url] of entries){
@@ -929,7 +936,7 @@ function parseCSV(csv){
       const gestor=iRes>=0?clean(cols[iRes]).split(';')[0].trim().replace(/\.$/,''):'Sin gestor';
       const fi=clean(cols[iStart]),fe=clean(cols[iEnd]);
       project={
-        id:'proj_'+projs.length+'_'+edt,
+        id:'p'+(++_projCounter),
         name:nombre,gestor,
         pct_plan:pct(cols[iPlan]),pct_real:pct(cols[iReal]),
         estado:clean(cols[iEstado]),
