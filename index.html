@@ -119,7 +119,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .rsm-stat-val{font-size:22px;font-weight:600;font-family:'DM Mono',monospace;line-height:1}
 .rsm-divider{width:.5px;height:40px;background:var(--border2)}
 .rsm-roadmap{padding:12px 0 16px}.rsm-roadmap-pad{padding:0 24px}
-.rsm-gantt-outer{overflow-x:auto;overflow-y:visible;width:100%;padding:0 24px 8px;-webkit-overflow-scrolling:touch;cursor:grab}.rsm-gantt-outer:active{cursor:grabbing}.rsm-gantt-outer::-webkit-scrollbar{height:3px}.rsm-gantt-outer::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+
 
 
 
@@ -269,7 +269,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .code-block{background:var(--bg3);border-radius:var(--radius-sm);padding:14px 16px;font-family:'DM Mono',monospace;font-size:11px;color:var(--text2);line-height:2;overflow-x:auto}
 .step-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;font-size:12px;color:var(--text2)}
 .step-num{width:20px;height:20px;border-radius:50%;background:rgba(99,102,241,.15);color:var(--accent);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
-::-webkit-scrollbar{width:4px}
+.rsm-gantt-outer{width:100%;overflow-x:auto;overflow-y:visible;padding:0 24px 6px;cursor:grab;-webkit-overflow-scrolling:touch}.rsm-gantt-outer:active{cursor:grabbing}.rsm-gantt-outer::-webkit-scrollbar{height:3px}.rsm-gantt-outer::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
 select{background:var(--bg3);color:var(--text2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:7px 12px;font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer}
@@ -628,8 +628,15 @@ function buildProjectCard(p){
   const months=getProjectMonths(p),today=p.today_pct||50;
   const rows=computeRows(p.fases);
   const totalRowH=rows.length*28+(rows.length-1)*5;
-  const PX_PER_MONTH=72;
-  const ganttW=Math.max(560, months.length*PX_PER_MONTH);
+  // Guarantee every phase has at least 80px
+  // Find the smallest phase duration
+  const minDur = p.fases.length ? Math.min(...p.fases.map(f=>f.dur)) : 10;
+  const MIN_PHASE_PX = 80;
+  // Width needed so smallest phase = MIN_PHASE_PX
+  const wByPhase = minDur > 0 ? Math.ceil(MIN_PHASE_PX * 100 / minDur) : 700;
+  // Also ensure each month is at least 52px wide
+  const wByMonth = months.length * 52;
+  const ganttW = Math.max(560, wByPhase, wByMonth);
   const rowsHtml=rows.map(rowFases=>
     `<div class="rsm-gantt-row"><div class="rsm-row-bg"></div>${
       rowFases.map((f,fi)=>{
