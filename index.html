@@ -104,7 +104,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .pc-footer{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
 .pc-dates{font-size:10px;color:var(--text3);font-family:'DM Mono',monospace}
 /* RESUMEN CARD */
-.rsm-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:16px;overflow:visible;transition:border-color .15s}
+.rsm-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:16px;overflow:hidden;transition:border-color .15s}
 .rsm-card:hover{border-color:var(--border2)}
 .rsm-top{display:grid;grid-template-columns:1fr auto;gap:24px;padding:20px 24px 16px;cursor:pointer;transition:background .12s;border-bottom:1px solid var(--border)}
 .rsm-top:hover{background:rgba(255,255,255,.015)}
@@ -118,17 +118,12 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .rsm-stat-lbl{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
 .rsm-stat-val{font-size:22px;font-weight:600;font-family:'DM Mono',monospace;line-height:1}
 .rsm-divider{width:.5px;height:40px;background:var(--border2)}
-.rsm-roadmap{padding:14px 0 18px}.rsm-roadmap-pad{padding:0 24px}
-.rsm-gantt-outer{
-  overflow-x:auto;
-  overflow-y:visible;
-  padding:0 24px 8px;
-  cursor:grab;
-}
-.rsm-gantt-outer:active{cursor:grabbing}
-.rsm-gantt-outer::-webkit-scrollbar{height:3px}
-.rsm-gantt-outer::-webkit-scrollbar-track{background:transparent}
-.rsm-gantt-outer::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
+.rsm-roadmap{padding:12px 0 16px}.rsm-roadmap-pad{padding:0 24px}
+.rsm-gantt-outer{overflow-x:auto;overflow-y:visible;padding:0 24px 8px;-webkit-overflow-scrolling:touch;cursor:grab}.rsm-gantt-outer:active{cursor:grabbing}.rsm-gantt-outer::-webkit-scrollbar{height:3px}.rsm-gantt-outer::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+
+
+
+
 .rsm-overflow-phases{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:8px 0 4px}
 .rsm-overflow-label{font-size:9px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;white-space:nowrap}
 .rsm-overflow-pill{display:inline-flex;align-items:center;padding:3px 8px;border-radius:20px;font-size:10px;font-weight:500;cursor:default;white-space:nowrap;transition:filter .15s}
