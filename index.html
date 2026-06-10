@@ -119,16 +119,57 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .rsm-stat-val{font-size:22px;font-weight:600;font-family:'DM Mono',monospace;line-height:1}
 .rsm-divider{width:.5px;height:40px;background:var(--border2)}
 .rsm-roadmap{padding:14px 24px 18px}
+.rsm-gantt-outer{overflow-x:auto;overflow-y:visible;min-width:0}
+.rsm-gantt-inner{min-width:500px}
 .rsm-month-axis{display:flex;border-bottom:1px solid var(--border);margin-bottom:10px;padding-bottom:4px}
-.rsm-month-cell{flex:1;font-size:9px;font-weight:500;color:var(--text3);position:relative}
+.rsm-month-cell{flex:1;font-size:9px;font-weight:500;color:var(--text3);position:relative;min-width:36px}
 .rsm-month-cell::before{content:'';position:absolute;left:0;top:-3px;bottom:0;width:.5px;background:var(--border)}
-.rsm-gantt-rows{position:relative;display:flex;flex-direction:column;gap:5px;margin-bottom:8px}
-.rsm-gantt-row{position:relative;height:28px}
-.rsm-row-bg{position:absolute;top:0;left:0;right:0;height:100%;background:var(--bg4);border-radius:4px}
-.rsm-seg{position:absolute;top:2px;height:24px;border-radius:4px;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:default;transition:filter .15s}
-.rsm-seg:hover{filter:brightness(1.15)}
-.rsm-seg-lbl{font-size:9px;font-weight:500;color:rgba(255,255,255,.9);white-space:nowrap;padding:0 6px;overflow:hidden;text-overflow:ellipsis;width:100%;text-align:center}
-.rsm-seg-prog{position:absolute;bottom:0;left:0;height:3px;background:rgba(255,255,255,.3);border-radius:0 0 2px 2px}
+.rsm-gantt-rows{position:relative;display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
+.rsm-gantt-row{position:relative;height:34px}
+.rsm-row-bg{position:absolute;top:0;left:0;right:0;height:100%;background:var(--bg4);border-radius:5px}
+.rsm-seg{
+  position:absolute;top:2px;height:30px;
+  border-radius:5px;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;cursor:pointer;
+  transition:filter .15s,box-shadow .15s;
+  border:1px solid rgba(255,255,255,.08);
+}
+.rsm-seg:hover{filter:brightness(1.2);box-shadow:0 2px 8px rgba(0,0,0,.4);z-index:10}
+.rsm-seg-inner{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  width:100%;padding:0 6px;overflow:hidden;gap:1px;
+}
+.rsm-seg-name{
+  font-size:9px;font-weight:600;
+  color:rgba(255,255,255,.92);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  width:100%;text-align:center;line-height:1.2;
+}
+.rsm-seg-sub{
+  font-size:8px;
+  color:rgba(255,255,255,.6);
+  font-family:'DM Mono',monospace;
+  white-space:nowrap;line-height:1;
+}
+.rsm-seg-prog{position:absolute;bottom:0;left:0;height:3px;background:rgba(255,255,255,.35);border-radius:0 0 3px 3px}
+/* Tooltip */
+.rsm-tooltip{
+  position:fixed;z-index:9999;
+  background:var(--bg2);border:1px solid var(--border2);
+  border-radius:var(--radius-sm);
+  padding:10px 14px;
+  font-size:12px;color:var(--text);
+  pointer-events:none;
+  box-shadow:0 8px 24px rgba(0,0,0,.5);
+  max-width:240px;
+  display:none;
+}
+.rsm-tooltip.visible{display:block}
+.rsm-tooltip-name{font-weight:600;margin-bottom:5px;color:var(--text)}
+.rsm-tooltip-row{display:flex;justify-content:space-between;gap:16px;font-size:11px;margin-bottom:2px}
+.rsm-tooltip-lbl{color:var(--text3)}
+.rsm-tooltip-val{font-family:'DM Mono',monospace;font-weight:500}
 .rsm-today{position:absolute;top:-6px;width:2px;background:var(--accent);opacity:.85;border-radius:1px;z-index:5;pointer-events:none}
 .rsm-today::before{content:'Hoy';position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:8px;font-weight:500;color:var(--accent);white-space:nowrap;font-family:'DM Sans',sans-serif}
 .rsm-today::after{content:'▼';position:absolute;top:-6px;left:50%;transform:translateX(-50%);font-size:7px;color:var(--accent)}
@@ -227,6 +268,7 @@ select{background:var(--bg3);color:var(--text2);border:1px solid var(--border2);
 </style>
 </head>
 <body>
+<div id="rsm-tooltip" class="rsm-tooltip"></div>
 <div class="shell">
 <aside class="sidebar">
   <div class="sb-logo">
@@ -583,10 +625,17 @@ function buildProjectCard(p){
       rowFases.map((f,fi)=>{
         const globalFi=p.fases.indexOf(f);
         const fc=faseColor(f.name,f.estado,globalFi);
-        const shortName=f.name.split('—')[0].trim().split(' ').slice(0,2).join(' ');
+                const shortName=f.name.split('—')[0].split('·')[0].trim();
+        const words=shortName.split(' ');
+        const lbl=f.dur>25?shortName:f.dur>12?words.slice(0,2).join(' '):f.dur>5?words[0]:'';
         const progW=f.pct_plan>0?Math.round((f.pct_real/f.pct_plan)*f.dur):0;
-        return `<div class="rsm-seg" style="left:${f.start_off}%;width:${f.dur}%;background:${fc}" title="${f.id} · ${f.name} — ${f.pct_real}% · ${f.estado}">
-          <span class="rsm-seg-lbl">${esc(f.id)} ${esc(shortName)}${f.dur>10?' · '+f.pct_real+'%':''}</span>
+        const showSub=f.dur>14&&f.pct_real>0;
+        const td=`data-tip-name="${esc(f.id+' · '+f.name)}" data-tip-plan="${f.pct_plan}" data-tip-real="${f.pct_real}" data-tip-estado="${esc(f.estado)}"`;
+        return `<div class="rsm-seg" style="left:${f.start_off}%;width:${f.dur}%;background:${fc}" ${td} onmouseenter="showTip(event,this)" onmouseleave="hideTip()">
+          <div class="rsm-seg-inner">
+            ${lbl?`<span class="rsm-seg-name">${esc(lbl)}</span>`:''}
+            ${showSub?`<span class="rsm-seg-sub">${f.pct_real}%</span>`:''}
+          </div>
           <div class="rsm-seg-prog" style="width:${progW}%"></div>
         </div>`;
       }).join('')
@@ -671,11 +720,15 @@ function buildProjectCard(p){
       </div>
     </div>
     <div class="rsm-roadmap">
-      <div class="rsm-month-axis">${monthAxis}</div>
-      <div class="rsm-gantt-rows" style="margin-bottom:8px">
+      <div class="rsm-gantt-outer">
+        <div class="rsm-gantt-inner">
+        <div class="rsm-month-axis">${monthAxis}</div>
+        <div class="rsm-gantt-rows" style="margin-bottom:8px">
         ${rowsHtml}
         <div class="rsm-today" style="left:${today}%;height:${totalRowH+16}px"></div>
       </div>
+        </div><!-- /rsm-gantt-inner -->
+      </div><!-- /rsm-gantt-outer -->
       <div class="rsm-date-range">
         <span>${p.fecha_inicio}</span>
         <span style="display:flex;align-items:center">${p.fases.length} fases${overlapNote}</span>
@@ -1018,6 +1071,56 @@ function parseCSV(csv){
   });
   return projs;
 }
+
+// ══ TOOLTIP ══
+function showTip(e, el){
+  const tip = document.getElementById('rsm-tooltip');
+  if(!tip) return;
+  const name   = el.dataset.tipName   || '';
+  const plan   = el.dataset.tipPlan   || '0';
+  const real   = el.dataset.tipReal   || '0';
+  const estado = el.dataset.tipEstado || '';
+  const gap    = parseInt(plan) - parseInt(real);
+  const gapColor = gap<=0?'var(--green)':gap<=3?'var(--amber)':'var(--red)';
+  const stColor  = gap<=0?'var(--green)':gap<=3?'var(--amber)':'var(--red)';
+  tip.innerHTML = `
+    <div class="rsm-tooltip-name">${name}</div>
+    <div class="rsm-tooltip-row">
+      <span class="rsm-tooltip-lbl">Estado</span>
+      <span class="rsm-tooltip-val" style="color:${stColor}">${estado}</span>
+    </div>
+    <div class="rsm-tooltip-row">
+      <span class="rsm-tooltip-lbl">Esperado</span>
+      <span class="rsm-tooltip-val">${plan}%</span>
+    </div>
+    <div class="rsm-tooltip-row">
+      <span class="rsm-tooltip-lbl">Real</span>
+      <span class="rsm-tooltip-val" style="color:${real>=plan?'var(--green)':'var(--red)'}">${real}%</span>
+    </div>
+    <div class="rsm-tooltip-row">
+      <span class="rsm-tooltip-lbl">Brecha</span>
+      <span class="rsm-tooltip-val" style="color:${gapColor}">${gap>0?'−':''}${Math.abs(gap)}%</span>
+    </div>`;
+  tip.classList.add('visible');
+  positionTip(e);
+}
+function positionTip(e){
+  const tip = document.getElementById('rsm-tooltip');
+  if(!tip||!tip.classList.contains('visible')) return;
+  const x = e.clientX + 14;
+  const y = e.clientY - 10;
+  const tw = tip.offsetWidth || 220;
+  const th = tip.offsetHeight || 120;
+  tip.style.left = (x + tw > window.innerWidth ? x - tw - 28 : x) + 'px';
+  tip.style.top  = (y + th > window.innerHeight ? y - th : y) + 'px';
+}
+function hideTip(){
+  const tip = document.getElementById('rsm-tooltip');
+  if(tip) tip.classList.remove('visible');
+}
+document.addEventListener('mousemove', function(e){
+  if(document.getElementById('rsm-tooltip')?.classList.contains('visible')) positionTip(e);
+});
 
 // ══ INIT ══
 // Single event delegation listener - handles ALL clicks
