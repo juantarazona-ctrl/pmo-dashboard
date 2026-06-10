@@ -104,7 +104,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .pc-footer{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
 .pc-dates{font-size:10px;color:var(--text3);font-family:'DM Mono',monospace}
 /* RESUMEN CARD */
-.rsm-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:16px;overflow-x:auto;overflow-y:visible;transition:border-color .15s}
+.rsm-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:16px;overflow:hidden;transition:border-color .15s}
 .rsm-card:hover{border-color:var(--border2)}
 .rsm-top{display:grid;grid-template-columns:1fr auto;gap:24px;padding:20px 24px 16px;cursor:pointer;transition:background .12s;border-bottom:1px solid var(--border)}
 .rsm-top:hover{background:rgba(255,255,255,.015)}
@@ -118,7 +118,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .rsm-stat-lbl{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
 .rsm-stat-val{font-size:22px;font-weight:600;font-family:'DM Mono',monospace;line-height:1}
 .rsm-divider{width:.5px;height:40px;background:var(--border2)}
-.rsm-roadmap{padding:12px 0 16px}.rsm-roadmap-pad{padding:0 24px}
+.rsm-roadmap{padding:12px 24px 16px}
 
 
 
@@ -128,9 +128,9 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .rsm-overflow-label{font-size:9px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;white-space:nowrap}
 .rsm-overflow-pill{display:inline-flex;align-items:center;padding:3px 8px;border-radius:20px;font-size:10px;font-weight:500;cursor:default;white-space:nowrap;transition:filter .15s}
 .rsm-overflow-pill:hover{filter:brightness(1.2)}
-.rsm-gantt-inner{display:block}
+.rsm-gantt-inner{position:relative}
 .rsm-month-axis{display:flex;border-bottom:1px solid var(--border);margin-bottom:10px;padding-bottom:4px}
-.rsm-month-cell{flex:1;font-size:9px;font-weight:500;color:var(--text3);position:relative;min-width:36px}
+.rsm-month-cell{flex:1;font-size:9px;font-weight:500;color:var(--text3);position:relative;min-width:28px;text-align:left}
 .rsm-month-cell::before{content:'';position:absolute;left:0;top:-3px;bottom:0;width:.5px;background:var(--border)}
 .rsm-gantt-rows{position:relative;display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
 .rsm-gantt-row{position:relative;height:34px}
@@ -269,7 +269,15 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .code-block{background:var(--bg3);border-radius:var(--radius-sm);padding:14px 16px;font-family:'DM Mono',monospace;font-size:11px;color:var(--text2);line-height:2;overflow-x:auto}
 .step-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;font-size:12px;color:var(--text2)}
 .step-num{width:20px;height:20px;border-radius:50%;background:rgba(99,102,241,.15);color:var(--accent);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
-.rsm-gantt-outer{padding:0 24px 6px}::-webkit-scrollbar{width:4px}
+.rsm-gantt-outer{position:relative}
+.rsm-tail{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
+.rsm-tail-lbl{font-size:9px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;width:100%;margin-bottom:2px}
+.rsm-tail-item{display:flex;align-items:center;gap:6px;padding:5px 10px;background:var(--bg4);border-radius:6px;border:1px solid var(--border)}
+.rsm-tail-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+.rsm-tail-name{font-size:11px;color:var(--text2);font-weight:500}
+.rsm-tail-pct{font-size:10px;font-family:'DM Mono',monospace;margin-left:auto;padding-left:8px}
+.rsm-tail-badge{font-size:9px;padding:1px 6px;border-radius:10px;white-space:nowrap}
+::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
 select{background:var(--bg3);color:var(--text2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:7px 12px;font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer}
@@ -626,18 +634,15 @@ function buildProjectCard(p){
     else f.estado='Retrasada';
   });
   const months=getProjectMonths(p),today=p.today_pct||50;
-  const rows=computeRows(p.fases);
+  const rows=computeRows(mainFases);
   const totalRowH=rows.length*28+(rows.length-1)*5;
-  // Guarantee every phase has at least 80px
-  // Find the smallest phase duration
-  const minDur = p.fases.length ? Math.min(...p.fases.map(f=>f.dur)) : 10;
-  const MIN_PHASE_PX = 80;
-  // Width needed so smallest phase = MIN_PHASE_PX
-  const wByPhase = minDur > 0 ? Math.ceil(MIN_PHASE_PX * 100 / minDur) : 700;
-  // Also ensure each month is at least 52px wide
-  const wByMonth = months.length * 52;
-  const ganttW = Math.max(560, wByPhase, wByMonth);
-  const rowsHtml=rows.map(rowFases=>
+  // Split phases: main (dur >= 5%) go in gantt, tail (< 5%) go as list below
+  const TAIL_THRESHOLD = 5;
+  const mainFases = p.fases.filter(f => f.dur >= TAIL_THRESHOLD);
+  const tailFases = p.fases.filter(f => f.dur < TAIL_THRESHOLD);
+  // Recalculate rows using only main phases
+  const ganttW = 0; // not used, gantt fills container naturally
+  const rowsHtml=rows.map((rowFases)=>
     `<div class="rsm-gantt-row"><div class="rsm-row-bg"></div>${
       rowFases.map((f,fi)=>{
         const globalFi=p.fases.indexOf(f);
@@ -658,7 +663,7 @@ function buildProjectCard(p){
       }).join('')
     }</div>`
   ).join('');
-  const overlapNote=rows.length>1?`<span style="font-size:9px;background:rgba(99,102,241,.15);color:var(--accent);padding:1px 6px;border-radius:10px;margin-left:6px">${rows.length} filas por solapamiento</span>`:'';
+  const overlapNote=mainFases.length!==p.fases.length||rows.length>1?`<span style="font-size:9px;background:rgba(99,102,241,.15);color:var(--accent);padding:1px 6px;border-radius:10px;margin-left:6px">${rows.length} filas por solapamiento</span>`:'';
   const monthAxis=months.map(m=>`<div class="rsm-month-cell">${m.label}</div>`).join('');
   const isOpen=expRsmPhase[p.id+'_open'];
 
@@ -738,7 +743,7 @@ function buildProjectCard(p){
     </div>
     <div class="rsm-roadmap">
       <div class="rsm-gantt-outer">
-        <div class="rsm-gantt-inner" style="width:${ganttW}px">
+        <div class="rsm-gantt-inner">
           <div class="rsm-month-axis">${monthAxis}</div>
           <div class="rsm-gantt-rows" style="margin-bottom:8px">
             ${rowsHtml}
@@ -746,14 +751,25 @@ function buildProjectCard(p){
           </div>
         </div>
       </div>
-      <div class="rsm-date-range" style="padding:0 24px">
+      <div class="rsm-date-range">
         <span>${p.fecha_inicio}</span>
-        <span style="display:flex;align-items:center;gap:6px">
-          ${p.fases.length} fases${overlapNote}
-          ${ganttW>560?'<span style="font-size:9px;color:var(--text3);opacity:.7">← desliza →</span>':''}
-        </span>
+        <span>${p.fases.length} fases${overlapNote}</span>
         <span>${p.fecha_fin}</span>
       </div>
+      ${tailFases.length ? `<div class="rsm-tail">
+        <div class="rsm-tail-lbl">Fases de cierre</div>
+        ${tailFases.map((f,i)=>{
+          const fc=faseColor(f.name,f.estado,p.fases.indexOf(f));
+          const gap=f.pct_plan-f.pct_real;
+          const bc=eBadge(f.estado);
+          return \`<div class="rsm-tail-item">
+            <div class="rsm-tail-dot" style="background:\${fc}"></div>
+            <span class="rsm-tail-name">\${esc(f.id)} · \${esc(f.name)}</span>
+            <span class="rsm-tail-pct" style="color:\${eCol(f.estado)}">\${f.pct_real}%</span>
+            <span class="rsm-tail-badge \${bc}">\${f.estado}</span>
+          </div>\`;
+        }).join('')}
+      </div>` : ''}
     </div>
     ${isOpen?`<div class="rsm-phases">
       <div class="rsm-phases-hdr">
