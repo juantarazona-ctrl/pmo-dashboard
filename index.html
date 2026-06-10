@@ -104,7 +104,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .pc-footer{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
 .pc-dates{font-size:10px;color:var(--text3);font-family:'DM Mono',monospace}
 /* RESUMEN CARD */
-.rsm-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:16px;overflow:hidden;transition:border-color .15s}
+.rsm-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:16px;overflow-x:auto;overflow-y:visible;transition:border-color .15s}
 .rsm-card:hover{border-color:var(--border2)}
 .rsm-top{display:grid;grid-template-columns:1fr auto;gap:24px;padding:20px 24px 16px;cursor:pointer;transition:background .12s;border-bottom:1px solid var(--border)}
 .rsm-top:hover{background:rgba(255,255,255,.015)}
@@ -269,7 +269,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .code-block{background:var(--bg3);border-radius:var(--radius-sm);padding:14px 16px;font-family:'DM Mono',monospace;font-size:11px;color:var(--text2);line-height:2;overflow-x:auto}
 .step-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;font-size:12px;color:var(--text2)}
 .step-num{width:20px;height:20px;border-radius:50%;background:rgba(99,102,241,.15);color:var(--accent);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
-.rsm-gantt-outer{width:100%;overflow-x:auto;overflow-y:visible;padding:0 24px 6px;cursor:grab;-webkit-overflow-scrolling:touch}.rsm-gantt-outer:active{cursor:grabbing}.rsm-gantt-outer::-webkit-scrollbar{height:3px}.rsm-gantt-outer::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}::-webkit-scrollbar{width:4px}
+.rsm-gantt-outer{padding:0 24px 6px}::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
 select{background:var(--bg3);color:var(--text2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:7px 12px;font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer}
