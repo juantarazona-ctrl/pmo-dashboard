@@ -104,7 +104,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .pc-footer{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
 .pc-dates{font-size:10px;color:var(--text3);font-family:'DM Mono',monospace}
 /* RESUMEN CARD */
-.rsm-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:16px;overflow:hidden;transition:border-color .15s}
+.rsm-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:16px;overflow:visible;transition:border-color .15s}
 .rsm-card:hover{border-color:var(--border2)}
 .rsm-top{display:grid;grid-template-columns:1fr auto;gap:24px;padding:20px 24px 16px;cursor:pointer;transition:background .12s;border-bottom:1px solid var(--border)}
 .rsm-top:hover{background:rgba(255,255,255,.015)}
@@ -118,8 +118,8 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .rsm-stat-lbl{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
 .rsm-stat-val{font-size:22px;font-weight:600;font-family:'DM Mono',monospace;line-height:1}
 .rsm-divider{width:.5px;height:40px;background:var(--border2)}
-.rsm-roadmap{padding:14px 24px 18px}
-.rsm-gantt-outer{overflow-x:auto;overflow-y:visible;min-width:0}
+.rsm-roadmap{padding:14px 0 18px}.rsm-roadmap-pad{padding:0 24px}
+.rsm-gantt-outer{overflow-x:auto;overflow-y:visible;padding-bottom:6px}
 .rsm-gantt-inner{min-width:500px}
 .rsm-month-axis{display:flex;border-bottom:1px solid var(--border);margin-bottom:10px;padding-bottom:4px}
 .rsm-month-cell{flex:1;font-size:9px;font-weight:500;color:var(--text3);position:relative;min-width:36px}
@@ -620,6 +620,7 @@ function buildProjectCard(p){
   const months=getProjectMonths(p),today=p.today_pct||50;
   const rows=computeRows(p.fases);
   const totalRowH=rows.length*28+(rows.length-1)*5;
+  const minGanttW=Math.max(500, months.length*50);
   const rowsHtml=rows.map(rowFases=>
     `<div class="rsm-gantt-row"><div class="rsm-row-bg"></div>${
       rowFases.map((f,fi)=>{
@@ -720,16 +721,15 @@ function buildProjectCard(p){
       </div>
     </div>
     <div class="rsm-roadmap">
-      <div class="rsm-gantt-outer">
-        <div class="rsm-gantt-inner">
+      <div class="rsm-gantt-outer" style="padding:0 24px 6px">
+        <div class="rsm-gantt-inner" style="min-width:${minGanttW}px">
         <div class="rsm-month-axis">${monthAxis}</div>
         <div class="rsm-gantt-rows" style="margin-bottom:8px">
         ${rowsHtml}
         <div class="rsm-today" style="left:${today}%;height:${totalRowH+16}px"></div>
       </div>
         </div><!-- /rsm-gantt-inner -->
-      </div><!-- /rsm-gantt-outer -->
-      <div class="rsm-date-range">
+        <div class="rsm-date-range">
         <span>${p.fecha_inicio}</span>
         <span style="display:flex;align-items:center">${p.fases.length} fases${overlapNote}</span>
         <span>${p.fecha_fin}</span>
