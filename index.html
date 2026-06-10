@@ -119,7 +119,20 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .rsm-stat-val{font-size:22px;font-weight:600;font-family:'DM Mono',monospace;line-height:1}
 .rsm-divider{width:.5px;height:40px;background:var(--border2)}
 .rsm-roadmap{padding:14px 0 18px}.rsm-roadmap-pad{padding:0 24px}
-.rsm-gantt-outer{overflow-x:auto;overflow-y:visible;padding-bottom:6px}
+.rsm-gantt-outer{
+  overflow-x:auto;
+  overflow-y:visible;
+  padding:0 24px 8px;
+  cursor:grab;
+}
+.rsm-gantt-outer:active{cursor:grabbing}
+.rsm-gantt-outer::-webkit-scrollbar{height:3px}
+.rsm-gantt-outer::-webkit-scrollbar-track{background:transparent}
+.rsm-gantt-outer::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
+.rsm-overflow-phases{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:8px 0 4px}
+.rsm-overflow-label{font-size:9px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;white-space:nowrap}
+.rsm-overflow-pill{display:inline-flex;align-items:center;padding:3px 8px;border-radius:20px;font-size:10px;font-weight:500;cursor:default;white-space:nowrap;transition:filter .15s}
+.rsm-overflow-pill:hover{filter:brightness(1.2)}
 .rsm-gantt-inner{min-width:500px}
 .rsm-month-axis{display:flex;border-bottom:1px solid var(--border);margin-bottom:10px;padding-bottom:4px}
 .rsm-month-cell{flex:1;font-size:9px;font-weight:500;color:var(--text3);position:relative;min-width:36px}
@@ -620,7 +633,8 @@ function buildProjectCard(p){
   const months=getProjectMonths(p),today=p.today_pct||50;
   const rows=computeRows(p.fases);
   const totalRowH=rows.length*28+(rows.length-1)*5;
-  const minGanttW=Math.max(500, months.length*50);
+  const PX_PER_MONTH=72;
+  const ganttW=Math.max(560, months.length*PX_PER_MONTH);
   const rowsHtml=rows.map(rowFases=>
     `<div class="rsm-gantt-row"><div class="rsm-row-bg"></div>${
       rowFases.map((f,fi)=>{
@@ -721,17 +735,21 @@ function buildProjectCard(p){
       </div>
     </div>
     <div class="rsm-roadmap">
-      <div class="rsm-gantt-outer" style="padding:0 24px 6px">
-        <div class="rsm-gantt-inner" style="min-width:${minGanttW}px">
+      <div class="rsm-gantt-outer">
+        <div class="rsm-gantt-inner" style="width:${ganttW}px">
         <div class="rsm-month-axis">${monthAxis}</div>
         <div class="rsm-gantt-rows" style="margin-bottom:8px">
         ${rowsHtml}
         <div class="rsm-today" style="left:${today}%;height:${totalRowH+16}px"></div>
       </div>
         </div><!-- /rsm-gantt-inner -->
-        <div class="rsm-date-range">
+        
+      <div class="rsm-date-range" style="padding:0 24px">
         <span>${p.fecha_inicio}</span>
-        <span style="display:flex;align-items:center">${p.fases.length} fases${overlapNote}</span>
+        <span style="display:flex;align-items:center;gap:6px">
+          ${p.fases.length} fases${overlapNote}
+          ${ganttW>560?'<span style="font-size:9px;color:var(--text3);opacity:.7">← desliza →</span>':''}
+        </span>
         <span>${p.fecha_fin}</span>
       </div>
     </div>
