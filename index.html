@@ -165,22 +165,14 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 }
 .rsm-seg-prog{position:absolute;bottom:0;left:0;height:3px;background:rgba(255,255,255,.35);border-radius:0 0 3px 3px}
 /* Tooltip */
-.rsm-tooltip{
-  position:fixed;z-index:9999;
-  background:var(--bg2);border:1px solid var(--border2);
-  border-radius:var(--radius-sm);
-  padding:10px 14px;
-  font-size:12px;color:var(--text);
-  pointer-events:none;
-  box-shadow:0 8px 24px rgba(0,0,0,.5);
-  max-width:240px;
-  display:none;
-}
+.rsm-tooltip{position:fixed;z-index:9999;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);padding:12px 16px;font-size:12px;color:var(--text);pointer-events:none;box-shadow:0 12px 32px rgba(0,0,0,.6);min-width:220px;max-width:280px;display:none}
 .rsm-tooltip.visible{display:block}
-.rsm-tooltip-name{font-weight:600;margin-bottom:5px;color:var(--text)}
-.rsm-tooltip-row{display:flex;justify-content:space-between;gap:16px;font-size:11px;margin-bottom:2px}
-.rsm-tooltip-lbl{color:var(--text3)}
-.rsm-tooltip-val{font-family:var(--font-mono);font-weight:500}
+.rsm-tooltip-name{font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px;line-height:1.3}
+.rsm-tooltip-divider{height:1px;background:var(--border);margin:6px 0}
+.rsm-tooltip-row{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:4px}
+.rsm-tooltip-gap{margin-top:2px}
+.rsm-tooltip-lbl{font-size:11px;color:var(--text3)}
+.rsm-tooltip-val{font-size:11px;font-family:'DM Mono',monospace;font-weight:500}
 .rsm-today{position:absolute;top:-6px;width:2px;background:var(--accent);opacity:.85;border-radius:1px;z-index:5;pointer-events:none}
 .rsm-today::before{content:'Hoy';position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:8px;font-weight:500;color:var(--accent);white-space:nowrap;font-family:'DM Sans',sans-serif}
 .rsm-today::after{content:'▼';position:absolute;top:-6px;left:50%;transform:translateX(-50%);font-size:7px;color:var(--accent)}
@@ -665,8 +657,18 @@ function buildProjectCard(p){
       const words=f.name.split(' ');
       const lbl=segPx>100?f.name:segPx>60?words.slice(0,2).join(' '):segPx>30?words[0]:'';
       const progW=f.pct_plan>0?Math.round((f.pct_real/f.pct_plan)*f.dur):0;
-      const td='data-tip-name="'+esc(f.id+' · '+f.name)+'" data-tip-plan="'+f.pct_plan+'" data-tip-real="'+f.pct_real+'" data-tip-estado="'+esc(f.estado)+'"';
-      return '<div class="rsm-seg" style="left:'+f.start_off+'%;width:'+f.dur+'%;background:'+fc+'" '+td+' data-action="noop">'+
+      const gap_f=f.pct_plan-f.pct_real;
+      const td='data-tip-name="'+esc(f.id+' · '+f.name)+'"'+
+        ' data-tip-plan="'+f.pct_plan+'"'+
+        ' data-tip-real="'+f.pct_real+'"'+
+        ' data-tip-estado="'+esc(f.estado)+'"'+
+        ' data-tip-gap="'+gap_f+'"'+
+        ' data-tip-tasks="'+f.tasks.length+'"'+
+        ' data-tip-proj-start="'+esc(p.fecha_inicio)+'"'+
+        ' data-tip-proj-end="'+esc(p.fecha_fin)+'"'+
+        ' data-tip-start-off="'+f.start_off+'"'+
+        ' data-tip-dur="'+f.dur+'"';
+      return '<div class="rsm-seg" style="left:'+f.start_off+'%;width:'+f.dur+'%;background:'+fc+'" '+td+' onmouseenter="showTip(event,this)" onmouseleave="hideTip()">'+
         '<div class="rsm-seg-inner">'+
         (lbl?'<span class="rsm-seg-name">'+esc(lbl)+'</span>':'')+
         (segPx>50&&f.pct_real>0?'<span class="rsm-seg-sub">'+f.pct_real+'%</span>':'')+
@@ -1103,31 +1105,44 @@ function parseCSV(csv){
 function showTip(e, el){
   const tip = document.getElementById('rsm-tooltip');
   if(!tip) return;
-  const name   = el.dataset.tipName   || '';
-  const plan   = el.dataset.tipPlan   || '0';
-  const real   = el.dataset.tipReal   || '0';
-  const estado = el.dataset.tipEstado || '';
-  const gap    = parseInt(plan) - parseInt(real);
-  const gapColor = gap<=0?'var(--green)':gap<=3?'var(--amber)':'var(--red)';
-  const stColor  = gap<=0?'var(--green)':gap<=3?'var(--amber)':'var(--red)';
-  tip.innerHTML = `
-    <div class="rsm-tooltip-name">${name}</div>
-    <div class="rsm-tooltip-row">
-      <span class="rsm-tooltip-lbl">Estado</span>
-      <span class="rsm-tooltip-val" style="color:${stColor}">${estado}</span>
-    </div>
-    <div class="rsm-tooltip-row">
-      <span class="rsm-tooltip-lbl">Esperado</span>
-      <span class="rsm-tooltip-val">${plan}%</span>
-    </div>
-    <div class="rsm-tooltip-row">
-      <span class="rsm-tooltip-lbl">Real</span>
-      <span class="rsm-tooltip-val" style="color:${real>=plan?'var(--green)':'var(--red)'}">${real}%</span>
-    </div>
-    <div class="rsm-tooltip-row">
-      <span class="rsm-tooltip-lbl">Brecha</span>
-      <span class="rsm-tooltip-val" style="color:${gapColor}">${gap>0?'−':''}${Math.abs(gap)}%</span>
-    </div>`;
+  const name      = el.dataset.tipName      || '';
+  const plan      = parseInt(el.dataset.tipPlan  || '0');
+  const real      = parseInt(el.dataset.tipReal  || '0');
+  const estado    = el.dataset.tipEstado    || '';
+  const gap       = parseInt(el.dataset.tipGap   || String(plan-real));
+  const tasks     = parseInt(el.dataset.tipTasks || '0');
+  const projStart = el.dataset.tipProjStart || '';
+  const projEnd   = el.dataset.tipProjEnd   || '';
+  const startOff  = parseFloat(el.dataset.tipStartOff || '0');
+  const dur       = parseFloat(el.dataset.tipDur || '0');
+  // Calc estimated phase dates from offsets
+  function calcDate(offset){
+    try{
+      const parts=projStart.split('/');
+      const s=new Date(parseInt(parts[2])+(parseInt(parts[2])<100?2000:0),parseInt(parts[1])-1,parseInt(parts[0]));
+      const ep=projEnd.split('/');
+      const e2=new Date(parseInt(ep[2])+(parseInt(ep[2])<100?2000:0),parseInt(ep[1])-1,parseInt(ep[0]));
+      const total=(e2-s)/86400000;
+      const d=new Date(s.getTime()+offset/100*total*86400000);
+      return d.toLocaleDateString('es-PE',{day:'2-digit',month:'short',year:'2-digit'});
+    }catch(e){return '';}
+  }
+  const phStart=calcDate(startOff);
+  const phEnd=calcDate(startOff+dur);
+  const gc=gap<=0?'var(--green)':gap<=3?'var(--amber)':'var(--red)';
+  const sc=gap<=0?'var(--green)':gap<=3?'var(--amber)':'var(--red)';
+  const rc=real>=plan?'var(--green)':'var(--red)';
+  tip.innerHTML=
+    '<div class="rsm-tooltip-name">'+name+'</div>'+
+    '<div class="rsm-tooltip-divider"></div>'+
+    '<div class="rsm-tooltip-row"><span class="rsm-tooltip-lbl">Estado</span><span class="rsm-tooltip-val" style="color:'+sc+'">'+estado+'</span></div>'+
+    '<div class="rsm-tooltip-row"><span class="rsm-tooltip-lbl">Inicio estimado</span><span class="rsm-tooltip-val">'+phStart+'</span></div>'+
+    '<div class="rsm-tooltip-row"><span class="rsm-tooltip-lbl">Fin estimado</span><span class="rsm-tooltip-val">'+phEnd+'</span></div>'+
+    '<div class="rsm-tooltip-divider"></div>'+
+    '<div class="rsm-tooltip-row"><span class="rsm-tooltip-lbl">% Esperado</span><span class="rsm-tooltip-val">'+plan+'%</span></div>'+
+    '<div class="rsm-tooltip-row"><span class="rsm-tooltip-lbl">% Real</span><span class="rsm-tooltip-val" style="color:'+rc+'">'+real+'%</span></div>'+
+    '<div class="rsm-tooltip-row rsm-tooltip-gap"><span class="rsm-tooltip-lbl">Desviación</span><span class="rsm-tooltip-val" style="color:'+gc+';font-weight:600">'+(gap>0?'−':'')+(gap<0?'+':'')+Math.abs(gap)+'%</span></div>'+
+    (tasks?'<div class="rsm-tooltip-divider"></div><div class="rsm-tooltip-row"><span class="rsm-tooltip-lbl">Tareas</span><span class="rsm-tooltip-val">'+tasks+'</span></div>':'');
   tip.classList.add('visible');
   positionTip(e);
 }
