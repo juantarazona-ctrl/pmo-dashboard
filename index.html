@@ -756,20 +756,7 @@ function buildProjectCard(p){
         <span>${p.fases.length} fases${overlapNote}</span>
         <span>${p.fecha_fin}</span>
       </div>
-      ${tailFases.length ? `<div class="rsm-tail">
-        <div class="rsm-tail-lbl">Fases de cierre</div>
-        ${tailFases.map((f,i)=>{
-          const fc=faseColor(f.name,f.estado,p.fases.indexOf(f));
-          const gap=f.pct_plan-f.pct_real;
-          const bc=eBadge(f.estado);
-          return \`<div class="rsm-tail-item">
-            <div class="rsm-tail-dot" style="background:\${fc}"></div>
-            <span class="rsm-tail-name">\${esc(f.id)} · \${esc(f.name)}</span>
-            <span class="rsm-tail-pct" style="color:\${eCol(f.estado)}">\${f.pct_real}%</span>
-            <span class="rsm-tail-badge \${bc}">\${f.estado}</span>
-          </div>\`;
-        }).join('')}
-      </div>` : ''}
+      ${tailFases.length ? '<div class="rsm-tail"><div class="rsm-tail-lbl">Fases de cierre</div>'+tailFases.map(f=>{const fc=faseColor(f.name,f.estado,p.fases.indexOf(f));return '<div class="rsm-tail-item"><div class="rsm-tail-dot" style="background:'+fc+'"></div><span class="rsm-tail-name">'+esc(f.id)+' · '+esc(f.name)+'</span><span class="rsm-tail-pct" style="color:'+eCol(f.estado)+'">'+f.pct_real+'%</span><span class="rsm-tail-badge '+eBadge(f.estado)+'">'+f.estado+'</span></div>';}).join('')+'</div>' : ''}
     </div>
     ${isOpen?`<div class="rsm-phases">
       <div class="rsm-phases-hdr">
