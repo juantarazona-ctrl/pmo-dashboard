@@ -634,14 +634,12 @@ function buildProjectCard(p){
     else f.estado='Retrasada';
   });
   const months=getProjectMonths(p),today=p.today_pct||50;
-  const rows=computeRows(mainFases);
-  const totalRowH=rows.length*28+(rows.length-1)*5;
-  // Split phases: main (dur >= 5%) go in gantt, tail (< 5%) go as list below
+  // Split: main phases (dur >= 5%) in gantt bar, tail phases (< 5%) as list
   const TAIL_THRESHOLD = 5;
   const mainFases = p.fases.filter(f => f.dur >= TAIL_THRESHOLD);
   const tailFases = p.fases.filter(f => f.dur < TAIL_THRESHOLD);
-  // Recalculate rows using only main phases
-  const ganttW = 0; // not used, gantt fills container naturally
+  const rows=computeRows(mainFases.length ? mainFases : p.fases);
+  const totalRowH=rows.length*28+(rows.length-1)*5;
   const rowsHtml=rows.map((rowFases)=>
     `<div class="rsm-gantt-row"><div class="rsm-row-bg"></div>${
       rowFases.map((f,fi)=>{
