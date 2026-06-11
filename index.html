@@ -107,7 +107,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .pc-footer{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
 .pc-dates{font-size:10px;color:var(--text3);font-family:var(--font-mono)}
 /* RESUMEN CARD */
-.rsm-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:16px;overflow:visible;transition:border-color .15s}
+.rsm-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:16px;overflow:clip;transition:border-color .15s}
 .rsm-card:hover{border-color:var(--border2)}
 .rsm-top{display:grid;grid-template-columns:1fr auto;gap:24px;padding:20px 24px 16px;cursor:pointer;transition:background .12s;border-bottom:1px solid var(--border);overflow:hidden}
 .rsm-top:hover{background:rgba(255,255,255,.015)}
@@ -677,8 +677,8 @@ function buildProjectCard(p){
     '</div>'
   ).join('');
 
-  const overlapNote=rows.length>1?
-    '<span style="font-size:9px;background:rgba(99,102,241,.15);color:var(--accent);padding:1px 6px;border-radius:10px;margin-left:6px">'+rows.length+' filas</span>':'';
+  const hasScroll=ganttW>600;const overlapNote=rows.length>1||hasScroll?
+    rows.length>1?'<span style="font-size:9px;background:rgba(99,102,241,.15);color:var(--accent);padding:1px 6px;border-radius:10px;margin-left:6px">'+rows.length+' filas</span>':'<span style="font-size:9px;color:var(--text3);margin-left:6px">← desliza →</span>':'';
 
   // Expanded phases
   const phaseRowsHtml=isOpen?p.fases.map((f,fi)=>{
@@ -1180,6 +1180,10 @@ document.addEventListener('click', function(e){
 buildSidebar();
 showResumen();
 loadFromSheets();
+// After any render, reset roadmap scrolls to start
+document.addEventListener('DOMNodeInserted', function(){
+  document.querySelectorAll('.rsm-roadmap').forEach(el=>{ el.scrollLeft=0; });
+});
 </script>
 </body>
 </html>
